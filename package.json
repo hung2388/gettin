@@ -1,7 +1,8 @@
 {
-  "name": "gettin-root",
+  "name": "kanalearner-web-root",
   "private": true,
+  "version": "1.0.0",
   "scripts": {
-    "build": "cd web && npm install && npm run build"
+    "build": "npm --prefix web install && npm --prefix web run build"
   }
 }
