@@ -269,6 +269,16 @@ class AppController:
             
             # Start session
             self._start_new_stage()
+
+            # Override part1 questions if user selected specific words
+            selected_words = self.topic_details_screen.get_selected_words()
+            if selected_words:
+                import random
+                pool = list(selected_words)
+                random.shuffle(pool)
+                self.model.part1_questions = pool
+                self.model.part1_question_index = 0
+                self._show_next_part1_question()
             
         def on_start_handwriting():
             topic_key = self.topic_details_screen.topic_key
@@ -301,25 +311,25 @@ class AppController:
                 self.vocab_packs_screen.refresh_list()
                 self.frame.show_screen(SCREEN_VOCAB_PACKS)
 
-        def on_start_level(pack_id: str, level_num: int):
+        def on_start_level(pack_id: str, level_num: int, selected_words=None):
             if level_num == 1:
-                self.level1_screen.set_pack(pack_id)
+                self.level1_screen.set_pack(pack_id, selected_words)
                 self.frame.show_screen(SCREEN_LEVEL1)
             elif level_num == 2:
-                self.level2_screen.set_pack(pack_id)
+                self.level2_screen.set_pack(pack_id, selected_words)
                 self.frame.show_screen(SCREEN_LEVEL2)
             elif level_num == 3:
-                self.level3_screen.set_pack(pack_id)
+                self.level3_screen.set_pack(pack_id, selected_words)
                 self.frame.show_screen(SCREEN_LEVEL3)
             elif level_num == 4:
-                self.level4_screen.set_pack(pack_id)
+                self.level4_screen.set_pack(pack_id, selected_words)
                 self.frame.show_screen(SCREEN_LEVEL4)
             elif level_num == 5:
-                self.level5_screen.set_pack(pack_id)
+                self.level5_screen.set_pack(pack_id, selected_words)
                 self.frame.show_screen(SCREEN_LEVEL5)
 
-        def on_start_handwriting(pack_id: str):
-            self.handwriting_controller.set_vocab_pack(pack_id)
+        def on_start_handwriting(pack_id: str, selected_words=None):
+            self.handwriting_controller.set_vocab_pack(pack_id, selected_words)
             self.frame.show_screen(SCREEN_HANDWRITING)
 
         self.vocab_study_hub_screen.set_callbacks(on_study_hub_back, on_start_level, on_start_handwriting)

@@ -55,8 +55,9 @@ class HandwritingController:
         if self.characters:
             self._load_character(self.characters[0])
 
-    def set_vocab_pack(self, pack_id: str):
+    def set_vocab_pack(self, pack_id: str, selected_words: Optional[List[WordEntry]] = None):
         """Sets the active category to 'vocab' and loads vocabulary words from the pack."""
+        from data.word_data import WordEntry
         self.category = "vocab"
         self.screen.set_category("vocab")
 
@@ -65,19 +66,20 @@ class HandwritingController:
         self.char_romaji = {}
         char_meanings = {}
 
-        if pack:
-            for w in pack.words:
-                word_key = w.word
-                if not any(0x4E00 <= ord(ch) <= 0x9FFF for ch in word_key):
-                    continue
-                if any(p in word_key for p in ('。', '.', '？', '?', 'です', 'ます', 'ください', 'はじめまして', 'よろしく', 'こちらへ')):
-                    continue
-                if len(word_key) > 6:
-                    continue
+        source_words = selected_words if selected_words is not None else (pack.words if pack else [])
 
-                self.characters.append(word_key)
-                self.char_romaji[word_key] = w.romaji
-                char_meanings[word_key] = w.meaning
+        for w in source_words:
+            word_key = w.word
+            if not any(0x4E00 <= ord(ch) <= 0x9FFF for ch in word_key):
+                continue
+            if any(p in word_key for p in ('。', '.', '？', '?', 'です', 'ます', 'ください', 'はじめまして', 'よろしく', 'こちらへ')):
+                continue
+            if len(word_key) > 6:
+                continue
+
+            self.characters.append(word_key)
+            self.char_romaji[word_key] = w.romaji
+            char_meanings[word_key] = w.meaning
 
         self.screen.populate_characters(self.characters, self.char_romaji, char_meanings)
 

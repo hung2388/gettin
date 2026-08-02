@@ -114,20 +114,23 @@ class Level5Screen(ctk.CTkFrame):
         self.progress_bar.set(0)
         self.progress_bar.pack(fill="x", pady=15)
 
-    def set_pack(self, pack_id: str):
+    def set_pack(self, pack_id: str, selected_words: Optional[List[WordEntry]] = None):
         self.pack = self.model.get_vocab_pack(pack_id)
         if not self.pack or not self.pack.words:
             self._handle_back()
             return
 
-        self.sequence = list(self.pack.words)
+        if selected_words:
+            self.sequence = list(selected_words)
+        else:
+            self.sequence = list(self.pack.words)
         random.shuffle(self.sequence)
         
         self.current_index = 0
         self.correct_count = 0
         self.wrong_count = 0
         
-        self.lbl_title.configure(text=f"{self.pack.name} · Level 5")
+        self.lbl_title.configure(text=f"{self.pack.name} · Level 5 ({len(self.sequence)} từ)")
         
         # Build sequence labels
         self._build_seq_labels()

@@ -70,13 +70,16 @@ class Level3Screen(ctk.CTkFrame):
 
         self._build_game_layout()
 
-    def set_pack(self, pack_id: str):
+    def set_pack(self, pack_id: str, selected_words: Optional[List[WordEntry]] = None):
         self.pack = self.model.get_vocab_pack(pack_id)
         if not self.pack or not self.pack.words:
             self._handle_back()
             return
 
-        self.words_pool = list(self.pack.words)
+        if selected_words:
+            self.words_pool = list(selected_words)
+        else:
+            self.words_pool = list(self.pack.words)
         random.shuffle(self.words_pool)
         
         # Divide words into blocks
@@ -88,7 +91,7 @@ class Level3Screen(ctk.CTkFrame):
         self.total_correct = 0
         self.total_words_tested = 0
 
-        self.lbl_title.configure(text=f"{self.pack.name} · Level 3")
+        self.lbl_title.configure(text=f"{self.pack.name} · Level 3 ({len(self.words_pool)} từ)")
         self._load_block()
 
     def set_on_back(self, cb: Callable):

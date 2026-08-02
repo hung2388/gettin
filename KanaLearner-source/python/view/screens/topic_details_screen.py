@@ -2,10 +2,12 @@
 Topic Details Screen – Study Hub containing Vocabulary list (with TTS pronunciation),
 interactive Flashcards, and Quiz launcher.
 """
+import tkinter as tk
+from tkinter import messagebox
 import customtkinter as ctk
 import subprocess
 import threading
-from typing import Callable, List, Optional
+from typing import Callable, List, Optional, Set
 
 from data.word_data import WordEntry, get_words_for_type
 from view.theme import Theme
@@ -38,6 +40,7 @@ class TopicDetailsScreen(ctk.CTkFrame):
         self.topic_name: str = ""
         self.topic_key: str = ""
         self.words: List[WordEntry] = []
+        self.selected_indices: Set[int] = set()
         
         # Flashcard state
         self.fc_index: int = 0
@@ -88,17 +91,21 @@ class TopicDetailsScreen(ctk.CTkFrame):
         self.active_frame: Optional[ctk.CTkFrame] = None
 
     def set_topic(self, topic_key: str, topic_name: str):
-        self.topic_key = topic_key
-        self.topic_name = topic_name
-        self.title_label.configure(text=topic_name)
-        
-        # Load vocab words
-        from model.app_model import KanaType
-        try:
-            ktype = KanaType(topic_key)
-            self.words = get_words_for_type(ktype)
-        except Exception:
-            self.words = []
+        if self.topic_key != topic_key:
+            self.topic_key = topic_key
+            self.topic_name = topic_name
+            self.title_label.configure(text=topic_name)
+            
+            # Load vocab words
+            from model.app_model import KanaType
+            try:
+                ktype = KanaType(topic_key)
+                self.words = get_words_for_type(ktype)
+            except Exception:
+                self.words = []
+            self.selected_indices = set(range(len(self.words)))
+        else:
+            self.title_label.configure(text=topic_name)
             
         # Reset flashcards
         self.fc_index = 0
@@ -106,6 +113,9 @@ class TopicDetailsScreen(ctk.CTkFrame):
 
         # Refresh active tab
         self._on_tab_changed(self.tab_var.get())
+
+    def get_selected_words(self) -> List[WordEntry]:
+        return [w for idx, w in enumerate(self.words) if idx in self.selected_indices]
 
     def set_callbacks(self, on_back: Callable, on_start_quiz: Callable, on_start_handwriting: Callable):
         self.on_back = on_back
@@ -139,6 +149,46 @@ class TopicDetailsScreen(ctk.CTkFrame):
             lbl.pack(expand=True)
             return
 
+        # ── Word selection control bar ────────────────────────────────────
+        toolbar = ctk.CTkFrame(self.active_frame, fg_color=Theme.CARD, corner_radius=10,
+                               border_width=1, border_color=Theme.BORDER)
+        toolbar.pack(fill="x", pady=(0, 10))
+
+        self.lbl_select_count = ctk.CTkLabel(
+            toolbar,
+            text=f"📌 Đã chọn: {len(self.selected_indices)} / {len(self.words)} từ để học",
+            font=ctk.CTkFont(*Theme.BODY_BOLD),
+            text_color=Theme.TEAL
+        )
+        self.lbl_select_count.pack(side="left", padx=15, pady=8)
+
+        btn_select_all = ctk.CTkButton(
+            toolbar, text="☑️ Chọn tất cả",
+            font=ctk.CTkFont(*Theme.SMALL_BOLD),
+            fg_color=Theme.SURFACE, hover_color=Theme.CARD_HOVER,
+            text_color=Theme.TEXT, width=110, height=30,
+            command=self._select_all_words
+        )
+        btn_select_all.pack(side="right", padx=5, pady=8)
+
+        btn_deselect_all = ctk.CTkButton(
+            toolbar, text="🔲 Bỏ chọn tất cả",
+            font=ctk.CTkFont(*Theme.SMALL_BOLD),
+            fg_color=Theme.SURFACE, hover_color=Theme.CARD_HOVER,
+            text_color=Theme.TEXT, width=120, height=30,
+            command=self._deselect_all_words
+        )
+        btn_deselect_all.pack(side="right", padx=5, pady=8)
+
+        btn_invert = ctk.CTkButton(
+            toolbar, text="🔄 Đảo chọn",
+            font=ctk.CTkFont(*Theme.SMALL_BOLD),
+            fg_color=Theme.SURFACE, hover_color=Theme.CARD_HOVER,
+            text_color=Theme.TEXT, width=100, height=30,
+            command=self._invert_word_selection
+        )
+        btn_invert.pack(side="right", padx=5, pady=8)
+
         scroll = ctk.CTkScrollableFrame(self.active_frame, fg_color="transparent",
                                         scrollbar_button_color=Theme.ACCENT,
                                         scrollbar_button_hover_color=Theme.ACCENT_LIGHT)
@@ -148,6 +198,16 @@ class TopicDetailsScreen(ctk.CTkFrame):
             row = ctk.CTkFrame(scroll, fg_color=Theme.CARD, corner_radius=10,
                                border_width=1, border_color=Theme.BORDER)
             row.pack(fill="x", pady=4, padx=5)
+
+            # Checkbox for selecting word
+            chk_var = ctk.BooleanVar(value=(idx in self.selected_indices))
+            chk = ctk.CTkCheckBox(
+                row, text="", width=24, checkbox_width=22, checkbox_height=22,
+                corner_radius=6, fg_color=Theme.TEAL, hover_color=Theme.ACCENT_GLOW,
+                variable=chk_var,
+                command=lambda i=idx, v=chk_var: self._toggle_word_selection(i, v.get())
+            )
+            chk.pack(side="left", padx=(15, 0))
 
             # Details inner frame
             details = ctk.CTkFrame(row, fg_color="transparent")
@@ -176,14 +236,42 @@ class TopicDetailsScreen(ctk.CTkFrame):
                                       command=lambda t=entry.word: speak_japanese_async(t))
             btn_speak.pack(side="right", padx=15)
 
+    def _toggle_word_selection(self, idx: int, is_checked: bool):
+        if is_checked:
+            self.selected_indices.add(idx)
+        else:
+            self.selected_indices.discard(idx)
+        if hasattr(self, 'lbl_select_count'):
+            self.lbl_select_count.configure(
+                text=f"📌 Đã chọn: {len(self.selected_indices)} / {len(self.words)} từ để học"
+            )
+
+    def _select_all_words(self):
+        self.selected_indices = set(range(len(self.words)))
+        self._on_tab_changed("Từ vựng")
+
+    def _deselect_all_words(self):
+        self.selected_indices.clear()
+        self._on_tab_changed("Từ vựng")
+
+    def _invert_word_selection(self):
+        self.selected_indices = set(range(len(self.words))) - self.selected_indices
+        self._on_tab_changed("Từ vựng")
+
+
     # ── Flashcards Tab ────────────────────────────────────────────────────
 
     def _build_flashcards_tab(self):
-        if not self.words:
-            lbl = ctk.CTkLabel(self.active_frame, text="Không có flashcard nào.",
-                               font=ctk.CTkFont(*Theme.BODY), text_color=Theme.TEXT_MUTED)
+        active_words = self.get_selected_words()
+        if not active_words:
+            lbl = ctk.CTkLabel(self.active_frame,
+                               text="⚠️ Chưa có từ vựng nào được chọn.\nVui lòng quay lại tab 'Từ vựng' và tích chọn các từ bạn muốn học!",
+                               font=ctk.CTkFont(*Theme.SUBHEADING), text_color=Theme.WARNING, justify="center")
             lbl.pack(expand=True)
             return
+
+        if self.fc_index >= len(active_words):
+            self.fc_index = 0
 
         # Main Flashcard Frame
         self.fc_card = ctk.CTkFrame(self.active_frame, fg_color=Theme.CARD, corner_radius=20,
@@ -254,8 +342,15 @@ class TopicDetailsScreen(ctk.CTkFrame):
         self._update_card_display()
 
     def _update_card_display(self):
-        entry = self.words[self.fc_index]
-        self.fc_progress_lbl.configure(text=f"{self.fc_index + 1} / {len(self.words)}")
+        active_words = self.get_selected_words()
+        if not active_words:
+            return
+
+        if self.fc_index >= len(active_words):
+            self.fc_index = 0
+
+        entry = active_words[self.fc_index]
+        self.fc_progress_lbl.configure(text=f"{self.fc_index + 1} / {len(active_words)}")
         
         if self.fc_flipped:
             # Show translation and romaji
@@ -275,18 +370,26 @@ class TopicDetailsScreen(ctk.CTkFrame):
         self._update_card_display()
 
     def _next_card(self):
-        self.fc_index = (self.fc_index + 1) % len(self.words)
+        active_words = self.get_selected_words()
+        if not active_words:
+            return
+        self.fc_index = (self.fc_index + 1) % len(active_words)
         self.fc_flipped = False
         self._update_card_display()
 
     def _prev_card(self):
-        self.fc_index = (self.fc_index - 1 + len(self.words)) % len(self.words)
+        active_words = self.get_selected_words()
+        if not active_words:
+            return
+        self.fc_index = (self.fc_index - 1 + len(active_words)) % len(active_words)
         self.fc_flipped = False
         self._update_card_display()
 
     def _speak_current_card(self):
-        entry = self.words[self.fc_index]
-        speak_japanese_async(entry.word)
+        active_words = self.get_selected_words()
+        if active_words and self.fc_index < len(active_words):
+            entry = active_words[self.fc_index]
+            speak_japanese_async(entry.word)
 
     # ── Practice/Quiz Tab ─────────────────────────────────────────────────
 
@@ -308,6 +411,15 @@ class TopicDetailsScreen(ctk.CTkFrame):
                              font=ctk.CTkFont(*Theme.HEADING),
                              text_color=Theme.TEXT)
         title.pack(pady=4)
+
+        selected_count = len(self.get_selected_words())
+        total_count = len(self.words)
+
+        status_lbl = ctk.CTkLabel(inner,
+                                  text=f"📌 Đã chọn: {selected_count} / {total_count} từ để học",
+                                  font=ctk.CTkFont(*Theme.BODY_BOLD),
+                                  text_color=Theme.TEAL if selected_count > 0 else Theme.WARNING)
+        status_lbl.pack(pady=4)
 
         desc = ctk.CTkLabel(inner, text="Bài thi bao gồm 2 phần:\n"
                                        "Phần 1: Trắc nghiệm nhập Romaji (Word → Romaji)\n"
@@ -357,9 +469,16 @@ class TopicDetailsScreen(ctk.CTkFrame):
             btn_write.pack(pady=(12, 0))
 
     def _handle_start_quiz(self):
+        if not self.get_selected_words():
+            messagebox.showwarning("Thông báo", "Vui lòng tích chọn ít nhất 1 từ vựng trong tab 'Từ vựng' để bắt đầu kiểm tra!")
+            return
         if self.on_start_quiz:
             self.on_start_quiz()
 
     def _handle_start_handwriting(self):
+        if not self.get_selected_words():
+            messagebox.showwarning("Thông báo", "Vui lòng tích chọn ít nhất 1 từ vựng trong tab 'Từ vựng' để bắt đầu luyện viết!")
+            return
         if self.on_start_handwriting:
             self.on_start_handwriting()
+

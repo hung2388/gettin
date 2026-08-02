@@ -55,13 +55,17 @@ class Level2Screen(ctk.CTkFrame):
 
         self._build_game_layout()
 
-    def set_pack(self, pack_id: str):
+    def set_pack(self, pack_id: str, selected_words: Optional[List[WordEntry]] = None):
         self.pack = self.model.get_vocab_pack(pack_id)
         if not self.pack or not self.pack.words:
             self._handle_back()
             return
 
-        self.words_pool = list(self.pack.words)
+        if selected_words:
+            self.words_pool = list(selected_words)
+        else:
+            self.words_pool = list(self.pack.words)
+
         self.original_count = len(self.words_pool)
         self.total_mistakes = 0
         self.total_correct = 0
@@ -71,7 +75,7 @@ class Level2Screen(ctk.CTkFrame):
         self.failed_words = []
         self.current_index = 0
 
-        self.lbl_title.configure(text=f"{self.pack.name} · Level 2")
+        self.lbl_title.configure(text=f"{self.pack.name} · Level 2 ({len(self.words_pool)} từ)")
         self._show_current_word()
 
     def set_on_back(self, cb: Callable):
