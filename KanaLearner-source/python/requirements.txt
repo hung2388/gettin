@@ -2,4 +2,5 @@ customtkinter>=5.2.0
 opencv-python
 Pillow
 numpy
+pywebview>=4.0
 
