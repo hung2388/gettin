@@ -27,6 +27,19 @@ export const VocabStudyHubScreen: React.FC<VocabStudyHubScreenProps> = ({
   const [fcIndex, setFcIndex] = useState(0);
   const [fcFlipped, setFcFlipped] = useState(false);
 
+  // Drag select state
+  const [isDragging, setIsDragging] = useState(false);
+  const [dragAction, setDragAction] = useState<'select' | 'deselect' | null>(null);
+
+  useEffect(() => {
+    const handleMouseUp = () => {
+      setIsDragging(false);
+      setDragAction(null);
+    };
+    window.addEventListener('mouseup', handleMouseUp);
+    return () => window.removeEventListener('mouseup', handleMouseUp);
+  }, []);
+
   useEffect(() => {
     if (words.length > 0) {
       const saved = loadSelectedIndices(packId, words.length);
@@ -44,6 +57,26 @@ export const VocabStudyHubScreen: React.FC<VocabStudyHubScreenProps> = ({
     if (next.has(idx)) next.delete(idx);
     else next.add(idx);
     updateIndices(next);
+  };
+
+  const handleMouseDown = (idx: number) => {
+    setIsDragging(true);
+    const willSelect = !selectedIndices.has(idx);
+    setDragAction(willSelect ? 'select' : 'deselect');
+    
+    const next = new Set(selectedIndices);
+    if (willSelect) next.add(idx);
+    else next.delete(idx);
+    updateIndices(next);
+  };
+
+  const handleMouseEnter = (idx: number) => {
+    if (isDragging && dragAction) {
+      const next = new Set(selectedIndices);
+      if (dragAction === 'select') next.add(idx);
+      else next.delete(idx);
+      updateIndices(next);
+    }
   };
 
   const selectAll = () => updateIndices(new Set(words.map((_, i) => i)));
@@ -166,8 +199,9 @@ export const VocabStudyHubScreen: React.FC<VocabStudyHubScreenProps> = ({
                 return (
                   <div
                     key={idx}
-                    onClick={() => toggleWord(idx)}
-                    className={`flex items-center justify-between p-4 rounded-2xl border transition-all cursor-pointer ${
+                    onMouseDown={(e) => { e.preventDefault(); handleMouseDown(idx); }}
+                    onMouseEnter={() => handleMouseEnter(idx)}
+                    className={`flex items-center justify-between p-4 rounded-2xl border transition-all cursor-pointer select-none ${
                       isSelected
                         ? 'bg-slate-800/60 border-teal-500/40'
                         : 'bg-slate-900/40 border-slate-800/80 opacity-60'

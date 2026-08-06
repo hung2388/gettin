@@ -50,26 +50,34 @@ export const Level1DualChoice: React.FC<Level1DualChoiceProps> = ({
     setIsBothCorrectState(null);
 
     const distractorSource = allPackWords.length >= 4 ? allPackWords : words;
-
-    // Kana choices
-    const correctKana = currentWord.kana || currentWord.word;
-    const kanaSet = new Set<string>([correctKana]);
     const shuffleDist = [...distractorSource].sort(() => Math.random() - 0.5);
-    for (const item of shuffleDist) {
-      const k = item.kana || item.word;
-      if (k !== correctKana) kanaSet.add(k);
-      if (kanaSet.size >= 4) break;
-    }
-    setKanaChoices(Array.from(kanaSet).sort(() => Math.random() - 0.5));
 
-    // Meaning choices
+    const correctKana = currentWord.kana || currentWord.word;
     const correctMeaning = currentWord.meaning;
-    const meaningSet = new Set<string>([correctMeaning]);
-    for (const item of shuffleDist) {
-      if (item.meaning !== correctMeaning) meaningSet.add(item.meaning);
-      if (meaningSet.size >= 4) break;
+
+    const selectedWrongs: WordEntry[] = [];
+    const usedKanas = new Set<string>([correctKana]);
+    const usedMeanings = new Set<string>([correctMeaning]);
+
+    for (const w of shuffleDist) {
+      if (selectedWrongs.length >= 3) break;
+      if (w.word === currentWord.word) continue;
+
+      const wKana = w.kana || w.word;
+      if (usedKanas.has(wKana) || usedMeanings.has(w.meaning)) continue;
+
+      usedKanas.add(wKana);
+      usedMeanings.add(w.meaning);
+      selectedWrongs.push(w);
     }
-    setMeaningChoices(Array.from(meaningSet).sort(() => Math.random() - 0.5));
+
+    const finalChoicesPool = [currentWord, ...selectedWrongs];
+
+    const finalKanas = finalChoicesPool.map((w) => w.kana || w.word).sort(() => Math.random() - 0.5);
+    const finalMeanings = finalChoicesPool.map((w) => w.meaning).sort(() => Math.random() - 0.5);
+
+    setKanaChoices(finalKanas);
+    setMeaningChoices(finalMeanings);
   }, [currentIndex, currentWord]);
 
   const handleNextQuestion = () => {

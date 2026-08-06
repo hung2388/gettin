@@ -93,7 +93,7 @@ export function deleteCustomPack(id: string): void {
 
 export function loadSelectedIndices(packId: string, totalWords: number): number[] {
   try {
-    const raw = localStorage.getItem(`${SELECTED_WORDS_KEY}_${packId}`);
+    const raw = sessionStorage.getItem(`${SELECTED_WORDS_KEY}_${packId}`);
     if (raw) {
       const arr = JSON.parse(raw);
       if (Array.isArray(arr)) return arr;
@@ -107,7 +107,7 @@ export function loadSelectedIndices(packId: string, totalWords: number): number[
 
 export function saveSelectedIndices(packId: string, indices: number[]): void {
   try {
-    localStorage.setItem(`${SELECTED_WORDS_KEY}_${packId}`, JSON.stringify(indices));
+    sessionStorage.setItem(`${SELECTED_WORDS_KEY}_${packId}`, JSON.stringify(indices));
   } catch (e) {
     console.error('Error saving selected words for pack:', packId, e);
   }
