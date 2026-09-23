@@ -228,12 +228,11 @@ class TopicDetailsScreen(ctk.CTkFrame):
                                        text_color=Theme.ACCENT_LIGHT)
             meaning_lbl.pack(side="left", padx=30)
 
-            # Speak button
             btn_speak = ctk.CTkButton(row, text="🔊 Phát âm",
                                       font=ctk.CTkFont(*Theme.SMALL_BOLD),
                                       fg_color=Theme.SURFACE, hover_color=Theme.CARD_HOVER,
                                       text_color="white", corner_radius=8, width=100, height=32,
-                                      command=lambda t=entry.word: speak_japanese_async(t))
+                                      command=lambda t=entry.get_kana(): speak_japanese_async(t))
             btn_speak.pack(side="right", padx=15)
 
     def _toggle_word_selection(self, idx: int, is_checked: bool):
@@ -389,7 +388,7 @@ class TopicDetailsScreen(ctk.CTkFrame):
         active_words = self.get_selected_words()
         if active_words and self.fc_index < len(active_words):
             entry = active_words[self.fc_index]
-            speak_japanese_async(entry.word)
+            speak_japanese_async(entry.get_kana())
 
     # ── Practice/Quiz Tab ─────────────────────────────────────────────────
 

@@ -88,7 +88,7 @@ export const Level2Recall: React.FC<Level2RecallProps> = ({ words, onBack, onFin
     setIsCorrect(matches);
 
     if (matches) {
-      speakJapanese(currentWord.word);
+      speakJapanese(currentWord.kana || currentWord.word);
       setCorrectCount((prev) => prev + 1);
 
       setTimeout(() => {

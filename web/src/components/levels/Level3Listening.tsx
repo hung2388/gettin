@@ -29,7 +29,7 @@ export const Level3Listening: React.FC<Level3ListeningProps> = ({ words, onBack,
     const interval = setInterval(() => {
       if (i < sample.length) {
         setPlayingIndex(i);
-        speakJapanese(sample[i].word);
+        speakJapanese(sample[i].kana || sample[i].word);
         i++;
       } else {
         clearInterval(interval);
@@ -140,7 +140,7 @@ export const Level3Listening: React.FC<Level3ListeningProps> = ({ words, onBack,
                   />
                 </div>
                 <button
-                  onClick={() => speakJapanese(item.word)}
+                  onClick={() => speakJapanese(item.kana || item.word)}
                   className="p-2 rounded-lg bg-slate-800 text-cyan-400 hover:bg-slate-700"
                   title="Nghe lại"
                 >

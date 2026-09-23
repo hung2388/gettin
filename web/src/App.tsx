@@ -12,6 +12,7 @@ import { Level4Matching } from '@/components/levels/Level4Matching';
 import { Level5SpeedTyping } from '@/components/levels/Level5SpeedTyping';
 import { HandwritingCanvas } from '@/components/levels/HandwritingCanvas';
 import { StageDoneModal } from '@/components/levels/StageDoneModal';
+import { ReferenceModal } from '@/components/screens/ReferenceModal';
 
 import { WordEntry, UserProgress } from '@/data/types';
 import { generateRandomNumberEntries } from '@/data/kanaData';
@@ -28,6 +29,7 @@ export function App() {
   const [selectedTopicKey, setSelectedTopicKey] = useState<string>('');
   const [selectedTopicName, setSelectedTopicName] = useState<string>('');
   const [selectedPackId, setSelectedPackId] = useState<string>('');
+  const [referenceId, setReferenceId] = useState<string | null>(null);
 
   // Active word pools for current level / quiz
   const [activeWords, setActiveWords] = useState<WordEntry[]>([]);
@@ -109,6 +111,7 @@ export function App() {
             progress={progress}
             onSelectTopic={handleSelectTopic}
             onSelectPack={handleSelectPack}
+            onSelectReference={(id) => setReferenceId(id)}
           />
         )}
 
@@ -198,6 +201,13 @@ export function App() {
             setDoneStats(null);
             setView('path');
           }}
+        />
+      )}
+
+      {referenceId && (
+        <ReferenceModal
+          id={referenceId}
+          onClose={() => setReferenceId(null)}
         />
       )}
     </div>

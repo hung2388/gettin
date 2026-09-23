@@ -200,7 +200,7 @@ class Level2Screen(ctk.CTkFrame):
         # Match Kanji, Kana, or Romaji
         is_correct = (typed == correct_word or typed == correct_kana or typed == correct_romaji)
 
-        speak_japanese_async(word.word)
+        speak_japanese_async(word.get_kana())
 
         if is_correct:
             self.total_correct += 1

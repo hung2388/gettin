@@ -28,6 +28,7 @@ class KanaType(Enum):
     PACK_01 = "pack_01"
     PACK_02 = "pack_02"
     PACK_03 = "pack_03"
+    PACK_08 = "pack_08"
 
 
 # LearningMode has been replaced with manual learning packs path
@@ -157,12 +158,12 @@ class AppModel:
         self.save_progress()
 
     BUILT_IN_PACK_IDS = [
-        "pack_00", "pack_01", "pack_02", "pack_03",
+        "pack_00", "pack_01", "pack_02", "pack_03", "pack_08",
         "days_week", "days_month", "days_month_special", 
         "months", "years", "birth_year"
     ]
 
-    HANDWRITING_PACK_IDS = ["pack_00", "pack_01", "pack_02", "pack_03"]
+    HANDWRITING_PACK_IDS = ["pack_00", "pack_01", "pack_02", "pack_03", "pack_08"]
 
     def is_built_in_pack(self, pack_id: str) -> bool:
         """Returns True if the given pack_id corresponds to a built-in learning pack."""
@@ -179,6 +180,7 @@ class AppModel:
             "pack_01": ("Gói từ vựng 01", "Gói học từ vựng bài 1 tổng hợp"),
             "pack_02": ("Gói từ vựng 02", "Gói học từ vựng bài 2: Mua sắm, Nhà hàng & Địa điểm"),
             "pack_03": ("Gói từ vựng 03", "Gói học từ vựng bài 3: Thời gian, Địa điểm & Hoạt động hàng ngày"),
+            "pack_08": ("Gói từ vựng 08", "Gói học từ vựng bài 8: Gia đình, Ngoại hình, Tính cách, Quà tặng & Lễ hội"),
             "days_week": ("Thứ trong tuần", "Học cách đọc thứ trong tuần"),
             "days_month": ("Ngày trong tháng", "Học cách đọc ngày trong tháng"),
             "months": ("Tháng", "Học cách đọc các tháng trong năm"),
@@ -258,6 +260,7 @@ class AppModel:
             "pack_01": 0.0,
             "pack_02": 0.0,
             "pack_03": 0.0,
+            "pack_08": 0.0,
             "days_week": 0.0,
             "days_month": 0.0,
             "days_month_special": 0.0,

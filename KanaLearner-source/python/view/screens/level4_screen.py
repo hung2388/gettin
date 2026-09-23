@@ -214,7 +214,7 @@ class Level4Screen(ctk.CTkFrame):
             # If all three represent the exact same word entry object
             if word_k == word_a == word_m:
                 # Correct match!
-                speak_japanese_async(word_k.word)
+                speak_japanese_async(word_k.get_kana())
                 
                 # Make them disappear
                 btn_k.pack_forget()

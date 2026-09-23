@@ -42,6 +42,7 @@ export type KanaType =
   | 'pack_01'
   | 'pack_02'
   | 'pack_03'
+  | 'pack_08'
   | string;
 
 export interface UserProgress {

@@ -204,7 +204,7 @@ class Level3Screen(ctk.CTkFrame):
             btn_replay = ctk.CTkButton(row, text="🔊", font=ctk.CTkFont(*Theme.SMALL),
                                        fg_color=Theme.SURFACE, hover_color=Theme.CARD_HOVER,
                                        text_color="white", width=36, height=30, corner_radius=6,
-                                       command=lambda w_obj=word: speak_japanese_async(w_obj.word))
+                                       command=lambda w_obj=word: speak_japanese_async(w_obj.get_kana()))
             btn_replay.pack(side="left", padx=5)
 
             # Input field
@@ -235,7 +235,7 @@ class Level3Screen(ctk.CTkFrame):
                     return
                 # Update UI on playing index
                 self._highlight_input_playing(idx)
-                speak_japanese_async(word.word)
+                speak_japanese_async(word.get_kana())
                 time.sleep(SPEAK_DELAY_MS / 1000.0)
 
             # Completed speaking, start countdown

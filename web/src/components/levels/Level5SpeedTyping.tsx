@@ -101,7 +101,7 @@ export const Level5SpeedTyping: React.FC<Level5SpeedTypingProps> = ({ words, onB
     else if (step === 'meaning') {
       if (val === targetMeaning || targetMeaning.includes(val)) {
         setIsEvaluated(true);
-        speakJapanese(currentWord.word);
+        speakJapanese(currentWord.kana || currentWord.word);
         setCorrectCount((prev) => prev + 1);
 
         setTimeout(() => {

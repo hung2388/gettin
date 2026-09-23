@@ -71,6 +71,29 @@ export const Level1DualChoice: React.FC<Level1DualChoiceProps> = ({
       selectedWrongs.push(w);
     }
 
+    const fallbacks: WordEntry[] = [
+      { word: 'mock1', kana: 'ねこ', meaning: 'Con mèo', romaji: 'neko' },
+      { word: 'mock2', kana: 'いぬ', meaning: 'Con chó', romaji: 'inu' },
+      { word: 'mock3', kana: 'いま', meaning: 'Thời gian', romaji: 'ima' },
+      { word: 'mock4', kana: 'あか', meaning: 'Màu sắc', romaji: 'aka' },
+      { word: 'mock5', kana: 'かぞく', meaning: 'Gia đình', romaji: 'kazoku' },
+      { word: 'mock6', kana: 'くるま', meaning: 'Ô tô', romaji: 'kuruma' },
+      { word: 'mock7', kana: 'じてんしゃ', meaning: 'Xe đạp', romaji: 'jitensha' },
+      { word: 'mock8', kana: 'ごはん', meaning: 'Bữa cơm', romaji: 'gohan' }
+    ];
+
+    let fbIndex = 0;
+    while (selectedWrongs.length < 3 && fbIndex < fallbacks.length) {
+      const fb = fallbacks[fbIndex];
+      const fbKana = fb.kana || fb.word;
+      if (!usedKanas.has(fbKana) && !usedMeanings.has(fb.meaning)) {
+        usedKanas.add(fbKana);
+        usedMeanings.add(fb.meaning);
+        selectedWrongs.push(fb);
+      }
+      fbIndex++;
+    }
+
     const finalChoicesPool = [currentWord, ...selectedWrongs];
 
     const finalKanas = finalChoicesPool.map((w) => w.kana || w.word).sort(() => Math.random() - 0.5);
@@ -132,7 +155,7 @@ export const Level1DualChoice: React.FC<Level1DualChoiceProps> = ({
     setIsBothCorrectState(isBothCorrect);
 
     if (isBothCorrect) {
-      speakJapanese(currentWord.word);
+      speakJapanese(currentWord.kana || currentWord.word);
       setCorrectCount((prev) => prev + 1);
 
       setTimeout(() => {

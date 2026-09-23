@@ -704,6 +704,27 @@ ul, ol { list-style: none; }
   to   { opacity: 1; transform: scale(1) translateY(0); }
 }
 
+.kana-chip-char {
+  font-family: var(--font-jp);
+  font-size: var(--text-2xl);
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1;
+}
+
+.kana-chip-romaji {
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+  margin-top: var(--sp-1);
+}
+
+.kana-preview-chip.empty-cell {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  pointer-events: none;
+}
+
 .modal-header { margin-bottom: var(--sp-6); }
 .modal-title { font-size: var(--text-xl); font-weight: 700; color: var(--text-primary); margin-bottom: var(--sp-2); }
 .modal-subtitle { font-size: var(--text-sm); color: var(--text-secondary); }
@@ -2009,6 +2030,21 @@ label {
   gap: var(--sp-2);
 }
 
+.gojuon-grid-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  display: flex;
+  justify-content: center;
+  padding: var(--sp-2) 0;
+}
+
+.gojuon-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 64px);
+  grid-auto-rows: 64px;
+  gap: var(--sp-3);
+}
+
 .kana-preview-chip {
   aspect-ratio: 1;
   background: var(--bg-elevated);
@@ -2662,7 +2698,7 @@ async function initDashboard() {
   // Quick start cards
   const grid = document.getElementById('quick-start-grid');
   grid.innerHTML = '';
-  const icons = {hiragana:'平',katakana:'カ',pack_00:'数',pack_01:'言',pack_02:'語',pack_03:'話'};
+  const icons = {hiragana:'平',katakana:'カ',pack_00:'数',pack_01:'言',pack_02:'語',pack_03:'話',pack_08:'族'};
   roadmap.forEach((node, i) => {
     const pct = Math.round(node.progress||0);
     const card = document.createElement('div');
@@ -2696,7 +2732,7 @@ async function initRoadmap() {
   roadmap.forEach((node, i) => {
     const pct = Math.round(node.progress || 0);
     const isLast = i === roadmap.length - 1;
-    const icons = {hiragana:'平',katakana:'カ',pack_00:'数',pack_01:'言',pack_02:'語',pack_03:'話'};
+    const icons = {hiragana:'平',katakana:'カ',pack_00:'数',pack_01:'言',pack_02:'語',pack_03:'話',pack_08:'族'};
     const statusIcon = node.status === 'completed'
       ? `<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>`
       : icons[node.key] || '語';
@@ -2762,14 +2798,27 @@ async function showTopicDetail(kanaKey) {
   const hiragana = ['あ','い','う','え','お','か','き','く','け','こ','さ','し','す','せ','そ','た','ち','つ','て','と','な','に','ぬ','ね','の','は','ひ','ふ','へ','ほ','ま','み','む','め','も','や','ゆ','よ','ら','り','る','れ','ろ','わ','を','ん'];
   const katakana = ['ア','イ','ウ','エ','オ','カ','キ','ク','ケ','コ','サ','シ','ス','セ','ソ','タ','チ','ツ','テ','ト','ナ','ニ','ヌ','ネ','ノ','ハ','ヒ','フ','ヘ','ホ','マ','ミ','ム','メ','モ','ヤ','ユ','ヨ','ラ','リ','ル','レ','ロ','ワ','ヲ','ン'];
   const romaji = ['a','i','u','e','o','ka','ki','ku','ke','ko','sa','shi','su','se','so','ta','chi','tsu','te','to','na','ni','nu','ne','no','ha','hi','fu','he','ho','ma','mi','mu','me','mo','ya','yu','yo','ra','ri','ru','re','ro','wa','wo','n'];
-  const chars = kanaKey === 'hiragana' ? hiragana : katakana;
+  let chars = kanaKey === 'hiragana' ? hiragana : katakana;
+  let currentRomaji = romaji;
+  let isGojuon = false;
 
-  const chips = chars.map((c,i) => `
-    <div class="kana-preview-chip">
-      <div class="kana-chip-char">${c}</div>
-      <div class="kana-chip-romaji">${romaji[i]||''}</div>
-    </div>
-  `).join('');
+  if (kanaKey === 'katakana') {
+    isGojuon = true;
+    chars = ['ア','イ','ウ','エ','オ','カ','キ','ク','ケ','コ','サ','シ','ス','セ','ソ','タ','チ','ツ','テ','ト','ナ','ニ','ヌ','ネ','ノ','ハ','ヒ','フ','ヘ','ホ','マ','ミ','ム','メ','モ','ヤ','','ユ','','ヨ','ラ','リ','ル','レ','ロ','ワ','','','','ヲ','','','ン','',''];
+    currentRomaji = ['a','i','u','e','o','ka','ki','ku','ke','ko','sa','shi','su','se','so','ta','chi','tsu','te','to','na','ni','nu','ne','no','ha','hi','fu','he','ho','ma','mi','mu','me','mo','ya','','yu','','yo','ra','ri','ru','re','ro','wa','','','','wo','','','n','',''];
+  }
+
+  const chips = chars.map((c,i) => {
+    if (isGojuon && !c) {
+      return `<div class="kana-preview-chip empty-cell"></div>`;
+    }
+    return `
+      <div class="kana-preview-chip">
+        <div class="kana-chip-char">${c}</div>
+        <div class="kana-chip-romaji">${currentRomaji[i]||''}</div>
+      </div>
+    `;
+  }).join('');
 
   const progress = await API.call('get_progress');
   const pct = Math.round(progress[kanaKey]||0);
@@ -2779,7 +2828,10 @@ async function showTopicDetail(kanaKey) {
       <div class="page-header-meta mb-2">${name}</div>
       <h2 style="font-family:var(--font-serif);font-size:var(--text-2xl);font-weight:700;color:var(--text-primary);margin-bottom:var(--sp-2);">${name} Characters</h2>
       <p style="color:var(--text-secondary);font-size:var(--text-sm);margin-bottom:var(--sp-6);">46 basic characters · Syllabary system · ${kanaKey === 'hiragana' ? 'Used for native Japanese words and grammar' : 'Used for foreign loanwords and emphasis'}</p>
-      <div class="topic-preview">${chips}</div>
+      ${isGojuon 
+        ? `<div class="gojuon-grid-wrapper"><div class="gojuon-grid">${chips}</div></div>` 
+        : `<div class="topic-preview">${chips}</div>`
+      }
     </div>
     <div class="topic-actions">
       <div class="action-card">
@@ -2847,7 +2899,7 @@ function renderPackGrid(packs) {
     </div>`;
     return;
   }
-  const icons = {pack_00:'数',pack_01:'言',pack_02:'語',pack_03:'話',days_week:'週',days_month:'日',months:'月',years:'年',birth_year:'生',review_all:'復'};
+  const icons = {pack_00:'数',pack_01:'言',pack_02:'語',pack_03:'話',pack_08:'族',days_week:'週',days_month:'日',months:'月',years:'年',birth_year:'生',review_all:'復'};
   packs.forEach((pack, i) => {
     const pct = Math.round(pack.progress||0);
     const card = document.createElement('div');
@@ -3813,7 +3865,7 @@ async function initProgress() {
   ]);
 
   const content = document.getElementById('progress-content');
-  const icons = {hiragana:'平',katakana:'カ',pack_00:'数',pack_01:'言',pack_02:'語',pack_03:'話'};
+  const icons = {hiragana:'平',katakana:'カ',pack_00:'数',pack_01:'言',pack_02:'語',pack_03:'話',pack_08:'族'};
 
   content.innerHTML = `
     <h3 style="font-size:var(--text-xl);font-weight:700;margin-bottom:var(--sp-4);">Roadmap Progress</h3>
@@ -3952,7 +4004,7 @@ document.addEventListener('keydown', e => {
 // ═══════════════════════════════════════════════════════════════════
 
 const MOCK_API = {
-  get_progress: () => ({ hiragana: 100, katakana: 45, pack_00: 80, pack_01: 30, pack_02: 0, pack_03: 0, days_week: 0, days_month: 0, months: 0, years: 0, birth_year: 0 }),
+  get_progress: () => ({ hiragana: 100, katakana: 45, pack_00: 80, pack_01: 30, pack_02: 0, pack_03: 0, pack_08: 0, days_week: 0, days_month: 0, months: 0, years: 0, birth_year: 0 }),
   get_roadmap: () => [
     {key:'hiragana', name:'Hiragana', icon:'平', subtitle:'46 characters', progress:100, status:'completed'},
     {key:'katakana', name:'Katakana', icon:'カ', subtitle:'46 characters', progress:45, status:'in_progress'},
@@ -3960,6 +4012,7 @@ const MOCK_API = {
     {key:'pack_01',  name:'Vocabulary I', icon:'言', subtitle:'Lesson 1 vocabulary', progress:30, status:'available'},
     {key:'pack_02',  name:'Vocabulary II', icon:'語', subtitle:'Shopping & places', progress:0, status:'available'},
     {key:'pack_03',  name:'Vocabulary III', icon:'話', subtitle:'Time & daily activities', progress:0, status:'locked'},
+    {key:'pack_08',  name:'Vocabulary VIII', icon:'族', subtitle:'Family, traits & gifts', progress:0, status:'locked'},
   ],
   get_all_packs: () => [
     {id:'pack_00',name:'Numbers & Dates',description:'Numbers, days of week, months',word_count:45,is_custom:false,progress:80,supports_handwriting:true},

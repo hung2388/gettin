@@ -59,7 +59,7 @@ export const Level4Matching: React.FC<Level4MatchingProps> = ({ words, onBack, o
         (target.kana || target.word) === selectedKana &&
         target.meaning === selectedMeaning
       ) {
-        speakJapanese(target.word);
+        speakJapanese(target.kana || target.word);
         const newMatched = new Set(matchedItems);
         newMatched.add(selectedWord);
         newMatched.add(selectedKana);

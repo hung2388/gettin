@@ -6,6 +6,7 @@ interface LearningPathScreenProps {
   progress: UserProgress;
   onSelectTopic: (topicKey: string, topicName: string) => void;
   onSelectPack: (packId: string) => void;
+  onSelectReference?: (refId: string) => void;
 }
 
 interface PathNode {
@@ -13,7 +14,7 @@ interface PathNode {
   title: string;
   subtitle: string;
   icon: string;
-  type: 'topic' | 'pack';
+  type: 'topic' | 'pack' | 'reference';
   color: string;
 }
 
@@ -23,8 +24,10 @@ export const PATH_NODES: PathNode[] = [
   { id: 'numbers', title: 'Con số Tiếng Nhật', subtitle: 'Luyện đếm số từ 1 đến 99,999', icon: '123', type: 'topic', color: 'from-emerald-500 to-teal-600' },
   { id: 'pack_00', title: 'Gói từ vựng 00', subtitle: 'Thứ, Ngày, Tháng, Năm & Năm sinh', icon: '📅', type: 'pack', color: 'from-amber-500 to-orange-600' },
   { id: 'pack_01', title: 'Gói từ vựng 01', subtitle: 'Danh xưng, Xã hội & Nghề nghiệp', icon: '👤', type: 'pack', color: 'from-pink-500 to-rose-600' },
+  { id: 'pre_02', title: 'Pre 02', subtitle: 'Bảng Hệ thống Đại từ chỉ thị: こ/そ/あ/ど', icon: '📋', type: 'reference', color: 'from-fuchsia-500 to-pink-600' },
   { id: 'pack_02', title: 'Gói từ vựng 02', subtitle: 'Mua sắm, Đồ vật & Vật dụng', icon: '🛍️', type: 'pack', color: 'from-violet-500 to-purple-600' },
   { id: 'pack_03', title: 'Gói từ vựng 03', subtitle: 'Địa điểm, Đồ dùng & Mua sắm', icon: '🏫', type: 'pack', color: 'from-sky-500 to-cyan-600' },
+  { id: 'pack_08', title: 'Gói từ vựng 08', subtitle: 'Gia đình, Ngoại hình, Tính cách & Quà tặng', icon: '👨‍👩‍👧‍👦', type: 'pack', color: 'from-emerald-500 to-teal-600' },
   { id: 'review_all', title: 'Ôn tập Tổng hợp', subtitle: 'Tổng hợp tất cả từ vựng của các bài học', icon: '💡', type: 'pack', color: 'from-yellow-400 to-amber-600' },
 ];
 
@@ -32,6 +35,7 @@ export const LearningPathScreen: React.FC<LearningPathScreenProps> = ({
   progress,
   onSelectTopic,
   onSelectPack,
+  onSelectReference,
 }) => {
   return (
     <div className="max-w-4xl mx-auto px-4 py-8">
@@ -91,8 +95,10 @@ export const LearningPathScreen: React.FC<LearningPathScreenProps> = ({
                   onClick={() => {
                     if (node.type === 'topic') {
                       onSelectTopic(node.id, node.title);
-                    } else {
+                    } else if (node.type === 'pack') {
                       onSelectPack(node.id);
+                    } else if (node.type === 'reference' && onSelectReference) {
+                      onSelectReference(node.id);
                     }
                   }}
                   className={`group relative overflow-hidden p-6 rounded-2xl bg-[#131B2E] border border-slate-800 hover:border-cyan-500/40 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-cyan-500/10 cursor-pointer`}
@@ -112,19 +118,26 @@ export const LearningPathScreen: React.FC<LearningPathScreenProps> = ({
                       </div>
                     </div>
 
-                    <span className={`px-2.5 py-1 rounded-full text-xs font-semibold ${
-                      isCompleted
-                        ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/30'
-                        : isInProgress
-                        ? 'bg-amber-500/10 text-amber-400 border border-amber-500/30'
-                        : 'bg-slate-800 text-slate-400 border border-slate-700'
-                    }`}>
-                      {isCompleted ? 'Hoàn thành 100%' : isInProgress ? `Đang học ${p}%` : 'Sẵn sàng'}
-                    </span>
+                    {node.type !== 'reference' && (
+                      <span className={`px-2.5 py-1 rounded-full text-xs font-semibold ${
+                        isCompleted
+                          ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/30'
+                          : isInProgress
+                          ? 'bg-amber-500/10 text-amber-400 border border-amber-500/30'
+                          : 'bg-slate-800 text-slate-400 border border-slate-700'
+                      }`}>
+                        {isCompleted ? 'Hoàn thành 100%' : isInProgress ? `Đang học ${p}%` : 'Sẵn sàng'}
+                      </span>
+                    )}
+                    {node.type === 'reference' && (
+                      <span className="px-2.5 py-1 rounded-full text-xs font-semibold bg-fuchsia-500/10 text-fuchsia-400 border border-fuchsia-500/30">
+                        Ngữ pháp
+                      </span>
+                    )}
                   </div>
 
                   <div className="mt-4 flex items-center justify-between pt-3 border-t border-slate-800/80 text-xs font-semibold text-cyan-400 group-hover:text-cyan-300">
-                    <span>Mở bài học & Từ vựng ➔</span>
+                    <span>{node.type === 'reference' ? 'Xem chi tiết ➔' : 'Mở bài học & Từ vựng ➔'}</span>
                     <Play className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                   </div>
                 </div>

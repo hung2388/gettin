@@ -199,7 +199,7 @@ class Level5Screen(ctk.CTkFrame):
             self.correct_count += 1
             self.lbl_correct.configure(text=f"✓ {self.correct_count}")
             self.input_container.configure(border_color=Theme.SUCCESS)
-            speak_japanese_async(word.word)
+            speak_japanese_async(word.get_kana())
 
             self.current_index += 1
             # Brief delay before moving next to show correct color

@@ -94,7 +94,14 @@ class VocabStudyHubScreen(ctk.CTkFrame):
             if self.pack:
                 self.title_label.configure(text=self.pack.name)
                 self.words = self.pack.words
-                self.selected_indices = set(range(len(self.words)))
+                
+                if not hasattr(self.model, "pack_selected_indices"):
+                    self.model.pack_selected_indices = {}
+                    
+                if pack_id in self.model.pack_selected_indices:
+                    self.selected_indices = set(self.model.pack_selected_indices[pack_id])
+                else:
+                    self.selected_indices = set(range(len(self.words)))
             else:
                 self.words = []
                 self.selected_indices = set()
@@ -107,6 +114,12 @@ class VocabStudyHubScreen(ctk.CTkFrame):
         self.fc_index = 0
         self.fc_flipped = False
         self._on_tab_changed(self.tab_var.get())
+
+    def _save_selection_to_model(self):
+        if not hasattr(self.model, "pack_selected_indices"):
+            self.model.pack_selected_indices = {}
+        if self.pack:
+            self.model.pack_selected_indices[self.pack.id] = set(self.selected_indices)
 
     def get_selected_words(self) -> List[WordEntry]:
         return [w for idx, w in enumerate(self.words) if idx in self.selected_indices]
@@ -188,6 +201,10 @@ class VocabStudyHubScreen(ctk.CTkFrame):
                                         scrollbar_button_hover_color=Theme.ACCENT_LIGHT)
         scroll.pack(fill="both", expand=True)
 
+        if not hasattr(self, "chk_vars"):
+            self.chk_vars = {}
+        self.chk_vars.clear()
+
         for idx, entry in enumerate(self.words):
             row = ctk.CTkFrame(scroll, fg_color=Theme.CARD, corner_radius=10,
                                border_width=1, border_color=Theme.BORDER)
@@ -231,29 +248,66 @@ class VocabStudyHubScreen(ctk.CTkFrame):
                                       font=ctk.CTkFont(*Theme.SMALL_BOLD),
                                       fg_color=Theme.SURFACE, hover_color=Theme.CARD_HOVER,
                                       text_color="white", corner_radius=8, width=100, height=32,
-                                      command=lambda t=entry.word: speak_japanese_async(t))
+                                      command=lambda t=entry.get_kana(): speak_japanese_async(t))
             btn_speak.pack(side="right", padx=15)
+            
+            row._vocab_idx = idx
+            details._vocab_idx = idx
+            word_lbl._vocab_idx = idx
+            romaji_lbl._vocab_idx = idx
+            meaning_lbl._vocab_idx = idx
+            
+            self.chk_vars[idx] = chk_var
+
+            for child in [row, details, word_lbl, romaji_lbl, meaning_lbl]:
+                child.bind("<ButtonPress-1>", lambda e, i=idx: self._on_drag_start(i))
+                child.bind("<B1-Motion>", self._on_drag_motion)
+                child.bind("<ButtonRelease-1>", self._on_drag_release)
+
+    def _on_drag_start(self, idx: int):
+        self.is_dragging = True
+        self.drag_action = not (idx in self.selected_indices)
+        self._toggle_word_selection(idx, self.drag_action)
+
+    def _on_drag_release(self, event):
+        self.is_dragging = False
+
+    def _on_drag_motion(self, event):
+        if getattr(self, "is_dragging", False):
+            widget = self.winfo_containing(event.x_root, event.y_root)
+            if widget:
+                idx = getattr(widget, "_vocab_idx", None)
+                if idx is not None:
+                    self._toggle_word_selection(idx, self.drag_action)
 
     def _toggle_word_selection(self, idx: int, is_checked: bool):
         if is_checked:
             self.selected_indices.add(idx)
         else:
             self.selected_indices.discard(idx)
+            
+        if hasattr(self, "chk_vars") and idx in self.chk_vars:
+            self.chk_vars[idx].set(is_checked)
+            
         if hasattr(self, 'lbl_select_count'):
             self.lbl_select_count.configure(
                 text=f"📌 Đã chọn: {len(self.selected_indices)} / {len(self.words)} từ để học"
             )
+        self._save_selection_to_model()
 
     def _select_all_words(self):
         self.selected_indices = set(range(len(self.words)))
+        self._save_selection_to_model()
         self._on_tab_changed("Từ vựng")
 
     def _deselect_all_words(self):
         self.selected_indices.clear()
+        self._save_selection_to_model()
         self._on_tab_changed("Từ vựng")
 
     def _invert_word_selection(self):
         self.selected_indices = set(range(len(self.words))) - self.selected_indices
+        self._save_selection_to_model()
         self._on_tab_changed("Từ vựng")
 
 
@@ -388,7 +442,7 @@ class VocabStudyHubScreen(ctk.CTkFrame):
         active_words = self.get_selected_words()
         if active_words and self.fc_index < len(active_words):
             entry = active_words[self.fc_index]
-            speak_japanese_async(entry.word)
+            speak_japanese_async(entry.get_kana())
 
     # ── Levels Tab (Practice Options) ─────────────────────────────────────
 

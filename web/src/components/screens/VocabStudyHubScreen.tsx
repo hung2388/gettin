@@ -226,7 +226,7 @@ export const VocabStudyHubScreen: React.FC<VocabStudyHubScreenProps> = ({
                       <button
                         onClick={(e) => {
                           e.stopPropagation();
-                          speakJapanese(item.word);
+                          speakJapanese(item.kana || item.word);
                         }}
                         className="p-2.5 rounded-xl bg-slate-800 hover:bg-teal-500/20 text-teal-400 transition-colors"
                         title="Phát âm"
@@ -286,7 +286,7 @@ export const VocabStudyHubScreen: React.FC<VocabStudyHubScreenProps> = ({
                     ← Trước
                   </button>
                   <button
-                    onClick={() => speakJapanese(currentFcWord?.word || '')}
+                    onClick={() => speakJapanese(currentFcWord?.kana || currentFcWord?.word || '')}
                     className="px-5 py-2.5 rounded-xl bg-teal-500/20 text-teal-400 hover:bg-teal-500/30 text-sm font-bold flex items-center gap-2"
                   >
                     <Volume2 className="w-4 h-4" /> Phát âm

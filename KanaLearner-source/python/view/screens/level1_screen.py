@@ -176,38 +176,58 @@ class Level1Screen(ctk.CTkFrame):
         self.lbl_status.configure(text=f"Từ vựng: {self.current_index + 1} / {len(self.current_round_words)} (Còn lại: {self.original_count - self.total_correct} từ)")
         self.lbl_score.configure(text=f"Đúng: {self.total_correct}  |  Sai: {self.total_mistakes}")
 
-        # Generate choice pools
         distractor_source = self.pack.words if (self.pack and len(self.pack.words) >= 4) else self.words_pool
-        kana_pool = [w.get_kana() for w in distractor_source]
-        meaning_pool = [w.meaning for w in distractor_source]
 
-        kana_choices = self._generate_choices(word.get_kana(), kana_pool, is_meaning=False)
-        meaning_choices = self._generate_choices(word.meaning, meaning_pool, is_meaning=True)
+        correct_kana = word.get_kana()
+        correct_meaning = word.meaning
+
+        selected_wrongs = []
+        used_kanas = {correct_kana}
+        used_meanings = {correct_meaning}
+
+        shuffle_dist = list(distractor_source)
+        random.shuffle(shuffle_dist)
+
+        for w in shuffle_dist:
+            if len(selected_wrongs) >= 3:
+                break
+            if w.word == word.word:
+                continue
+
+            w_kana = w.get_kana()
+            w_meaning = w.meaning
+
+            if w_kana in used_kanas or w_meaning in used_meanings:
+                continue
+
+            used_kanas.add(w_kana)
+            used_meanings.add(w_meaning)
+            selected_wrongs.append(w)
+
+        fallbacks = [
+            ("ねこ", "Con mèo"), ("いぬ", "Con chó"), ("いま", "Thời gian"),
+            ("あか", "Màu sắc"), ("かぞく", "Gia đình"), ("くるま", "Ô tô"),
+            ("じてんしゃ", "Xe đạp"), ("ごはん", "Bữa cơm")
+        ]
+        
+        fb_index = 0
+        while len(selected_wrongs) < 3 and fb_index < len(fallbacks):
+            fkana, fmean = fallbacks[fb_index]
+            if fkana not in used_kanas and fmean not in used_meanings:
+                used_kanas.add(fkana)
+                used_meanings.add(fmean)
+                selected_wrongs.append(WordEntry("mock", "mock", fmean, fkana))
+            fb_index += 1
+
+        final_pool = [word] + selected_wrongs
+        
+        kana_choices = [w.get_kana() for w in final_pool]
+        meaning_choices = [w.meaning for w in final_pool]
+        
+        random.shuffle(kana_choices)
+        random.shuffle(meaning_choices)
 
         self._build_choice_buttons(kana_choices, meaning_choices)
-
-    def _generate_choices(self, correct: str, pool: List[str], is_meaning: bool) -> List[str]:
-        choices = {correct}
-        other_pool = [x for x in pool if x != correct]
-        random.shuffle(other_pool)
-        for x in other_pool:
-            if len(choices) >= 4:
-                break
-            choices.add(x)
-        # Pad if less than 4 choices
-        fallbacks = (
-            ["Con mèo", "Con chó", "Thời gian", "Màu sắc", "Gia đình", "Ô tô", "Xe đạp", "Bữa cơm"]
-            if is_meaning else
-            ["ねこ", "いぬ", "いま", "あか", "かぞく", "くるま", "じてんしゃ", "ごはん"]
-        )
-        for f in fallbacks:
-            if len(choices) >= 4:
-                break
-            if f != correct:
-                choices.add(f)
-        choices_list = list(choices)
-        random.shuffle(choices_list)
-        return choices_list
 
     def _build_choice_buttons(self, kana_choices: List[str], meaning_choices: List[str]):
         # Clear old buttons
@@ -288,7 +308,7 @@ class Level1Screen(ctk.CTkFrame):
                     btn.configure(fg_color=Theme.ERROR_DARK, text_color="white")
 
             # TTS pronunciation
-            speak_japanese_async(word.word)
+            speak_japanese_async(word.get_kana())
 
             if is_kana_correct and is_meaning_correct:
                 self.total_correct += 1
