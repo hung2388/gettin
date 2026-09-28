@@ -661,6 +661,80 @@ export const PACK_08_WORDS: WordEntry[] = [
   { word: '素敵 (な)', kana: 'すてき (な)', romaji: 'suteki (na)', meaning: 'Đẹp, tốt' },
 ];
 
+// ── Pack 09 (Full 70 Words - Sở thích, Hoạt động, Lượng từ & Sự kiện) ─────────────
+export const PACK_09_WORDS: WordEntry[] = [
+  { word: '話', kana: 'はなし', romaji: 'hanashi', meaning: 'Câu chuyện' },
+  { word: 'ミュージカル', kana: 'ミュージカル', romaji: 'myuujikaru', meaning: 'Nhạc kịch' },
+  { word: 'アクション', kana: 'アクション', romaji: 'akushon', meaning: 'Hành động' },
+  { word: '(お)菓子', kana: '(お)かし', romaji: '(o)kashi', meaning: 'Bánh kẹo' },
+  { word: '切手', kana: 'きって', romaji: 'kitte', meaning: 'Cái tem' },
+  { word: 'クラシック', kana: 'クラシック', romaji: 'kurashikku', meaning: 'Nhạc cổ điển' },
+  { word: 'ポップス', kana: 'ポップス', romaji: 'poppusu', meaning: 'Nhạc pốp' },
+  { word: '小説', kana: 'しょうせつ', romaji: 'shousetsu', meaning: 'Tiểu thuyết' },
+  { word: '漫画', kana: 'まんが', romaji: 'manga', meaning: 'Truyện tranh' },
+  { word: '釣り', kana: 'つり', romaji: 'tsuri', meaning: 'Câu cá' },
+  { word: 'ドラマ', kana: 'ドラマ', romaji: 'dorama', meaning: 'Kịch' },
+  { word: 'プール', kana: 'プール', romaji: 'puuru', meaning: 'Bể bơi' },
+  { word: '最近', kana: 'さいきん', romaji: 'saikin', meaning: 'Gần đây' },
+  { word: '~日', kana: '~にち', romaji: '~nichi', meaning: '~ Ngày' },
+  { word: '~週間', kana: '~しゅうかん', romaji: '~shuukan', meaning: '~ Tuần' },
+  { word: '~か月', kana: '~かげつ', romaji: '~kagetsu', meaning: '~ Tháng' },
+  { word: '~年', kana: '~ねん', romaji: '~nen', meaning: '~ Năm' },
+  { word: '~回', kana: '~かい', romaji: '~kai', meaning: '~ Lần' },
+  { word: '~冊', kana: '~さつ', romaji: '~satsu', meaning: '~ Quyển' },
+  { word: '~杯', kana: '~はい', romaji: '~hai', meaning: '~ Cốc' },
+  { word: '~本', kana: '~ほん', romaji: '~hon', meaning: '~ Cái' },
+  { word: '~料理 (例: イタリア料理)', kana: '~りょうり (れい: イタリアりょうり)', romaji: '~ryouri (rei: itariaryouri)', meaning: 'Món ăn~ (ví dụ: món ăn Ý)' },
+  { word: '泳ぎます [泳ぐ]', kana: 'およぎます [およぐ]', romaji: 'oyogimasu [oyogu]', meaning: 'Bơi' },
+  { word: '描きます [描く]', kana: 'かきます [かく]', romaji: 'kakimasu [kaku]', meaning: 'Vẽ' },
+  { word: '集めます [集める]', kana: 'あつめます [あつめる]', romaji: 'atsumemasu [atsumeru]', meaning: 'Thu thập, gom' },
+  { word: '運転します [運転する]', kana: 'うんてんします [うんてんする]', romaji: 'untenshimasu [untensuru]', meaning: 'Lái (xe, tàu)' },
+  { word: '特に', kana: 'とくに', romaji: 'tokuni', meaning: 'Đặc biệt là' },
+  { word: 'いつも', kana: 'いつも', romaji: 'itsumo', meaning: 'Luôn' },
+  { word: 'よく', kana: 'よく', romaji: 'yoku', meaning: 'Hay' },
+  { word: '私はよく映画を見ます。', kana: 'わたしはよくえいがをみます。', romaji: 'watashi wa yoku eiga o mimasu.', meaning: 'Tôi hay xem phim.' },
+  { word: 'ときどき', kana: 'ときどき', romaji: 'tokidoki', meaning: 'Thỉnh thoảng' },
+  { word: 'あまり', kana: 'あまり', romaji: 'amari', meaning: '(Không~) lắm' },
+  { word: 'あまりテレビを見ません。', kana: 'あまりテレビをみません。', romaji: 'amari terebi o mimasen.', meaning: 'Ít xem phim.' },
+  { word: '全然', kana: 'ぜんぜん', romaji: 'zenzen', meaning: 'Hoàn toàn (không)' },
+  { word: 'でも', kana: 'でも', romaji: 'demo', meaning: 'Nhưng' },
+  { word: 'だけ', kana: 'だけ', romaji: 'dake', meaning: 'Chỉ' },
+  { word: 'イベント', kana: 'イベント', romaji: 'ibento', meaning: 'Việc, sự kiện' },
+  { word: 'コンテスト', kana: 'コンテスト', romaji: 'kontesuto', meaning: 'Cuộc thi' },
+  { word: '書道', kana: 'しょどう', romaji: 'shodou', meaning: 'Thư pháp' },
+  { word: 'ダイビング', kana: 'ダイビング', romaji: 'daibingu', meaning: 'Đánh máy' },
+  { word: 'ダンス', kana: 'ダンス', romaji: 'dansu', meaning: 'Khiêu vũ' },
+  { word: '~クラブ (例: ダンスクラブ)', kana: '~クラブ (れい: ダンスクラブ)', romaji: '~kurabu (rei: dansukurabu)', meaning: 'Câu lạc bộ (ví dụ: câu lạc bộ khiêu vũ)' },
+  { word: '~教室 (例: 書道教室)', kana: '~きょうしつ (れい: しょどうきょうしつ)', romaji: '~kyoushitsu (rei: shodoukyoushitsu)', meaning: 'Lớp học (ví dụ: lớp học thư pháp)' },
+  { word: '習います [習う]', kana: 'ならいます [ならう]', romaji: 'naraimasu [narau]', meaning: 'Học' },
+  { word: '乗ります [乗る]', kana: 'のります [のる]', romaji: 'norimasu [noru]', meaning: 'Đi, cưỡi' },
+  { word: '入ります [入る]', kana: 'はいります [はいる]', romaji: 'hairimasu [hairu]', meaning: 'Tham gia' },
+  { word: 'ダンスクラブに入ります。', kana: 'ダンスクラブにはいります。', romaji: 'dansukurabu ni hairimasu.', meaning: 'Tôi tham gia câu lạc bộ khiêu vũ.' },
+  { word: '申し込みます [申し込む]', kana: 'もうしこみます [もうしこむ]', romaji: 'moushikomimasu [moushikomu]', meaning: 'Đăng ký' },
+  { word: 'できます [できる]', kana: 'できます [できる]', romaji: 'dekimasu [dekiru]', meaning: 'Có thể làm' },
+  { word: 'スキーができます。', kana: 'スキーができます。', romaji: 'sukii ga dekimasu.', meaning: 'Tôi có thể trượt tuyết.' },
+  { word: '参加します [参加する]', kana: 'さんかします [さんかする]', romaji: 'sankashimasu [sankasuru]', meaning: 'Tham gia' },
+  { word: 'すごい', kana: 'すごい', romaji: 'sugoi', meaning: 'Rất, ghê' },
+  { word: 'いろいろ (な)', kana: 'いろいろ (な)', romaji: 'iroiro (na)', meaning: 'Nhiều' },
+  { word: '上手に', kana: 'じょうずに', romaji: 'jouzuni', meaning: 'Giỏi' },
+  { word: '受付', kana: 'うけつけ', romaji: 'uketsuke', meaning: 'Tiếp tân' },
+  { word: 'カード', kana: 'カード', romaji: 'kaado', meaning: 'Thẻ' },
+  { word: '図書館のカードを作ります。', kana: 'としょかんのカードをつくります。', romaji: 'toshokan no kaado o tsukurimasu.', meaning: 'Tôi làm thẻ thư viện.' },
+  { word: '外国人登録証', kana: 'がいこくじんとうろくしょう', romaji: 'gaikokujintourokushou', meaning: 'Thẻ ngoại kiều' },
+  { word: '住所', kana: 'じゅうしょ', romaji: 'juusho', meaning: 'Địa chỉ' },
+  { word: '宿題', kana: 'しゅくだい', romaji: 'shukudai', meaning: 'Bài tập về nhà' },
+  { word: '電話番号', kana: 'でんわばんごう', romaji: 'denwabangou', meaning: 'Số điện thoại' },
+  { word: '~番', kana: '~ばん', romaji: '~ban', meaning: 'Số~' },
+  { word: '言います [言う]', kana: 'いいます [いう]', romaji: 'iimasu [iu]', meaning: 'Nói' },
+  { word: '払います [払う]', kana: 'はらいます [はらう]', romaji: 'haraimasu [harau]', meaning: 'Trả (tiền)' },
+  { word: '降ります [降りる]', kana: 'おります [おりる]', romaji: 'orimasu [oriru]', meaning: 'Xuống' },
+  { word: '見せます [見せる]', kana: 'みせます [みせる]', romaji: 'misemasu [miseru]', meaning: 'Cho xem' },
+  { word: '予約します [予約する]', kana: 'よやくします [よやくする]', romaji: 'yoyakushimasu [yoyakusuru]', meaning: 'Đặt chỗ' },
+  { word: 'どうやって', kana: 'どうやって', romaji: 'douyatte', meaning: 'Làm thế nào' },
+  { word: 'クラスメイト', kana: 'クラスメイト', romaji: 'kurasumeito', meaning: 'Bạn học' },
+  { word: '楽しみです', kana: 'たのしみです', romaji: 'tanoshimi desu', meaning: 'Tôi mong đợi điều đó' },
+];
+
 export function getBuiltInPack(packId: string): VocabPack | null {
   const packsMap: Record<string, { name: string; description: string; words: WordEntry[]; supports_handwriting?: boolean }> = {
     pack_00: {
@@ -691,6 +765,12 @@ export function getBuiltInPack(packId: string): VocabPack | null {
       name: 'Gói từ vựng 08',
       description: 'Gói học từ vựng bài 8: Gia đình, Ngoại hình, Tính cách, Quà tặng & Lễ hội (88 từ)',
       words: PACK_08_WORDS,
+      supports_handwriting: true,
+    },
+    pack_09: {
+      name: 'Gói từ vựng 09',
+      description: 'Gói học từ vựng bài 9: Sở thích, Hoạt động, Lượng từ, Thủ tục & Sự kiện (70 từ)',
+      words: PACK_09_WORDS,
       supports_handwriting: true,
     },
     days_week: {
@@ -741,6 +821,6 @@ export function getBuiltInPack(packId: string): VocabPack | null {
 }
 
 export function getAllBuiltInPacks(): VocabPack[] {
-  const ids = ['pack_00', 'pack_01', 'pack_02', 'pack_03', 'pack_08', 'days_week', 'days_month', 'months', 'years', 'birth_year'];
+  const ids = ['pack_00', 'pack_01', 'pack_02', 'pack_03', 'pack_08', 'pack_09', 'days_week', 'days_month', 'months', 'years', 'birth_year'];
   return ids.map((id) => getBuiltInPack(id)!).filter(Boolean);
 }

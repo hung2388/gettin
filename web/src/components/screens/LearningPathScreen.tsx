@@ -28,6 +28,7 @@ export const PATH_NODES: PathNode[] = [
   { id: 'pack_02', title: 'Gói từ vựng 02', subtitle: 'Mua sắm, Đồ vật & Vật dụng', icon: '🛍️', type: 'pack', color: 'from-violet-500 to-purple-600' },
   { id: 'pack_03', title: 'Gói từ vựng 03', subtitle: 'Địa điểm, Đồ dùng & Mua sắm', icon: '🏫', type: 'pack', color: 'from-sky-500 to-cyan-600' },
   { id: 'pack_08', title: 'Gói từ vựng 08', subtitle: 'Gia đình, Ngoại hình, Tính cách & Quà tặng', icon: '👨‍👩‍👧‍👦', type: 'pack', color: 'from-emerald-500 to-teal-600' },
+  { id: 'pack_09', title: 'Gói từ vựng 09', subtitle: 'Sở thích, Hoạt động, Lượng từ & Sự kiện', icon: '🎨', type: 'pack', color: 'from-indigo-500 to-blue-600' },
   { id: 'review_all', title: 'Ôn tập Tổng hợp', subtitle: 'Tổng hợp tất cả từ vựng của các bài học', icon: '💡', type: 'pack', color: 'from-yellow-400 to-amber-600' },
 ];
 
