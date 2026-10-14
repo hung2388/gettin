@@ -111,6 +111,7 @@ class Api:
             {"key": "pack_03",   "name": "Vocabulary III", "icon": "話",  "subtitle": "Time & daily activities"},
             {"key": "pack_08",   "name": "Vocabulary VIII", "icon": "族",  "subtitle": "Family, traits & gifts"},
             {"key": "pack_09",   "name": "Vocabulary IX",   "icon": "趣",  "subtitle": "Hobbies, actions & events"},
+            {"key": "pack_10",   "name": "Vocabulary X",    "icon": "動",  "subtitle": "Directions, rules & animals"},
         ]
         for node in nodes:
             node["progress"] = self.model.progress.get(node["key"], 0.0)
