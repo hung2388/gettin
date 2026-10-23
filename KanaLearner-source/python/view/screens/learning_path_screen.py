@@ -21,6 +21,7 @@ class LearningPathScreen(ctk.CTkFrame):
         "pack_08": {"name": "Gói từ vựng 8", "emoji": "👨‍👩‍👧‍👦", "x": 400, "y": 805},
         "pack_09": {"name": "Gói từ vựng 9", "emoji": "🎨", "x": 400, "y": 925},
         "pack_10": {"name": "Gói từ vựng 10", "emoji": "🦁", "x": 400, "y": 1045},
+        "pack_11": {"name": "Gói từ vựng 11", "emoji": "☕", "x": 400, "y": 1165},
     }
 
     def __init__(self, master):
@@ -92,7 +93,7 @@ class LearningPathScreen(ctk.CTkFrame):
         # Native Tkinter Canvas for vector drawings (curved lines and custom node shapes)
         self.canvas = ctk.CTkCanvas(self.canvas_container, bg=Theme.BG_GRADIENT,
                                     bd=0, highlightthickness=0,
-                                    scrollregion=(0, 0, 800, 1180))
+                                    scrollregion=(0, 0, 800, 1300))
         self.canvas.pack(fill="both", expand=True, padx=4, pady=4)
 
         # Bind panning & scrolling events
@@ -239,6 +240,9 @@ class LearningPathScreen(ctk.CTkFrame):
 
         # 8. Pack 09 -> Pack 10
         self._draw_curve_line("pack_09", "pack_10", [(400, 925), (400, 1045)])
+
+        # 9. Pack 10 -> Pack 11
+        self._draw_curve_line("pack_10", "pack_11", [(400, 1045), (400, 1165)])
 
     def _get_link_color(self, parent_key: str, child_key: str) -> str:
         """Determines connection line color based on completion status."""

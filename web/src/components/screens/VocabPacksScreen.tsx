@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Plus, Download, Upload, Edit, Trash2, Play, Sparkles, BookOpen, ArrowLeft, X } from 'lucide-react';
+import { PixelIcon } from '@/components/ui/PixelIcon';
 import { VocabPack, WordEntry } from '@/data/types';
 import { getAllVocabPacks, addCustomPack, updateCustomPack, deleteCustomPack } from '@/data/storage';
 
@@ -97,38 +97,38 @@ export const VocabPacksScreen: React.FC<VocabPacksScreenProps> = ({ onSelectPack
   };
 
   return (
-    <div className="max-w-6xl mx-auto px-4 py-8">
+    <div className="max-w-6xl mx-auto px-4 py-6">
       {/* Header */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8">
         <div className="flex items-center gap-3">
           <button
             onClick={onBack}
-            className="p-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 transition-colors"
+            className="p-2.5 rounded-xl bg-[#171822] hover:bg-[#20222f] text-zinc-300 border border-[#242635] transition-colors"
           >
-            <ArrowLeft className="w-5 h-5" />
+            <PixelIcon name="arrow-left" size={14} />
           </button>
           <div>
-            <h2 className="text-2xl font-extrabold text-white flex items-center gap-2">
-              Kho Từ Vựng Tiếng Nhật 🎌
+            <h2 className="text-xl sm:text-2xl font-black text-white flex items-center gap-2">
+              Kho Từ Vựng Tiếng Nhật
             </h2>
-            <p className="text-xs text-slate-400">Danh sách bài học hệ thống & chủ đề tự chọn của bạn</p>
+            <p className="text-xs text-zinc-400">Danh sách bài học hệ thống & chủ đề tự chọn của bạn</p>
           </div>
         </div>
 
         {/* Action Bar */}
-        <div className="flex items-center gap-3">
-          <label className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-semibold text-xs cursor-pointer border border-slate-700 transition-all">
-            <Upload className="w-4 h-4 text-cyan-400" />
+        <div className="flex items-center gap-2.5">
+          <label className="flex items-center gap-2 px-3.5 py-2 rounded-xl bg-[#171822] hover:bg-[#20222f] text-zinc-200 font-semibold text-xs cursor-pointer border border-[#242635] transition-all">
+            <PixelIcon name="upload" size={12} className="text-red-400" />
             <span>Nhập JSON</span>
             <input type="file" accept=".json" onChange={handleImport} className="hidden" />
           </label>
 
           <button
             onClick={() => openEditor(null)}
-            className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-white font-bold text-xs shadow-lg shadow-emerald-500/20 transition-all"
+            className="flex items-center gap-2 px-4 py-2 rounded-full bg-[#c93b3b] hover:bg-[#e74c3c] text-white font-bold text-xs shadow-lg shadow-red-500/20 transition-all"
           >
-            <Plus className="w-4 h-4" />
-            <span>Tạo Pack Mới</span>
+            <PixelIcon name="plus" size={12} />
+            <span>Tạo Gói Mới</span>
           </button>
         </div>
       </div>
@@ -142,54 +142,56 @@ export const VocabPacksScreen: React.FC<VocabPacksScreenProps> = ({ onSelectPack
           return (
             <div
               key={pack.id}
-              className="group p-6 rounded-2xl bg-[#131B2E] border border-slate-800 hover:border-purple-500/40 transition-all duration-300 flex flex-col justify-between"
+              className="group p-5 rounded-2xl bg-[#13141c] border border-[#222432] hover:border-red-500/40 transition-all duration-300 flex flex-col justify-between"
             >
               <div>
                 <div className="flex items-center justify-between gap-3 mb-2">
-                  <h3 className="font-extrabold text-lg text-white group-hover:text-purple-300 transition-colors">
+                  <h3 className="font-extrabold text-base text-white group-hover:text-red-400 transition-colors">
                     {pack.name}
                   </h3>
 
-                  <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold ${
-                    isReview
-                      ? 'bg-amber-500/20 text-amber-300 border border-amber-500/40'
-                      : isCustom
-                      ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/40'
-                      : 'bg-slate-800 text-slate-400 border border-slate-700'
-                  }`}>
+                  <span
+                    className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold ${
+                      isReview
+                        ? 'bg-amber-500/20 text-amber-300 border border-amber-500/40'
+                        : isCustom
+                        ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/40'
+                        : 'bg-[#1e202c] text-zinc-400 border border-[#2a2d3e]'
+                    }`}
+                  >
                     {isReview ? '💡 Ôn tập' : isCustom ? '✨ Tự chọn' : '🎌 Hệ thống'}
                   </span>
                 </div>
 
-                <p className="text-xs text-slate-400 mb-4 line-clamp-2">
-                  {pack.description} · <strong className="text-slate-200">{pack.words.length} từ</strong>
+                <p className="text-xs text-zinc-400 mb-4 line-clamp-2">
+                  {pack.description} · <strong className="text-zinc-200">{pack.words.length} từ</strong>
                 </p>
               </div>
 
-              <div className="flex items-center justify-between pt-4 border-t border-slate-800/80">
+              <div className="flex items-center justify-between pt-3.5 border-t border-[#1e202c]">
                 <div className="flex items-center gap-1.5">
                   {isCustom && (
                     <>
                       <button
                         onClick={() => openEditor(pack)}
-                        className="p-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 transition-colors"
+                        className="p-2 rounded-lg bg-[#1a1b26] hover:bg-[#252837] text-zinc-300 transition-colors"
                         title="Chỉnh sửa"
                       >
-                        <Edit className="w-3.5 h-3.5" />
+                        <PixelIcon name="edit" size={12} />
                       </button>
                       <button
                         onClick={() => handleExport(pack)}
-                        className="p-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 transition-colors"
+                        className="p-2 rounded-lg bg-[#1a1b26] hover:bg-[#252837] text-zinc-300 transition-colors"
                         title="Xuất file JSON"
                       >
-                        <Download className="w-3.5 h-3.5" />
+                        <PixelIcon name="download" size={12} />
                       </button>
                       <button
                         onClick={() => handleDelete(pack.id)}
-                        className="p-2 rounded-lg bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 transition-colors"
+                        className="p-2 rounded-lg bg-red-500/10 hover:bg-red-500/20 text-red-400 transition-colors"
                         title="Xóa"
                       >
-                        <Trash2 className="w-3.5 h-3.5" />
+                        <PixelIcon name="trash" size={12} />
                       </button>
                     </>
                   )}
@@ -197,9 +199,10 @@ export const VocabPacksScreen: React.FC<VocabPacksScreenProps> = ({ onSelectPack
 
                 <button
                   onClick={() => onSelectPack(pack.id)}
-                  className="flex items-center gap-2 px-4 py-2 rounded-xl bg-purple-500/15 hover:bg-purple-500/25 text-purple-300 font-bold text-xs border border-purple-500/30 transition-all"
+                  className="flex items-center gap-2 px-4 py-2 rounded-full bg-[#1b1c28] hover:bg-[#c93b3b] text-zinc-200 hover:text-white font-bold text-xs border border-[#2b2e40] hover:border-red-500/40 transition-all"
                 >
-                  <span>Học Ngay 🎯</span>
+                  <span>Học Ngay</span>
+                  <PixelIcon name="chevron-right" size={10} />
                 </button>
               </div>
             </div>
@@ -210,45 +213,50 @@ export const VocabPacksScreen: React.FC<VocabPacksScreenProps> = ({ onSelectPack
       {/* Editor Modal */}
       {isEditorOpen && (
         <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-[#131B2E] border border-slate-800 rounded-3xl max-w-2xl w-full p-6 shadow-2xl max-h-[90vh] flex flex-col">
-            <div className="flex items-center justify-between mb-6 pb-4 border-b border-slate-800">
-              <h3 className="text-lg font-bold text-white">
+          <div className="bg-[#13141c] border border-[#242635] rounded-3xl max-w-2xl w-full p-6 shadow-2xl max-h-[90vh] flex flex-col">
+            <div className="flex items-center justify-between mb-5 pb-4 border-b border-[#212330]">
+              <h3 className="text-base font-bold text-white">
                 {editingPack ? `Sửa chủ đề: ${editingPack.name}` : 'Tạo Chủ Đề Tự Học Mới'}
               </h3>
-              <button onClick={() => setIsEditorOpen(false)} className="text-slate-400 hover:text-white">
-                <X className="w-5 h-5" />
+              <button
+                onClick={() => setIsEditorOpen(false)}
+                className="text-zinc-400 hover:text-white p-1 rounded-lg"
+              >
+                <PixelIcon name="close" size={14} />
               </button>
             </div>
 
             <div className="space-y-4 overflow-y-auto pr-2 flex-1">
               <div>
-                <label className="block text-xs font-bold text-slate-300 mb-1">Tên chủ đề:</label>
+                <label className="block text-xs font-bold text-zinc-300 mb-1">Tên chủ đề:</label>
                 <input
                   type="text"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  placeholder="Ví dụ: JLPT N5 - Từ vựng Động từ"
-                  className="w-full px-4 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-white text-sm focus:border-cyan-500 outline-none"
+                  placeholder="Ví dụ: JLPT N5 - Động từ nhóm 1"
+                  className="w-full px-4 py-2 rounded-xl bg-[#181924] border border-[#252837] text-white text-xs focus:border-red-500 outline-none"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-slate-300 mb-1">Mô tả ngắn:</label>
+                <label className="block text-xs font-bold text-zinc-300 mb-1">Mô tả ngắn:</label>
                 <input
                   type="text"
                   value={desc}
                   onChange={(e) => setDesc(e.target.value)}
                   placeholder="Mô tả danh sách từ vựng..."
-                  className="w-full px-4 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-white text-sm focus:border-cyan-500 outline-none"
+                  className="w-full px-4 py-2 rounded-xl bg-[#181924] border border-[#252837] text-white text-xs focus:border-red-500 outline-none"
                 />
               </div>
 
               <div>
                 <div className="flex items-center justify-between mb-2">
-                  <label className="text-xs font-bold text-slate-300">Danh sách từ vựng:</label>
+                  <label className="text-xs font-bold text-zinc-300">Danh sách từ vựng:</label>
                   <button
-                    onClick={() => setWords([...words, { word: '', kana: '', romaji: '', meaning: '' }])}
-                    className="text-xs font-bold text-cyan-400 hover:underline"
+                    onClick={() =>
+                      setWords([...words, { word: '', kana: '', romaji: '', meaning: '' }])
+                    }
+                    className="text-xs font-bold text-red-400 hover:underline"
                   >
                     + Thêm hàng từ
                   </button>
@@ -266,7 +274,7 @@ export const VocabPacksScreen: React.FC<VocabPacksScreenProps> = ({ onSelectPack
                           next[idx].word = e.target.value;
                           setWords(next);
                         }}
-                        className="w-1/4 px-3 py-1.5 rounded-lg bg-slate-900 border border-slate-800 text-xs text-white"
+                        className="w-1/4 px-3 py-1.5 rounded-lg bg-[#181924] border border-[#252837] text-xs text-white"
                       />
                       <input
                         type="text"
@@ -277,7 +285,7 @@ export const VocabPacksScreen: React.FC<VocabPacksScreenProps> = ({ onSelectPack
                           next[idx].kana = e.target.value;
                           setWords(next);
                         }}
-                        className="w-1/4 px-3 py-1.5 rounded-lg bg-slate-900 border border-slate-800 text-xs text-white"
+                        className="w-1/4 px-3 py-1.5 rounded-lg bg-[#181924] border border-[#252837] text-xs text-white"
                       />
                       <input
                         type="text"
@@ -288,7 +296,7 @@ export const VocabPacksScreen: React.FC<VocabPacksScreenProps> = ({ onSelectPack
                           next[idx].romaji = e.target.value;
                           setWords(next);
                         }}
-                        className="w-1/4 px-3 py-1.5 rounded-lg bg-slate-900 border border-slate-800 text-xs text-white"
+                        className="w-1/4 px-3 py-1.5 rounded-lg bg-[#181924] border border-[#252837] text-xs text-white"
                       />
                       <input
                         type="text"
@@ -299,14 +307,14 @@ export const VocabPacksScreen: React.FC<VocabPacksScreenProps> = ({ onSelectPack
                           next[idx].meaning = e.target.value;
                           setWords(next);
                         }}
-                        className="w-1/4 px-3 py-1.5 rounded-lg bg-slate-900 border border-slate-800 text-xs text-white"
+                        className="w-1/4 px-3 py-1.5 rounded-lg bg-[#181924] border border-[#252837] text-xs text-white"
                       />
                       {words.length > 1 && (
                         <button
                           onClick={() => setWords(words.filter((_, i) => i !== idx))}
-                          className="p-1.5 text-rose-400 hover:text-rose-300"
+                          className="p-1.5 text-zinc-500 hover:text-red-400"
                         >
-                          <X className="w-4 h-4" />
+                          <PixelIcon name="close" size={12} />
                         </button>
                       )}
                     </div>
@@ -315,18 +323,18 @@ export const VocabPacksScreen: React.FC<VocabPacksScreenProps> = ({ onSelectPack
               </div>
             </div>
 
-            <div className="flex justify-end gap-3 pt-4 border-t border-slate-800 mt-4">
+            <div className="flex justify-end gap-3 pt-4 border-t border-[#212330] mt-4">
               <button
                 onClick={() => setIsEditorOpen(false)}
-                className="px-4 py-2 rounded-xl bg-slate-800 text-slate-300 text-xs font-bold hover:bg-slate-700"
+                className="px-4 py-2 rounded-xl bg-[#1c1d28] text-zinc-300 text-xs font-bold hover:bg-[#252838]"
               >
                 Hủy
               </button>
               <button
                 onClick={handleSavePack}
-                className="px-5 py-2 rounded-xl bg-emerald-500 text-slate-950 text-xs font-extrabold hover:bg-emerald-400 shadow-md"
+                className="px-5 py-2 rounded-full bg-[#c93b3b] text-white text-xs font-extrabold hover:bg-[#e74c3c] shadow-md shadow-red-500/20"
               >
-                💾 Lưu Chủ Đề
+                Lưu Chủ Đề
               </button>
             </div>
           </div>

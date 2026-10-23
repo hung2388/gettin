@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { ArrowLeft, Eraser, Volume2, ChevronRight, ChevronLeft } from 'lucide-react';
+import { PixelIcon } from '@/components/ui/PixelIcon';
 import { WordEntry } from '@/data/types';
 import { speakJapanese } from '@/data/tts';
 
@@ -27,9 +27,9 @@ export const HandwritingCanvas: React.FC<HandwritingCanvasProps> = ({ words, onB
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     // Draw guide grid
-    ctx.strokeStyle = '#1E293B';
+    ctx.strokeStyle = '#222535';
     ctx.lineWidth = 1;
-    ctx.setLineDash([6, 6]);
+    ctx.setLineDash([4, 4]);
 
     ctx.beginPath();
     ctx.moveTo(canvas.width / 2, 0);
@@ -41,7 +41,9 @@ export const HandwritingCanvas: React.FC<HandwritingCanvasProps> = ({ words, onB
     ctx.setLineDash([]);
   };
 
-  const startDrawing = (e: React.MouseEvent<HTMLCanvasElement> | React.TouchEvent<HTMLCanvasElement>) => {
+  const startDrawing = (
+    e: React.MouseEvent<HTMLCanvasElement> | React.TouchEvent<HTMLCanvasElement>
+  ) => {
     setIsDrawing(true);
     draw(e);
   };
@@ -76,10 +78,10 @@ export const HandwritingCanvas: React.FC<HandwritingCanvasProps> = ({ words, onB
     const x = clientX - rect.left;
     const y = clientY - rect.top;
 
-    ctx.lineWidth = 10;
+    ctx.lineWidth = 8;
     ctx.lineCap = 'round';
     ctx.lineJoin = 'round';
-    ctx.strokeStyle = '#06B6D4'; // Cyan stroke
+    ctx.strokeStyle = '#ffffff';
 
     ctx.lineTo(x, y);
     ctx.stroke();
@@ -90,39 +92,44 @@ export const HandwritingCanvas: React.FC<HandwritingCanvasProps> = ({ words, onB
   if (!currentWord) return null;
 
   return (
-    <div className="max-w-2xl mx-auto px-4 py-8 text-center">
-      {/* Header */}
+    <div className="max-w-xl mx-auto px-4 py-6 text-center">
+      {/* Top Header */}
       <div className="flex items-center justify-between gap-4 mb-6">
         <button
           onClick={onBack}
-          className="flex items-center gap-2 px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-sm font-semibold"
+          className="flex items-center gap-2 px-4 py-2 rounded-xl bg-[#161722] hover:bg-[#20222f] text-zinc-300 text-xs font-semibold border border-[#232533] transition-all"
         >
-          <ArrowLeft className="w-4 h-4" /> Quay lại
+          <PixelIcon name="arrow-left" size={12} />
+          <span>Quay lại</span>
         </button>
-        <h2 className="text-xl font-extrabold text-white">✍️ Luyện Viết Kanji & Kana</h2>
+        <h2 className="text-lg sm:text-xl font-black text-white">
+          Luyện Viết Nét Chữ
+        </h2>
       </div>
 
       {/* Target Word Info */}
-      <div className="p-6 rounded-3xl bg-[#131B2E] border border-slate-800 mb-6">
-        <div className="text-xs text-slate-400 font-bold mb-1">MỤC TIÊU LUYỆN VIẾT ({currentIndex + 1} / {words.length}):</div>
-        <div className="text-4xl font-black text-white font-jp mb-2">{currentWord.word}</div>
-        <div className="text-sm font-bold text-cyan-400">{currentWord.meaning}</div>
+      <div className="p-5 rounded-3xl bg-[#121319] border border-[#232635] mb-6">
+        <div className="text-[11px] text-zinc-400 font-bold mb-1 uppercase tracking-wider">
+          Mục tiêu luyện viết ({currentIndex + 1} / {words.length}):
+        </div>
+        <div className="text-4xl font-black text-white font-jp mb-1">{currentWord.word}</div>
+        <div className="text-xs font-bold text-red-400">{currentWord.meaning}</div>
         {currentWord.kana && currentWord.kana !== currentWord.word && (
-          <div className="text-xs text-slate-400 mt-1">[{currentWord.kana}]</div>
+          <div className="text-xs text-zinc-400 mt-1">[{currentWord.kana}]</div>
         )}
       </div>
 
       {/* HTML5 Canvas Drawing Area */}
-      <div className="relative inline-block bg-[#0B0F19] rounded-3xl border-2 border-slate-800 shadow-2xl overflow-hidden mb-6">
+      <div className="relative inline-block bg-[#090a0e] rounded-3xl border-2 border-[#222432] shadow-2xl overflow-hidden mb-6">
         {/* Background Trace Hint */}
-        <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none text-slate-800/30 text-[180px] font-black font-jp">
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none text-zinc-800/40 text-[180px] font-black font-jp">
           {currentWord.word}
         </div>
 
         <canvas
           ref={canvasRef}
-          width={360}
-          height={360}
+          width={340}
+          height={340}
           onMouseDown={startDrawing}
           onMouseUp={stopDrawing}
           onMouseMove={draw}
@@ -135,30 +142,31 @@ export const HandwritingCanvas: React.FC<HandwritingCanvasProps> = ({ words, onB
       </div>
 
       {/* Canvas Toolbar */}
-      <div className="flex items-center justify-center gap-4">
+      <div className="flex items-center justify-center gap-2.5">
         <button
           onClick={() => {
             if (currentIndex > 0) setCurrentIndex(currentIndex - 1);
           }}
           disabled={currentIndex === 0}
-          className="px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs disabled:opacity-40"
+          className="flex items-center gap-1 px-4 py-2 rounded-xl bg-[#181924] hover:bg-[#252837] text-white font-bold text-xs border border-[#252837] disabled:opacity-40"
         >
-          <ChevronLeft className="w-4 h-4 inline" /> Từ trước
+          <PixelIcon name="chevron-left" size={10} />
+          <span>Trước</span>
         </button>
 
         <button
           onClick={clearCanvas}
-          className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold text-xs"
+          className="flex items-center gap-2 px-4 py-2 rounded-xl bg-[#181924] hover:bg-[#252837] text-zinc-200 font-bold text-xs border border-[#252837]"
         >
-          <Eraser className="w-4 h-4 text-rose-400" />
+          <PixelIcon name="eraser" size={12} className="text-red-400" />
           <span>Xóa bảng</span>
         </button>
 
         <button
           onClick={() => speakJapanese(currentWord.kana || currentWord.word)}
-          className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-cyan-500/20 text-cyan-400 hover:bg-cyan-500/30 font-bold text-xs"
+          className="flex items-center gap-2 px-4 py-2 rounded-xl bg-red-500/15 hover:bg-red-500/25 text-red-300 border border-red-500/30 font-bold text-xs"
         >
-          <Volume2 className="w-4 h-4" />
+          <PixelIcon name="volume" size={12} />
           <span>Phát âm</span>
         </button>
 
@@ -167,9 +175,10 @@ export const HandwritingCanvas: React.FC<HandwritingCanvasProps> = ({ words, onB
             if (currentIndex + 1 < words.length) setCurrentIndex(currentIndex + 1);
           }}
           disabled={currentIndex + 1 >= words.length}
-          className="px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs disabled:opacity-40"
+          className="flex items-center gap-1 px-4 py-2 rounded-xl bg-[#181924] hover:bg-[#252837] text-white font-bold text-xs border border-[#252837] disabled:opacity-40"
         >
-          Từ sau <ChevronRight className="w-4 h-4 inline" />
+          <span>Sau</span>
+          <PixelIcon name="chevron-right" size={10} />
         </button>
       </div>
     </div>

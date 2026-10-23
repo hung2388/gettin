@@ -821,6 +821,62 @@ export const PACK_10_WORDS: WordEntry[] = [
   { word: 'ゆっくり', kana: 'ゆっくり', romaji: 'yukkuri', meaning: 'Chậm rãi, thong thả' },
 ];
 
+// ── Pack 11 (Full 52 Words - Đời sống, Thói quen, Cảm xúc & Giao tiếp) ─────────────
+export const PACK_11_WORDS: WordEntry[] = [
+  { word: 'これから', kana: 'これから', romaji: 'korekara', meaning: 'từ bây giờ' },
+  { word: '頭', kana: 'あたま', romaji: 'atama', meaning: 'đầu' },
+  { word: '会話', kana: 'かいわ', romaji: 'kaiwa', meaning: 'hội thoại' },
+  { word: '作文', kana: 'さくぶん', romaji: 'sakubun', meaning: 'bài văn' },
+  { word: 'クラスメイト', kana: 'クラスメイト', romaji: 'kurasumeito', meaning: 'bạn học' },
+  { word: '雑誌', kana: 'ざっし', romaji: 'zasshi', meaning: 'tạp chí' },
+  { word: 'ジョギング', kana: 'ジョギング', romaji: 'jogingu', meaning: 'chạy bộ' },
+  { word: '生活', kana: 'せいかつ', romaji: 'seikatsu', meaning: 'cuộc sống' },
+  { word: '店長', kana: 'てんちょう', romaji: 'tenchou', meaning: 'cửa hàng trưởng' },
+  { word: '日記', kana: 'にっき', romaji: 'nikki', meaning: 'nhật ký' },
+  { word: '初め', kana: 'はじめ', romaji: 'hajime', meaning: 'đầu tiên' },
+  { word: '一人暮らし', kana: 'ひとりぐらし', romaji: 'hitorigurashi', meaning: 'sống một mình' },
+  { word: '平日', kana: 'へいじつ', romaji: 'heijitsu', meaning: 'ngày thường' },
+  { word: '毎週', kana: 'まいしゅう', romaji: 'maishuu', meaning: 'hàng tuần' },
+  { word: '終わります [終わる]', kana: 'おわります [おわる]', romaji: 'owarimasu [owaru]', meaning: 'hết, kết thúc' },
+  { word: '通います [通う]', kana: 'かよいます [かよう]', romaji: 'kayoimasu [kayou]', meaning: 'đi lại (thường xuyên) (đi với ni)' },
+  { word: 'kaze wo ひきます [ひく]', kana: 'ひきます [ひく]', romaji: 'kaze wo hikimasu [hiku]', meaning: 'mắc, bị (cảm)' },
+  { word: '休みます [休む]', kana: 'やすみます [やすむ]', romaji: 'yasumimasu [yasumu]', meaning: 'nghỉ' },
+  { word: '慣れます [慣れる]', kana: 'なれます [なれる]', romaji: 'naremasu [nareru]', meaning: 'quen' },
+  { word: '忘れます [忘れる]', kana: 'わすれます [わすれる]', romaji: 'wasuremasu [wasureru]', meaning: 'quên' },
+  { word: '散歩します [散歩する]', kana: 'さんぽします [散歩する]', romaji: 'sanposhimasu [sanposuru]', meaning: 'đi dạo bộ' },
+  { word: '寂しい', kana: 'さびしい', romaji: 'sabishii', meaning: 'buồn, cô đơn' },
+  { word: '眠い', kana: 'ねむい', romaji: 'nemui', meaning: 'buồn ngủ' },
+  { word: 'たいてい', kana: 'たいてい', romaji: 'taitei', meaning: 'thường, tóm lại' },
+  { word: 'なかなか Vnai', kana: 'なかなか', romaji: 'nakanaka Vnai', meaning: 'mãi mà không thể thực hiện V' },
+  { word: 'ええ', kana: 'ええ', romaji: 'ee', meaning: 'vâng' },
+  { word: 'オリンピック', kana: 'オリンピック', romaji: 'orinpikku', meaning: 'Olympic' },
+  { word: '外国', kana: 'がいこく', romaji: 'gaikoku', meaning: 'nước ngoài' },
+  { word: '小学生', kana: 'しょうがくせい', romaji: 'shougakusei', meaning: 'học sinh tiểu học' },
+  { word: '中学生', kana: 'ちゅうがくせい', romaji: 'chuugakusei', meaning: 'học sinh trung học (cấp 2)' },
+  { word: '選手', kana: 'せんしゅ', romaji: 'senshu', meaning: 'tuyển thủ' },
+  { word: '祖父', kana: 'そふ', romaji: 'sofu', meaning: 'ông' },
+  { word: '始めます [始める]', kana: 'はじめます [はじめる]', romaji: 'hajimemasu [hajimeru]', meaning: 'bắt đầu' },
+  { word: '別れます [別れる]', kana: 'わかれます [わかれる]', romaji: 'wakaremasu [wakareru]', meaning: 'chia tay' },
+  { word: '卒業します [卒業する]', kana: 'そつぎょうします [そつぎょうする]', romaji: 'sotsugyoushimasu [sotsugyousuru]', meaning: 'tốt nghiệp' },
+  { word: '入学します [入学する]', kana: 'にゅうがくします [にゅうがくする]', romaji: 'nyuugakushimasu [nyuugakusuru]', meaning: 'nhập học' },
+  { word: 'だんだん', kana: 'だんだん', romaji: 'dandan', meaning: 'dần dần' },
+  { word: '初めて', kana: 'はじめて', romaji: 'hajimete', meaning: 'lần đầu tiên' },
+  { word: 'それで', kana: 'それで', romaji: 'sorede', meaning: 'do đó, vì vậy' },
+  { word: 'エアコン', kana: 'エアコン', romaji: 'eakon', meaning: 'điều hòa nhiệt độ' },
+  { word: 'ニュース', kana: 'ニュース', romaji: 'nyuusu', meaning: 'tin tức' },
+  { word: '消します [消す]', kana: 'けします [けす]', romaji: 'keshimasu [kesu]', meaning: 'tắt, xóa' },
+  { word: 'つけます [つける]', kana: 'つけます [つける]', romaji: 'tsukemasu [tsukeru]', meaning: 'bật' },
+  { word: '引っ越しします [引っ越しする]', kana: 'ひっこしします [ひっこしする]', romaji: 'hikkoshishimasu [hikkoshisuru]', meaning: 'chuyển nhà' },
+  { word: 'うん', kana: 'うん', romaji: 'un', meaning: 'ừ' },
+  { word: 'ううん', kana: 'ううん', romaji: 'uun', meaning: 'không' },
+  { word: 'ごめん', kana: 'ごめん', romaji: 'gomen', meaning: 'xin lỗi' },
+  { word: 'そっか', kana: 'そっか', romaji: 'sokka', meaning: 'thế à' },
+  { word: 'また', kana: 'また', romaji: 'mata', meaning: 'lại, hẹn gặp lại' },
+  { word: '乾杯', kana: 'かんぱい', romaji: 'kanpai', meaning: 'cạn chén' },
+  { word: 'ワールドカップ', kana: 'ワールドカップ', romaji: 'waarudokappu', meaning: 'World Cup' },
+  { word: 'お待たせ(しました)', kana: 'おまたせ(しました)', romaji: 'omatase(shimashita)', meaning: 'xin lỗi vì để bạn/anh/chị phải đợi' },
+];
+
 export function getBuiltInPack(packId: string): VocabPack | null {
   const packsMap: Record<string, { name: string; description: string; words: WordEntry[]; supports_handwriting?: boolean }> = {
     pack_00: {
@@ -863,6 +919,12 @@ export function getBuiltInPack(packId: string): VocabPack | null {
       name: 'Gói từ vựng 10',
       description: 'Gói học từ vựng bài 10: Chỉ đường, Quy tắc, Động vật & Tham quan (82 từ)',
       words: PACK_10_WORDS,
+      supports_handwriting: true,
+    },
+    pack_11: {
+      name: 'Gói từ vựng 11',
+      description: 'Gói học từ vựng bài 11: Đời sống, Thói quen, Cảm xúc & Giao tiếp (52 từ)',
+      words: PACK_11_WORDS,
       supports_handwriting: true,
     },
     days_week: {
@@ -913,6 +975,6 @@ export function getBuiltInPack(packId: string): VocabPack | null {
 }
 
 export function getAllBuiltInPacks(): VocabPack[] {
-  const ids = ['pack_00', 'pack_01', 'pack_02', 'pack_03', 'pack_08', 'pack_09', 'pack_10', 'days_week', 'days_month', 'months', 'years', 'birth_year'];
+  const ids = ['pack_00', 'pack_01', 'pack_02', 'pack_03', 'pack_08', 'pack_09', 'pack_10', 'pack_11', 'days_week', 'days_month', 'months', 'years', 'birth_year'];
   return ids.map((id) => getBuiltInPack(id)!).filter(Boolean);
 }

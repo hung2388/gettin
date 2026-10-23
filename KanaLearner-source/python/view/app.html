@@ -2698,7 +2698,7 @@ async function initDashboard() {
   // Quick start cards
   const grid = document.getElementById('quick-start-grid');
   grid.innerHTML = '';
-  const icons = {hiragana:'平',katakana:'カ',pack_00:'数',pack_01:'言',pack_02:'語',pack_03:'話',pack_08:'族',pack_09:'趣',pack_10:'動'};
+  const icons = {hiragana:'平',katakana:'カ',pack_00:'数',pack_01:'言',pack_02:'語',pack_03:'話',pack_08:'族',pack_09:'趣',pack_10:'動',pack_11:'活'};
   roadmap.forEach((node, i) => {
     const pct = Math.round(node.progress||0);
     const card = document.createElement('div');
@@ -2732,7 +2732,7 @@ async function initRoadmap() {
   roadmap.forEach((node, i) => {
     const pct = Math.round(node.progress || 0);
     const isLast = i === roadmap.length - 1;
-    const icons = {hiragana:'平',katakana:'カ',pack_00:'数',pack_01:'言',pack_02:'語',pack_03:'話',pack_08:'族',pack_09:'趣',pack_10:'動'};
+    const icons = {hiragana:'平',katakana:'カ',pack_00:'数',pack_01:'言',pack_02:'語',pack_03:'話',pack_08:'族',pack_09:'趣',pack_10:'動',pack_11:'活'};
     const statusIcon = node.status === 'completed'
       ? `<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>`
       : icons[node.key] || '語';
@@ -2899,7 +2899,7 @@ function renderPackGrid(packs) {
     </div>`;
     return;
   }
-  const icons = {pack_00:'数',pack_01:'言',pack_02:'語',pack_03:'話',pack_08:'族',pack_09:'趣',pack_10:'動',days_week:'週',days_month:'日',months:'月',years:'年',birth_year:'生',review_all:'復'};
+  const icons = {pack_00:'数',pack_01:'言',pack_02:'語',pack_03:'話',pack_08:'族',pack_09:'趣',pack_10:'動',pack_11:'活',days_week:'週',days_month:'日',months:'月',years:'年',birth_year:'生',review_all:'復'};
   packs.forEach((pack, i) => {
     const pct = Math.round(pack.progress||0);
     const card = document.createElement('div');
@@ -3230,13 +3230,14 @@ async function submitL1Answer(chosen, correct, btn) {
 
   if (res.correct) {
     btn.classList.add('correct');
-    speakWord(btn.textContent.trim());
+    speakWord(res.correct_word || document.querySelector('.word-kana')?.textContent || '');
     await delay(400);
   } else {
     btn.classList.add('wrong');
     // Highlight correct
     allBtns.forEach(b => { if (b.textContent.trim() === res.correct_meaning) b.classList.add('correct'); });
     toast(`Correct: ${res.correct_meaning} (${res.romaji})`, 'error', 2000);
+    speakWord(res.correct_word || document.querySelector('.word-kana')?.textContent || '');
     await delay(1200);
   }
   document.getElementById('l1-correct').textContent = res.correct ? parseInt(document.getElementById('l1-correct').textContent)+1 : document.getElementById('l1-correct').textContent;
@@ -3308,6 +3309,7 @@ async function submitL2Answer() {
     await delay(600);
   } else {
     toast(`Answer: ${res.correct_word}${res.kana ? ' · '+res.kana : ''} (${res.romaji})`, 'error', 2500);
+    if (Settings.get('tts', true)) speakWord(res.correct_word);
     await delay(800);
   }
   document.getElementById('l2-correct').textContent = res.correct ? parseInt(document.getElementById('l2-correct').textContent)+1 : document.getElementById('l2-correct').textContent;
@@ -3865,7 +3867,7 @@ async function initProgress() {
   ]);
 
   const content = document.getElementById('progress-content');
-  const icons = {hiragana:'平',katakana:'カ',pack_00:'数',pack_01:'言',pack_02:'語',pack_03:'話',pack_08:'族',pack_09:'趣',pack_10:'動'};
+  const icons = {hiragana:'平',katakana:'カ',pack_00:'数',pack_01:'言',pack_02:'語',pack_03:'話',pack_08:'族',pack_09:'趣',pack_10:'動',pack_11:'活'};
 
   content.innerHTML = `
     <h3 style="font-size:var(--text-xl);font-weight:700;margin-bottom:var(--sp-4);">Roadmap Progress</h3>
@@ -4004,7 +4006,7 @@ document.addEventListener('keydown', e => {
 // ═══════════════════════════════════════════════════════════════════
 
 const MOCK_API = {
-  get_progress: () => ({ hiragana: 100, katakana: 45, pack_00: 80, pack_01: 30, pack_02: 0, pack_03: 0, pack_08: 0, pack_09: 0, pack_10: 0, days_week: 0, days_month: 0, months: 0, years: 0, birth_year: 0 }),
+  get_progress: () => ({ hiragana: 100, katakana: 45, pack_00: 80, pack_01: 30, pack_02: 0, pack_03: 0, pack_08: 0, pack_09: 0, pack_10: 0, pack_11: 0, days_week: 0, days_month: 0, months: 0, years: 0, birth_year: 0 }),
   get_roadmap: () => [
     {key:'hiragana', name:'Hiragana', icon:'平', subtitle:'46 characters', progress:100, status:'completed'},
     {key:'katakana', name:'Katakana', icon:'カ', subtitle:'46 characters', progress:45, status:'in_progress'},
@@ -4015,6 +4017,7 @@ const MOCK_API = {
     {key:'pack_08',  name:'Vocabulary VIII', icon:'族', subtitle:'Family, traits & gifts', progress:0, status:'locked'},
     {key:'pack_09',  name:'Vocabulary IX', icon:'趣', subtitle:'Hobbies, actions & events', progress:0, status:'locked'},
     {key:'pack_10',  name:'Vocabulary X', icon:'動', subtitle:'Directions, rules & animals', progress:0, status:'locked'},
+    {key:'pack_11',  name:'Vocabulary XI', icon:'活', subtitle:'Daily life, habits & feelings', progress:0, status:'locked'},
   ],
   get_all_packs: () => [
     {id:'pack_00',name:'Numbers & Dates',description:'Numbers, days of week, months',word_count:45,is_custom:false,progress:80,supports_handwriting:true},

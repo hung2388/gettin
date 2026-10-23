@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { ArrowLeft, HelpCircle, ArrowRight } from 'lucide-react';
+import { PixelIcon } from '@/components/ui/PixelIcon';
 import { WordEntry } from '@/data/types';
 import { speakJapanese } from '@/data/tts';
 
@@ -47,7 +47,11 @@ export const Level2Recall: React.FC<Level2RecallProps> = ({ words, onBack, onFin
       setFailedWords([]);
       setCurrentIndex(0);
     } else {
-      onFinish({ correct: correctCount + (isCorrect ? 1 : 0), mistakes: mistakeCount, missed: missedList });
+      onFinish({
+        correct: correctCount + (isCorrect ? 1 : 0),
+        mistakes: mistakeCount,
+        missed: missedList,
+      });
     }
   };
 
@@ -55,13 +59,10 @@ export const Level2Recall: React.FC<Level2RecallProps> = ({ words, onBack, onFin
     if (!currentWord || isEvaluated) return;
     setIsEvaluated(true);
     setIsCorrect(false);
+    speakJapanese(currentWord.kana || currentWord.word);
     setMistakeCount((prev) => prev + 1);
-
-    if (!missedList.some((w) => w.word === currentWord.word)) {
-      setMissedList((prev) => [...prev, currentWord]);
-    }
+    setMissedList((prev) => [...prev, currentWord]);
     setFailedWords((prev) => [...prev, currentWord]);
-    // User must press Enter again to advance!
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -73,43 +74,41 @@ export const Level2Recall: React.FC<Level2RecallProps> = ({ words, onBack, onFin
       return;
     }
 
-    if (!inputVal.trim()) {
+    const cleanInput = inputVal.trim().toLowerCase();
+    if (!cleanInput) {
       handleForgot();
       return;
     }
 
-    const val = inputVal.trim().toLowerCase();
-    const targetWord = currentWord.word.toLowerCase();
-    const targetKana = (currentWord.kana || '').toLowerCase();
-    const targetRomaji = (currentWord.romaji || '').toLowerCase();
+    const cleanWord = currentWord.word.trim().toLowerCase();
+    const cleanKana = (currentWord.kana || '').trim().toLowerCase();
+    const cleanRomaji = (currentWord.romaji || '').trim().toLowerCase();
 
-    const matches = val === targetWord || val === targetKana || val === targetRomaji;
+    const ok =
+      cleanInput === cleanWord ||
+      cleanInput === cleanKana ||
+      cleanInput === cleanRomaji;
+
     setIsEvaluated(true);
-    setIsCorrect(matches);
+    setIsCorrect(ok);
 
-    if (matches) {
-      speakJapanese(currentWord.kana || currentWord.word);
+    if (ok) {
       setCorrectCount((prev) => prev + 1);
-
+      speakJapanese(currentWord.kana || currentWord.word);
       setTimeout(() => {
         handleNextQuestion();
-      }, 1000);
+      }, 700);
     } else {
       setMistakeCount((prev) => prev + 1);
-      if (!missedList.some((w) => w.word === currentWord.word)) {
-        setMissedList((prev) => [...prev, currentWord]);
-      }
+      setMissedList((prev) => [...prev, currentWord]);
       setFailedWords((prev) => [...prev, currentWord]);
-      // User presses Enter again to advance!
+      speakJapanese(currentWord.kana || currentWord.word);
     }
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
-      if (isEvaluated) {
-        e.preventDefault();
-        handleNextQuestion();
-      } else if (!inputVal.trim()) {
+      if (!isEvaluated && !inputVal.trim()) {
         e.preventDefault();
         handleForgot();
       }
@@ -119,46 +118,57 @@ export const Level2Recall: React.FC<Level2RecallProps> = ({ words, onBack, onFin
   if (!currentWord) return null;
 
   return (
-    <div className="max-w-2xl mx-auto px-4 py-8">
+    <div className="max-w-2xl mx-auto px-4 py-6">
       {/* Header */}
       <div className="flex items-center justify-between gap-4 mb-6">
         <button
           onClick={onBack}
-          className="flex items-center gap-2 px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-sm font-semibold"
+          className="flex items-center gap-2 px-4 py-2 rounded-xl bg-[#161722] hover:bg-[#20222f] text-zinc-300 text-xs font-semibold border border-[#232533] transition-all"
         >
-          <ArrowLeft className="w-4 h-4" /> Quay lại
+          <PixelIcon name="arrow-left" size={12} />
+          <span>Quay lại</span>
         </button>
-        <h2 className="text-xl font-extrabold text-white">Level 2: Active Recall 🧠</h2>
+        <h2 className="text-lg sm:text-xl font-black text-white">
+          Level 2: Active Recall
+        </h2>
       </div>
 
       {/* Progress */}
-      <div className="flex items-center justify-between p-4 rounded-2xl bg-[#131B2E] border border-slate-800 mb-6 text-xs font-bold">
-        <span className="text-teal-400">Từ: {currentIndex + 1} / {pool.length}</span>
+      <div className="flex items-center justify-between p-3.5 rounded-2xl bg-[#14151e] border border-[#222432] mb-6 text-xs font-bold">
+        <span className="text-red-400">
+          Câu: {currentIndex + 1} / {pool.length}
+        </span>
         <div className="flex items-center gap-4">
           <span className="text-emerald-400">✓ Đúng: {correctCount}</span>
-          <span className="text-rose-400">✗ Sai/Quên: {mistakeCount}</span>
+          <span className="text-red-400">✗ Sai/Quên: {mistakeCount}</span>
         </div>
       </div>
 
       {/* Card Prompt */}
-      <div className="p-8 rounded-3xl bg-gradient-to-br from-slate-900 via-[#131B2E] to-slate-900 border border-slate-800 text-center mb-6 shadow-2xl">
-        <div className="text-xs text-slate-400 font-bold mb-2">NHÌN NGHĨA TIẾNG VIỆT ĐỂ GÕ TIẾNG NHẬT:</div>
-        <div className="text-3xl font-extrabold text-teal-300 mb-4">{currentWord.meaning}</div>
+      <div className="p-8 rounded-3xl bg-[#121319] border border-[#232635] text-center mb-6 shadow-2xl">
+        <div className="text-xs text-zinc-400 font-bold mb-2 uppercase tracking-wider">
+          Nhìn nghĩa tiếng Việt để gõ tiếng Nhật:
+        </div>
+        <div className="text-3xl font-extrabold text-white mb-4">{currentWord.meaning}</div>
 
         {isEvaluated && (
-          <div className="mt-4 p-4 rounded-2xl bg-slate-900 border border-slate-800 text-center">
-            <div className="text-xs font-bold text-rose-400 mb-1">
-              {isCorrect ? '✓ CHÍNH XÁC!' : '❌ BỎ QUA / XÁC NHẬN QUÊN TỪ - ĐÁP ÁN ĐÚNG:'}
+          <div className="mt-4 p-4 rounded-2xl bg-[#171824] border border-[#26283b] text-center">
+            <div className="text-xs font-bold text-red-400 mb-1">
+              {isCorrect ? '✓ CHÍNH XÁC!' : '❌ XÁC NHẬN QUÊN TỪ - ĐÁP ÁN ĐÚNG:'}
             </div>
             <div className="text-3xl font-black text-white font-jp mb-1">{currentWord.word}</div>
             {currentWord.kana && currentWord.kana !== currentWord.word && (
-              <div className="text-sm font-bold text-cyan-400 font-jp">Cách đọc: [{currentWord.kana}]</div>
+              <div className="text-sm font-bold text-zinc-300 font-jp">
+                Cách đọc: [{currentWord.kana}]
+              </div>
             )}
-            <div className="text-xs text-slate-400 font-mono mt-1">Romaji: {currentWord.romaji}</div>
+            <div className="text-xs text-zinc-400 font-mono mt-1">
+              Romaji: {currentWord.romaji}
+            </div>
 
             {!isCorrect && (
-              <div className="mt-3 text-xs font-bold text-cyan-300 animate-pulse">
-                ⌨️ Nhấn phím [Enter] một lần nữa để chuyển sang câu tiếp theo ➔
+              <div className="mt-3 text-xs font-bold text-red-400 animate-pulse">
+                Nhấn phím [Enter] một lần nữa để chuyển sang câu tiếp theo ➔
               </div>
             )}
           </div>
@@ -174,48 +184,51 @@ export const Level2Recall: React.FC<Level2RecallProps> = ({ words, onBack, onFin
           onChange={(e) => setInputVal(e.target.value)}
           onKeyDown={handleKeyDown}
           disabled={isEvaluated}
-          placeholder={isEvaluated ? 'Nhấn [Enter] để chuyển tiếp...' : 'Gõ Romaji hoặc tiếng Nhật...'}
+          placeholder={
+            isEvaluated ? 'Nhấn [Enter] để chuyển tiếp...' : 'Gõ Romaji hoặc tiếng Nhật...'
+          }
           autoFocus
-          className={`w-full px-6 py-4 rounded-2xl bg-[#131B2E] border-2 text-center text-xl font-bold text-white outline-none transition-all ${
+          className={`w-full px-6 py-4 rounded-2xl bg-[#14151e] border-2 text-center text-lg font-bold text-white outline-none transition-all ${
             isEvaluated
               ? isCorrect
                 ? 'border-emerald-500 bg-emerald-950/20 text-emerald-300'
-                : 'border-rose-500 bg-rose-950/20 text-rose-300'
-              : 'border-slate-800 focus:border-teal-500'
+                : 'border-red-500 bg-red-950/20 text-red-300'
+              : 'border-[#242635] focus:border-red-500'
           }`}
         />
 
-        <div className="flex items-center justify-between text-xs text-slate-400 px-2">
-          <span>💡 Bấm Enter khi để trống để thừa nhận quên từ</span>
+        <div className="flex items-center justify-between text-xs text-zinc-400 px-2">
+          <span>💡 Bấm Enter khi để trống nếu quên từ</span>
           {isEvaluated ? (
             <button
               type="button"
               onClick={handleNextQuestion}
-              className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-teal-500 text-slate-950 font-extrabold text-xs shadow-md hover:bg-teal-400"
+              className="flex items-center gap-1.5 px-4 py-2 rounded-full bg-[#c93b3b] text-white font-bold text-xs shadow-md hover:bg-[#e74c3c]"
             >
               <span>Chuyển câu tiếp (Enter)</span>
-              <ArrowRight className="w-3.5 h-3.5" />
+              <PixelIcon name="chevron-right" size={10} />
             </button>
           ) : (
             <button
               type="button"
               onClick={handleForgot}
-              className="flex items-center gap-1 text-rose-400 hover:underline font-bold"
+              className="flex items-center gap-1 text-red-400 hover:underline font-bold"
             >
-              <HelpCircle className="w-3.5 h-3.5" /> Nhấn [Enter] để bỏ qua
+              <PixelIcon name="help" size={12} />
+              <span>Nhấn [Enter] để bỏ qua</span>
             </button>
           )}
         </div>
 
         <button
           type="submit"
-          className="w-full py-4 rounded-2xl bg-gradient-to-r from-teal-500 to-emerald-600 hover:from-teal-400 hover:to-emerald-500 text-slate-950 font-extrabold text-base shadow-lg shadow-teal-500/20 transition-all"
+          className="w-full py-4 rounded-full bg-[#c93b3b] hover:bg-[#e74c3c] text-white font-extrabold text-sm shadow-xl shadow-red-500/25 transition-all"
         >
           {isEvaluated
             ? isCorrect
               ? '✓ Chính xác! (Đang chuyển câu...)'
               : 'Chuyển sang câu tiếp theo (Nhấn Enter) ➔'
-            : 'Kiểm Tra Answer ↵'}
+            : 'Kiểm Tra Đáp Án ↵'}
         </button>
       </form>
     </div>

@@ -857,6 +857,61 @@ PACK_10_WORDS: List[WordEntry] = [
     WordEntry("ゆっくり", "yukkuri", "Chậm rãi, thong thả", "ゆっくり"),
 ]
 
+PACK_11_WORDS: List[WordEntry] = [
+    WordEntry("これから", "korekara", "từ bây giờ", "これから"),
+    WordEntry("頭", "atama", "đầu", "あたま"),
+    WordEntry("会話", "kaiwa", "hội thoại", "かいわ"),
+    WordEntry("作文", "sakubun", "bài văn", "さくぶん"),
+    WordEntry("クラスメイト", "kurasumeito", "bạn học", "クラスメイト"),
+    WordEntry("雑誌", "zasshi", "tạp chí", "ざっし"),
+    WordEntry("ジョギング", "jogingu", "chạy bộ", "ジョギング"),
+    WordEntry("生活", "seikatsu", "cuộc sống", "せいかつ"),
+    WordEntry("店長", "tenchou", "cửa hàng trưởng", "てんちょう"),
+    WordEntry("日記", "nikki", "nhật ký", "にっき"),
+    WordEntry("初め", "hajime", "đầu tiên", "はじめ"),
+    WordEntry("一人暮らし", "hitorigurashi", "sống một mình", "ひとりぐらし"),
+    WordEntry("平日", "heijitsu", "ngày thường", "へいじつ"),
+    WordEntry("毎週", "maishuu", "hàng tuần", "まいしゅう"),
+    WordEntry("終わります [終わる]", "owarimasu [owaru]", "hết, kết thúc", "おわります [おわる]"),
+    WordEntry("通います [通う]", "kayoimasu [kayou]", "đi lại (thường xuyên) (đi với ni)", "かよいます [かよう]"),
+    WordEntry("kaze wo ひきます [ひく]", "kaze wo hikimasu [hiku]", "mắc, bị (cảm)", "ひきます [ひく]"),
+    WordEntry("休みます [休む]", "yasumimasu [yasumu]", "nghỉ", "やすみます [やすむ]"),
+    WordEntry("慣れます [慣れる]", "naremasu [nareru]", "quen", "なれます [なれる]"),
+    WordEntry("忘れます [忘れる]", "wasuremasu [wasureru]", "quên", "わすれます [わすれる]"),
+    WordEntry("散歩します [散歩する]", "sanposhimasu [sanposuru]", "đi dạo bộ", "さんぽします [散歩する]"),
+    WordEntry("寂しい", "sabishii", "buồn, cô đơn", "さびしい"),
+    WordEntry("眠い", "nemui", "buồn ngủ", "ねむい"),
+    WordEntry("たいてい", "taitei", "thường, tóm lại", "たいてい"),
+    WordEntry("なかなか Vnai", "nakanaka Vnai", "mãi mà không thể thực hiện V", "なかなか"),
+    WordEntry("ええ", "ee", "vâng", "ええ"),
+    WordEntry("オリンピック", "orinpikku", "Olympic", "オリンピック"),
+    WordEntry("外国", "gaikoku", "nước ngoài", "がいこく"),
+    WordEntry("小学生", "shougakusei", "học sinh tiểu học", "しょうがくせい"),
+    WordEntry("中学生", "chuugakusei", "học sinh trung học (cấp 2)", "ちゅうがくせい"),
+    WordEntry("選手", "senshu", "tuyển thủ", "せんしゅ"),
+    WordEntry("祖父", "sofu", "ông", "そふ"),
+    WordEntry("始めます [始める]", "hajimemasu [hajimeru]", "bắt đầu", "はじめます [はじめる]"),
+    WordEntry("別れます [別れる]", "wakaremasu [wakareru]", "chia tay", "わかれます [わかれる]"),
+    WordEntry("卒業します [卒業する]", "sotsugyoushimasu [sotsugyousuru]", "tốt nghiệp", "そつぎょうします [そつぎょうする]"),
+    WordEntry("入学します [入学する]", "nyuugakushimasu [nyuugakusuru]", "nhập học", "にゅうがくします [にゅうがくする]"),
+    WordEntry("だんだん", "dandan", "dần dần", "だんだん"),
+    WordEntry("初めて", "hajimete", "lần đầu tiên", "はじめて"),
+    WordEntry("それで", "sorede", "do đó, vì vậy", "それで"),
+    WordEntry("エアコン", "eakon", "điều hòa nhiệt độ", "エアコン"),
+    WordEntry("ニュース", "nyuusu", "tin tức", "ニュース"),
+    WordEntry("消します [消す]", "keshimasu [kesu]", "tắt, xóa", "けします [けす]"),
+    WordEntry("つけます [つける]", "tsukemasu [tsukeru]", "bật", "つけます [つける]"),
+    WordEntry("引っ越しします [引っ越しする]", "hikkoshishimasu [hikkoshisuru]", "chuyển nhà", "ひっこしします [ひっこしする]"),
+    WordEntry("うん", "un", "ừ", "うん"),
+    WordEntry("ううん", "uun", "không", "ううん"),
+    WordEntry("ごめん", "gomen", "xin lỗi", "ごめん"),
+    WordEntry("そっか", "sokka", "thế à", "そっか"),
+    WordEntry("また", "mata", "lại, hẹn gặp lại", "また"),
+    WordEntry("乾杯", "kanpai", "cạn chén", "かんぱい"),
+    WordEntry("ワールドカップ", "waarudokappu", "World Cup", "ワールドカップ"),
+    WordEntry("お待たせ(しました)", "omatase(shimashita)", "xin lỗi vì để bạn/anh/chị phải đợi", "おまたせ(しました)"),
+]
+
 # ── Accessors ─────────────────────────────────────────────────────────────
 
 def get_hiragana_words() -> List[WordEntry]:
@@ -884,6 +939,7 @@ def get_words_for_type(kana_type) -> List[WordEntry]:
         KanaType.PACK_08: PACK_08_WORDS,
         KanaType.PACK_09: PACK_09_WORDS,
         KanaType.PACK_10: PACK_10_WORDS,
+        KanaType.PACK_11: PACK_11_WORDS,
     }
     if kana_type == KanaType.BOTH:
         return HIRAGANA_WORDS + KATAKANA_WORDS
@@ -900,6 +956,6 @@ class VocabPack:
 
     @property
     def supports_handwriting(self) -> bool:
-        return self.id in ("pack_00", "pack_01", "pack_02", "pack_03", "pack_08", "pack_09", "pack_10")
+        return self.id in ("pack_00", "pack_01", "pack_02", "pack_03", "pack_08", "pack_09", "pack_10", "pack_11")
 
 

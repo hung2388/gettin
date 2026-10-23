@@ -1,69 +1,77 @@
 import React from 'react';
-import { BookOpen, MapPin, Sparkles, Trophy } from 'lucide-react';
+import { PixelAppLogo } from '@/components/ui/PixelAppLogo';
+import { PixelIcon } from '@/components/ui/PixelIcon';
 import { UserProgress } from '@/data/types';
 
 interface AppHeaderProps {
-  activeView: 'path' | 'topic' | 'vocab_packs' | 'study_hub' | 'level';
+  activeView: string;
   setActiveView: (view: 'path' | 'vocab_packs') => void;
   progress: UserProgress;
+  onOpenMobileMenu: () => void;
+  onOpenStats: () => void;
 }
 
-export const AppHeader: React.FC<AppHeaderProps> = ({ activeView, setActiveView, progress }) => {
+export const AppHeader: React.FC<AppHeaderProps> = ({
+  activeView,
+  setActiveView,
+  progress,
+  onOpenMobileMenu,
+  onOpenStats,
+}) => {
   const completedCount = Object.values(progress).filter((p) => p >= 100).length;
 
   return (
-    <header className="sticky top-0 z-40 bg-[#0B0F19]/80 backdrop-blur-md border-b border-slate-800/80 px-4 lg:px-8 py-3">
-      <div className="max-w-7xl mx-auto flex items-center justify-between">
-        {/* Brand Logo */}
-        <div 
-          onClick={() => setActiveView('path')}
-          className="flex items-center gap-3 cursor-pointer group"
-        >
-          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-cyan-500 to-purple-600 flex items-center justify-center text-white font-bold text-xl shadow-lg shadow-cyan-500/20 group-hover:scale-105 transition-transform">
-            🎌
+    <header className="sticky top-0 z-30 bg-[#0d0e12]/90 backdrop-blur-md border-b border-[#1b1c24] px-4 lg:px-8 py-3">
+      <div className="flex items-center justify-between">
+        {/* Mobile Left: Menu Toggle & Brand */}
+        <div className="flex items-center gap-3">
+          <button
+            onClick={onOpenMobileMenu}
+            className="lg:hidden p-2 rounded-xl bg-[#171822] border border-[#242736] text-zinc-300 hover:text-white"
+            title="Menu"
+          >
+            <PixelIcon name="layers" size={16} />
+          </button>
+
+          <div
+            onClick={() => setActiveView('path')}
+            className="flex items-center gap-2.5 cursor-pointer lg:hidden"
+          >
+            <PixelAppLogo size={28} />
+            <span className="font-extrabold text-sm text-white tracking-tight">Kana Pro</span>
           </div>
-          <div>
-            <h1 className="font-extrabold text-lg text-white tracking-tight flex items-center gap-2">
-              KanaLearner
-              <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-cyan-500/10 text-cyan-400 border border-cyan-500/30">
-                PRO WEB
-              </span>
-            </h1>
-            <p className="text-xs text-slate-400 hidden sm:block">Học Tiếng Nhật Thông Minh & Luyện Nhớ Chủ Động</p>
+
+          {/* Desktop Subtitle / Breadcrumbs */}
+          <div className="hidden lg:flex items-center gap-3">
+            <span className="text-xs text-zinc-400">
+              Học tiếng Nhật chuẩn khoa học Active Recall
+            </span>
+            <span className="w-1 h-1 rounded-full bg-zinc-700" />
+            <span className="text-[11px] text-zinc-400">Phiên bản Web 2.0</span>
           </div>
         </div>
 
-        {/* Navigation Buttons */}
-        <div className="flex items-center gap-2 sm:gap-4">
+        {/* Right Action Items */}
+        <div className="flex items-center gap-3">
+          {/* Quick Stats Pill */}
           <button
-            onClick={() => setActiveView('path')}
-            className={`flex items-center gap-2 px-3 sm:px-4 py-2 rounded-xl text-sm font-semibold transition-all ${
-              activeView === 'path'
-                ? 'bg-cyan-500/15 text-cyan-400 border border-cyan-500/40 shadow-sm'
-                : 'text-slate-300 hover:bg-slate-800/60 hover:text-white'
-            }`}
+            onClick={onOpenStats}
+            className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#161720] border border-[#252837] hover:border-red-500/40 text-xs font-semibold text-zinc-200 transition-all cursor-pointer"
           >
-            <MapPin className="w-4 h-4 text-cyan-400" />
-            <span>Lộ trình Map</span>
+            <PixelIcon name="trophy" size={14} className="text-amber-400" />
+            <span>Đã thuộc: <strong className="text-amber-400">{completedCount}</strong> bài</span>
           </button>
 
-          <button
-            onClick={() => setActiveView('vocab_packs')}
-            className={`flex items-center gap-2 px-3 sm:px-4 py-2 rounded-xl text-sm font-semibold transition-all ${
-              activeView === 'vocab_packs'
-                ? 'bg-purple-500/15 text-purple-400 border border-purple-500/40 shadow-sm'
-                : 'text-slate-300 hover:bg-slate-800/60 hover:text-white'
-            }`}
+          {/* Link to previous version / info */}
+          <a
+            href="https://kana.pro/vi"
+            target="_blank"
+            rel="noreferrer"
+            className="hidden sm:inline-flex items-center gap-1.5 text-xs font-medium text-zinc-400 hover:text-zinc-200 hover:underline transition-colors"
           >
-            <BookOpen className="w-4 h-4 text-purple-400" />
-            <span>Kho Từ Vựng</span>
-          </button>
-
-          {/* Progress Indicator */}
-          <div className="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-900 border border-slate-800 text-xs font-semibold text-amber-400">
-            <Trophy className="w-4 h-4 text-amber-400" />
-            <span>Đã thuộc: {completedCount} bài</span>
-          </div>
+            <span>Phiên bản gốc</span>
+            <PixelIcon name="chevron-right" size={10} />
+          </a>
         </div>
       </div>
     </header>

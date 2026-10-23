@@ -209,6 +209,7 @@ class Level5Screen(ctk.CTkFrame):
             self.wrong_count += 1
             self.lbl_wrong.configure(text=f"✗ {self.wrong_count}")
             self.input_container.configure(border_color=Theme.ERROR)
+            speak_japanese_async(word.get_kana())
             
             # Reset typed input to give another try
             self.input_var.set("")

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ArrowLeft, Volume2, CheckSquare, Square, RefreshCw, Sparkles, Play, PenTool } from 'lucide-react';
+import { PixelIcon } from '@/components/ui/PixelIcon';
 import { VocabPack, WordEntry } from '@/data/types';
 import { speakJapanese } from '@/data/tts';
 import { getVocabPack, loadSelectedIndices, saveSelectedIndices } from '@/data/storage';
@@ -63,7 +63,7 @@ export const VocabStudyHubScreen: React.FC<VocabStudyHubScreenProps> = ({
     setIsDragging(true);
     const willSelect = !selectedIndices.has(idx);
     setDragAction(willSelect ? 'select' : 'deselect');
-    
+
     const next = new Set(selectedIndices);
     if (willSelect) next.add(idx);
     else next.delete(idx);
@@ -105,133 +105,166 @@ export const VocabStudyHubScreen: React.FC<VocabStudyHubScreenProps> = ({
   };
 
   const levelsList = [
-    { num: 1, title: '🎯 Level 1: Learn & Multiple Choice', desc: 'Học từ mới qua 2 câu hỏi trắc nghiệm đồng thời (chọn Kana & Nghĩa).' },
-    { num: 2, title: '🤔 Level 2: Active Recall', desc: 'Chủ động hồi tưởng từ vựng. Nhìn nghĩa tiếng Việt để gõ lại Kanji/Kana.' },
-    { num: 3, title: '🎧 Level 3: Listening Test', desc: 'Nghe hệ thống phát âm 10 từ liên tiếp, sau đó có 25s để điền nghĩa tiếng Việt.' },
-    { num: 4, title: '🧩 Level 4: Word Matching Grid', desc: 'Ghép nối bộ ba tương ứng: Kanji ↔️ Kana ↔️ Nghĩa tiếng Việt.' },
-    { num: 5, title: '⚡ Level 5: Speed Typing Stream', desc: 'Tự động trượt chuỗi từ và gõ Romaji luyện phản xạ tốc độ.' },
+    {
+      num: 1,
+      title: 'Level 1: Trắc Nghiệm Kép',
+      desc: 'Học từ mới qua 2 câu hỏi đồng thời (chọn Kana & chọn Nghĩa tiếng Việt).',
+    },
+    {
+      num: 2,
+      title: 'Level 2: Active Recall',
+      desc: 'Chủ động hồi tưởng từ vựng. Nhìn nghĩa tiếng Việt để gõ lại Kanji/Kana.',
+    },
+    {
+      num: 3,
+      title: 'Level 3: Luyện Nghe (Listening)',
+      desc: 'Nghe phát âm liên tiếp, sau đó điền nghĩa tương ứng.',
+    },
+    {
+      num: 4,
+      title: 'Level 4: Ghép Bộ Ba (Matching Grid)',
+      desc: 'Ghép nối bộ ba tương ứng: Kanji ↔️ Kana ↔️ Nghĩa tiếng Việt.',
+    },
+    {
+      num: 5,
+      title: 'Level 5: Phản Xạ Gõ Nhanh (Speed Typing)',
+      desc: 'Trượt chuỗi từ liên tục và gõ Romaji luyện phản xạ tốc độ.',
+    },
   ];
 
   return (
-    <div className="max-w-5xl mx-auto px-4 py-8">
+    <div className="max-w-5xl mx-auto px-4 py-6">
       {/* Top Bar */}
       <div className="flex items-center justify-between gap-4 mb-6">
         <button
           onClick={onBack}
-          className="flex items-center gap-2 px-4 py-2 rounded-xl bg-slate-800/80 hover:bg-slate-700 text-slate-200 text-sm font-semibold transition-all"
+          className="flex items-center gap-2 px-4 py-2 rounded-xl bg-[#161722] hover:bg-[#20222f] text-zinc-300 text-xs font-semibold border border-[#232533] transition-all"
         >
-          <ArrowLeft className="w-4 h-4" /> Quay lại Kho từ vựng
+          <PixelIcon name="arrow-left" size={12} />
+          <span>Quay lại</span>
         </button>
-        <h2 className="text-2xl font-extrabold text-white flex items-center gap-2">
-          {pack?.name || 'Gói Từ Vựng'} 🎌
+        <h2 className="text-xl sm:text-2xl font-black text-white flex items-center gap-2">
+          {pack?.name || 'Gói Từ Vựng'}
         </h2>
       </div>
 
       {/* Tab Nav */}
-      <div className="flex p-1.5 rounded-2xl bg-[#131B2E] border border-slate-800 mb-8">
+      <div className="flex rounded-2xl bg-[#13141c] border border-[#212330] p-1.5 mb-6">
         <button
           onClick={() => setActiveTab('vocab')}
-          className={`flex-1 py-3 rounded-xl font-bold text-sm transition-all ${
+          className={`flex-1 py-2.5 rounded-xl font-bold text-xs transition-all ${
             activeTab === 'vocab'
-              ? 'bg-purple-500 text-slate-950 shadow-md shadow-purple-500/20'
-              : 'text-slate-400 hover:text-white'
+              ? 'bg-zinc-100 text-zinc-950 shadow-sm'
+              : 'text-zinc-400 hover:text-white'
           }`}
         >
-          📖 Danh sách Từ vựng
+          Danh sách Từ ({selectedWords.length}/{words.length})
         </button>
         <button
           onClick={() => setActiveTab('flashcards')}
-          className={`flex-1 py-3 rounded-xl font-bold text-sm transition-all ${
+          className={`flex-1 py-2.5 rounded-xl font-bold text-xs transition-all ${
             activeTab === 'flashcards'
-              ? 'bg-purple-500 text-slate-950 shadow-md shadow-purple-500/20'
-              : 'text-slate-400 hover:text-white'
+              ? 'bg-zinc-100 text-zinc-950 shadow-sm'
+              : 'text-zinc-400 hover:text-white'
           }`}
         >
-          🎴 Flashcards ({selectedWords.length})
+          Flashcards ({selectedWords.length})
         </button>
         <button
           onClick={() => setActiveTab('levels')}
-          className={`flex-1 py-3 rounded-xl font-bold text-sm transition-all ${
+          className={`flex-1 py-2.5 rounded-xl font-bold text-xs transition-all ${
             activeTab === 'levels'
-              ? 'bg-purple-500 text-slate-950 shadow-md shadow-purple-500/20'
-              : 'text-slate-400 hover:text-white'
+              ? 'bg-zinc-100 text-zinc-950 shadow-sm'
+              : 'text-zinc-400 hover:text-white'
           }`}
         >
-          🎯 Luyện tập Active Recall (5 Level)
+          5 Level Active Recall
         </button>
       </div>
 
       {/* Main Card */}
-      <div className="bg-[#131B2E] border border-slate-800 rounded-3xl p-6 shadow-xl">
+      <div className="bg-[#12131a] border border-[#20222d] rounded-3xl p-5 sm:p-6 shadow-xl">
         {activeTab === 'vocab' && (
           <div>
             {/* Selection Toolbar */}
-            <div className="flex flex-wrap items-center justify-between gap-4 p-4 rounded-2xl bg-slate-900/90 border border-slate-800 mb-6">
-              <div className="flex items-center gap-2 text-sm font-bold text-teal-400">
-                <span>📌 Đã chọn: {selectedIndices.size} / {words.length} từ để học</span>
+            <div className="flex flex-wrap items-center justify-between gap-3 p-3.5 rounded-2xl bg-[#171822] border border-[#242635] mb-5">
+              <div className="flex items-center gap-2 text-xs font-bold text-red-400">
+                <span>📌 Đã chọn: {selectedIndices.size} / {words.length} từ</span>
               </div>
               <div className="flex items-center gap-2">
                 <button
                   onClick={selectAll}
-                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white text-xs font-semibold"
+                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#202230] hover:bg-[#2b2e40] text-zinc-200 text-xs font-semibold"
                 >
-                  <CheckSquare className="w-3.5 h-3.5 text-teal-400" /> Chọn tất cả
+                  <PixelIcon name="check-square" size={12} />
+                  <span>Chọn tất cả</span>
                 </button>
                 <button
                   onClick={deselectAll}
-                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white text-xs font-semibold"
+                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#202230] hover:bg-[#2b2e40] text-zinc-200 text-xs font-semibold"
                 >
-                  <Square className="w-3.5 h-3.5 text-rose-400" /> Bỏ chọn tất cả
+                  <PixelIcon name="square" size={12} />
+                  <span>Bỏ chọn</span>
                 </button>
                 <button
                   onClick={invertSelection}
-                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white text-xs font-semibold"
+                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#202230] hover:bg-[#2b2e40] text-zinc-200 text-xs font-semibold"
                 >
-                  <RefreshCw className="w-3.5 h-3.5 text-purple-400" /> Đảo chọn
+                  <PixelIcon name="refresh" size={12} />
+                  <span>Đảo chọn</span>
                 </button>
               </div>
             </div>
 
-            {/* List */}
-            <div className="space-y-3 max-h-[500px] overflow-y-auto pr-2">
+            {/* Word List */}
+            <div className="space-y-2.5 max-h-[500px] overflow-y-auto pr-2">
               {words.map((item, idx) => {
                 const isSelected = selectedIndices.has(idx);
                 return (
                   <div
                     key={idx}
-                    onMouseDown={(e) => { e.preventDefault(); handleMouseDown(idx); }}
+                    onMouseDown={(e) => {
+                      e.preventDefault();
+                      handleMouseDown(idx);
+                    }}
                     onMouseEnter={() => handleMouseEnter(idx)}
-                    className={`flex items-center justify-between p-4 rounded-2xl border transition-all cursor-pointer select-none ${
+                    className={`flex items-center justify-between p-3.5 rounded-2xl border transition-all cursor-pointer select-none ${
                       isSelected
-                        ? 'bg-slate-800/60 border-teal-500/40'
-                        : 'bg-slate-900/40 border-slate-800/80 opacity-60'
+                        ? 'bg-[#1a1b26] border-[#34374b] text-white shadow-sm'
+                        : 'bg-[#14151e]/50 border-[#1f202b] text-zinc-400 opacity-60'
                     }`}
                   >
-                    <div className="flex items-center gap-4">
-                      <input
-                        type="checkbox"
-                        checked={isSelected}
-                        onChange={() => {}}
-                        className="w-5 h-5 rounded accent-teal-500 cursor-pointer"
-                      />
+                    <div className="flex items-center gap-3.5">
+                      <div
+                        className={`w-4 h-4 rounded border flex items-center justify-center ${
+                          isSelected
+                            ? 'bg-red-500 border-red-400 text-white'
+                            : 'border-zinc-600 bg-transparent'
+                        }`}
+                      >
+                        {isSelected && <PixelIcon name="check" size={10} color="#fff" />}
+                      </div>
                       <div>
-                        <div className="font-extrabold text-xl text-white font-jp">
-                          {item.word} {item.kana && item.kana !== item.word && <span className="text-sm font-normal text-slate-400">[{item.kana}]</span>}
+                        <div className="font-extrabold text-lg text-white font-jp">
+                          {item.word}{' '}
+                          {item.kana && item.kana !== item.word && (
+                            <span className="text-xs font-normal text-zinc-400">[{item.kana}]</span>
+                          )}
                         </div>
                       </div>
                     </div>
 
-                    <div className="flex items-center gap-4">
-                      <span className="text-sm font-bold text-teal-300">{item.meaning}</span>
+                    <div className="flex items-center gap-3">
+                      <span className="text-xs font-bold text-zinc-300">{item.meaning}</span>
                       <button
                         onClick={(e) => {
                           e.stopPropagation();
                           speakJapanese(item.kana || item.word);
                         }}
-                        className="p-2.5 rounded-xl bg-slate-800 hover:bg-teal-500/20 text-teal-400 transition-colors"
+                        className="p-2 rounded-xl bg-[#202230] hover:bg-red-500/20 text-zinc-300 hover:text-red-400 transition-colors"
                         title="Phát âm"
                       >
-                        <Volume2 className="w-4 h-4" />
+                        <PixelIcon name="volume" size={14} />
                       </button>
                     </div>
                   </div>
@@ -242,58 +275,65 @@ export const VocabStudyHubScreen: React.FC<VocabStudyHubScreenProps> = ({
         )}
 
         {activeTab === 'flashcards' && (
-          <div className="py-8 text-center max-w-xl mx-auto">
+          <div className="py-6 text-center max-w-lg mx-auto">
             {selectedWords.length === 0 ? (
-              <div className="p-8 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-amber-300">
-                ⚠️ Chưa có từ vựng nào được chọn. Vui lòng quay lại tab "Danh sách Từ vựng" và tích chọn các từ bạn muốn học!
+              <div className="p-6 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs">
+                ⚠️ Chưa có từ vựng nào được chọn. Vui lòng quay lại tab "Danh sách Từ" và tích chọn ít nhất 1 từ!
               </div>
             ) : (
               <div>
-                <div className="text-xs font-semibold text-slate-400 mb-4">
+                <div className="text-xs font-semibold text-zinc-400 mb-4">
                   Thẻ {fcIndex + 1} / {selectedWords.length}
                 </div>
 
                 {/* Flip Card */}
                 <div
                   onClick={() => setFcFlipped(!fcFlipped)}
-                  className={`w-full h-72 rounded-3xl border-2 cursor-pointer flex flex-col items-center justify-center p-6 transition-all duration-300 transform ${
+                  className={`w-full h-72 rounded-3xl border cursor-pointer flex flex-col items-center justify-center p-6 transition-all duration-300 transform select-none ${
                     fcFlipped
-                      ? 'bg-gradient-to-br from-purple-950/60 to-slate-900 border-purple-500/60'
-                      : 'bg-gradient-to-br from-slate-900 via-[#162035] to-slate-900 border-teal-500/60 hover:scale-[1.02]'
+                      ? 'bg-gradient-to-br from-[#1b1c28] to-[#12131a] border-emerald-500/50'
+                      : 'bg-gradient-to-br from-[#161722] to-[#0f1017] border-[#292c3d] hover:border-red-500/40 hover:scale-[1.01]'
                   }`}
                 >
                   {fcFlipped ? (
                     <div>
-                      <div className="text-3xl font-extrabold text-purple-300 mb-2">{currentFcWord?.meaning}</div>
+                      <div className="text-2xl font-extrabold text-emerald-400 mb-2 font-jp">
+                        {currentFcWord?.meaning}
+                      </div>
                       {currentFcWord?.kana && currentFcWord.kana !== currentFcWord.word && (
-                        <div className="text-sm font-bold text-cyan-400 font-jp">[{currentFcWord.kana}]</div>
+                        <div className="text-sm font-bold text-zinc-300 font-jp">
+                          [{currentFcWord.kana}]
+                        </div>
                       )}
                     </div>
                   ) : (
                     <div>
-                      <div className="text-6xl font-black text-white font-jp mb-4">{currentFcWord?.word}</div>
-                      <div className="text-xs text-slate-400">Bấm để lật thẻ</div>
+                      <div className="text-5xl font-black text-white font-jp mb-4">
+                        {currentFcWord?.word}
+                      </div>
+                      <div className="text-xs text-zinc-400">Bấm để lật thẻ</div>
                     </div>
                   )}
                 </div>
 
-                {/* Actions */}
-                <div className="flex items-center justify-center gap-4 mt-6">
+                {/* Flashcard Nav Actions */}
+                <div className="flex items-center justify-center gap-3 mt-6">
                   <button
                     onClick={prevCard}
-                    className="px-5 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white text-sm font-bold"
+                    className="px-5 py-2.5 rounded-xl bg-[#1c1d27] hover:bg-[#272937] text-white text-xs font-bold"
                   >
                     ← Trước
                   </button>
                   <button
                     onClick={() => speakJapanese(currentFcWord?.kana || currentFcWord?.word || '')}
-                    className="px-5 py-2.5 rounded-xl bg-teal-500/20 text-teal-400 hover:bg-teal-500/30 text-sm font-bold flex items-center gap-2"
+                    className="px-5 py-2.5 rounded-xl bg-red-500/20 text-red-400 hover:bg-red-500/30 text-xs font-bold flex items-center gap-2"
                   >
-                    <Volume2 className="w-4 h-4" /> Phát âm
+                    <PixelIcon name="volume" size={14} />
+                    <span>Phát âm</span>
                   </button>
                   <button
                     onClick={nextCard}
-                    className="px-5 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white text-sm font-bold"
+                    className="px-5 py-2.5 rounded-xl bg-[#1c1d27] hover:bg-[#272937] text-white text-xs font-bold"
                   >
                     Sau →
                   </button>
@@ -304,46 +344,47 @@ export const VocabStudyHubScreen: React.FC<VocabStudyHubScreenProps> = ({
         )}
 
         {activeTab === 'levels' && (
-          <div className="space-y-4">
-            <div className="p-4 rounded-2xl bg-slate-900/80 border border-slate-800 flex items-center justify-between text-xs font-bold text-teal-400">
-              <span>🎯 Phạm vi luyện tập: Đã chọn {selectedWords.length} / {words.length} từ vựng</span>
+          <div className="space-y-3.5">
+            <div className="p-3.5 rounded-2xl bg-[#171822] border border-[#242635] flex items-center justify-between text-xs font-bold text-zinc-300">
+              <span>🎯 Đã chọn: {selectedWords.length} / {words.length} từ vựng</span>
             </div>
 
-            {/* Level Options */}
+            {/* Level Cards */}
             <div className="space-y-3">
               {levelsList.map((lvl) => (
                 <div
                   key={lvl.num}
-                  className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-5 rounded-2xl bg-slate-900/60 border border-slate-800 hover:border-teal-500/40 transition-all"
+                  className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-4 sm:p-5 rounded-2xl bg-[#161722] border border-[#242635] hover:border-red-500/40 transition-all"
                 >
                   <div>
-                    <h4 className="font-extrabold text-base text-white">{lvl.title}</h4>
-                    <p className="text-xs text-slate-400 mt-1">{lvl.desc}</p>
+                    <h4 className="font-extrabold text-sm sm:text-base text-white">{lvl.title}</h4>
+                    <p className="text-xs text-zinc-400 mt-0.5">{lvl.desc}</p>
                   </div>
 
                   <button
                     onClick={() => {
                       if (selectedWords.length === 0) {
-                        alert('Vui lòng chọn ít nhất 1 từ vựng trong tab "Danh sách Từ vựng"!');
+                        alert('Vui lòng chọn ít nhất 1 từ vựng trong tab "Danh sách Từ"!');
                         return;
                       }
                       onStartLevel(lvl.num, selectedWords);
                     }}
-                    className="px-5 py-2.5 rounded-xl bg-teal-500 hover:bg-teal-400 text-slate-950 font-extrabold text-xs shadow-md shadow-teal-500/20 transition-all self-end sm:self-auto"
+                    className="px-5 py-2 rounded-full bg-[#c93b3b] hover:bg-[#e74c3c] text-white font-bold text-xs shadow-md shadow-red-500/20 transition-all self-end sm:self-auto"
                   >
-                    Bắt đầu ⛩️
+                    Bắt đầu ➔
                   </button>
                 </div>
               ))}
 
               {/* Handwriting Practice Option */}
-              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-5 rounded-2xl bg-gradient-to-r from-purple-950/40 to-slate-900 border border-purple-500/30">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-4 sm:p-5 rounded-2xl bg-[#191522] border border-[#3b284c]">
                 <div>
-                  <h4 className="font-extrabold text-base text-purple-300 flex items-center gap-2">
-                    <PenTool className="w-4 h-4" /> ✍️ Luyện viết Kanji & Kana (Handwriting Practice)
+                  <h4 className="font-extrabold text-sm sm:text-base text-purple-300 flex items-center gap-2">
+                    <PixelIcon name="pen" size={14} className="text-purple-400" />
+                    <span>Luyện viết nét Kanji & Kana (Handwriting)</span>
                   </h4>
-                  <p className="text-xs text-slate-400 mt-1">
-                    Luyện vẽ nét trực tiếp bằng chuột hoặc màn hình cảm ứng HTML5 Canvas.
+                  <p className="text-xs text-zinc-400 mt-0.5">
+                    Tập vẽ nét chữ trực tiếp bằng chuột hoặc màn hình cảm ứng HTML5 Canvas.
                   </p>
                 </div>
 
@@ -355,7 +396,7 @@ export const VocabStudyHubScreen: React.FC<VocabStudyHubScreenProps> = ({
                     }
                     onStartHandwriting(selectedWords);
                   }}
-                  className="px-5 py-2.5 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-extrabold text-xs shadow-md shadow-purple-500/20 transition-all self-end sm:self-auto"
+                  className="px-5 py-2 rounded-full bg-purple-600 hover:bg-purple-500 text-white font-bold text-xs shadow-md shadow-purple-500/20 transition-all self-end sm:self-auto"
                 >
                   Luyện viết ✍️
                 </button>

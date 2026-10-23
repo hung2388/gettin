@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ArrowLeft, HelpCircle, ArrowRight } from 'lucide-react';
+import { PixelIcon } from '@/components/ui/PixelIcon';
 import { WordEntry } from '@/data/types';
 import { speakJapanese } from '@/data/tts';
 
@@ -43,7 +43,6 @@ export const Level1DualChoice: React.FC<Level1DualChoiceProps> = ({
   useEffect(() => {
     if (!currentWord) return;
 
-    // Reset choices & selections
     setSelectedKana(null);
     setSelectedMeaning(null);
     setIsEvaluated(false);
@@ -79,7 +78,7 @@ export const Level1DualChoice: React.FC<Level1DualChoiceProps> = ({
       { word: 'mock5', kana: 'かぞく', meaning: 'Gia đình', romaji: 'kazoku' },
       { word: 'mock6', kana: 'くるま', meaning: 'Ô tô', romaji: 'kuruma' },
       { word: 'mock7', kana: 'じてんしゃ', meaning: 'Xe đạp', romaji: 'jitensha' },
-      { word: 'mock8', kana: 'ごはん', meaning: 'Bữa cơm', romaji: 'gohan' }
+      { word: 'mock8', kana: 'ごはん', meaning: 'Bữa cơm', romaji: 'gohan' },
     ];
 
     let fbIndex = 0;
@@ -96,12 +95,70 @@ export const Level1DualChoice: React.FC<Level1DualChoiceProps> = ({
 
     const finalChoicesPool = [currentWord, ...selectedWrongs];
 
-    const finalKanas = finalChoicesPool.map((w) => w.kana || w.word).sort(() => Math.random() - 0.5);
-    const finalMeanings = finalChoicesPool.map((w) => w.meaning).sort(() => Math.random() - 0.5);
+    const finalKanas = finalChoicesPool
+      .map((w) => w.kana || w.word)
+      .sort(() => Math.random() - 0.5);
+    const finalMeanings = finalChoicesPool
+      .map((w) => w.meaning)
+      .sort(() => Math.random() - 0.5);
 
     setKanaChoices(finalKanas);
     setMeaningChoices(finalMeanings);
-  }, [currentIndex, currentWord]);
+  }, [currentIndex, pool, allPackWords, words]);
+
+  const targetKana = currentWord?.kana || currentWord?.word;
+
+  const handleSelectKana = (val: string) => {
+    if (isEvaluated) return;
+    setSelectedKana(val);
+    speakJapanese(val);
+    if (selectedMeaning) {
+      evaluateRound(val, selectedMeaning);
+    }
+  };
+
+  const handleSelectMeaning = (val: string) => {
+    if (isEvaluated) return;
+    setSelectedMeaning(val);
+    if (selectedKana) {
+      evaluateRound(selectedKana, val);
+    }
+  };
+
+  const handleForgot = () => {
+    if (isEvaluated || !currentWord) return;
+    speakJapanese(targetKana || '');
+    setSelectedKana('__FORGOT__');
+    setSelectedMeaning('__FORGOT__');
+    setMistakeCount((prev) => prev + 1);
+    setMissedList((prev) => [...prev, currentWord]);
+    setFailedWords((prev) => [...prev, currentWord]);
+    setIsEvaluated(true);
+    setIsBothCorrectState(false);
+  };
+
+  const evaluateRound = (chosenKana: string, chosenMeaning: string) => {
+    if (!currentWord) return;
+
+    const isKanaOk = chosenKana === targetKana;
+    const isMeaningOk = chosenMeaning === currentWord.meaning;
+    const bothOk = isKanaOk && isMeaningOk;
+
+    setIsEvaluated(true);
+    setIsBothCorrectState(bothOk);
+
+    if (bothOk) {
+      setCorrectCount((prev) => prev + 1);
+      setTimeout(() => {
+        handleNextQuestion();
+      }, 700);
+    } else {
+      setMistakeCount((prev) => prev + 1);
+      setMissedList((prev) => [...prev, currentWord]);
+      setFailedWords((prev) => [...prev, currentWord]);
+      speakJapanese(targetKana || '');
+    }
+  };
 
   const handleNextQuestion = () => {
     if (currentIndex + 1 < pool.length) {
@@ -111,114 +168,73 @@ export const Level1DualChoice: React.FC<Level1DualChoiceProps> = ({
       setFailedWords([]);
       setCurrentIndex(0);
     } else {
-      onFinish({ correct: correctCount + (isBothCorrectState ? 1 : 0), mistakes: mistakeCount, missed: missedList });
+      onFinish({
+        correct: correctCount,
+        mistakes: mistakeCount,
+        missed: missedList,
+      });
     }
   };
 
-  const handleForgot = () => {
-    if (!currentWord || isEvaluated) return;
-    setIsEvaluated(true);
-    setIsBothCorrectState(false);
-    setMistakeCount((prev) => prev + 1);
-
-    if (!missedList.some((w) => w.word === currentWord.word)) {
-      setMissedList((prev) => [...prev, currentWord]);
-    }
-    setFailedWords((prev) => [...prev, currentWord]);
-    // User must press Enter again to advance!
-  };
-
-  // Keyboard shortcut: Press Enter
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Enter') {
-        if (isEvaluated) {
-          handleNextQuestion();
-        } else {
+        if (!isEvaluated) {
           handleForgot();
+        } else if (!isBothCorrectState) {
+          handleNextQuestion();
         }
       }
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [isEvaluated, currentWord]);
-
-  const evaluateAnswer = (kanaVal: string | null, meaningVal: string | null) => {
-    if (!currentWord || isEvaluated || !kanaVal || !meaningVal) return;
-
-    const targetKana = currentWord.kana || currentWord.word;
-    const isKanaCorrect = kanaVal === targetKana;
-    const isMeaningCorrect = meaningVal === currentWord.meaning;
-    const isBothCorrect = isKanaCorrect && isMeaningCorrect;
-
-    setIsEvaluated(true);
-    setIsBothCorrectState(isBothCorrect);
-
-    if (isBothCorrect) {
-      speakJapanese(currentWord.kana || currentWord.word);
-      setCorrectCount((prev) => prev + 1);
-
-      setTimeout(() => {
-        handleNextQuestion();
-      }, 1000);
-    } else {
-      setMistakeCount((prev) => prev + 1);
-      if (!missedList.some((w) => w.word === currentWord.word)) {
-        setMissedList((prev) => [...prev, currentWord]);
-      }
-      setFailedWords((prev) => [...prev, currentWord]);
-      // User must press Enter again to advance!
-    }
-  };
-
-  const handleSelectKana = (val: string) => {
-    if (isEvaluated) return;
-    setSelectedKana(val);
-    if (selectedMeaning) evaluateAnswer(val, selectedMeaning);
-  };
-
-  const handleSelectMeaning = (val: string) => {
-    if (isEvaluated) return;
-    setSelectedMeaning(val);
-    if (selectedKana) evaluateAnswer(selectedKana, val);
-  };
+  }, [isEvaluated, isBothCorrectState, currentWord, currentIndex, pool, failedWords]);
 
   if (!currentWord) return null;
 
-  const targetKana = currentWord.kana || currentWord.word;
-
   return (
-    <div className="max-w-4xl mx-auto px-4 py-8">
-      {/* Top Header */}
+    <div className="max-w-4xl mx-auto px-4 py-6">
+      {/* Top Bar */}
       <div className="flex items-center justify-between gap-4 mb-6">
         <button
           onClick={onBack}
-          className="flex items-center gap-2 px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-sm font-semibold"
+          className="flex items-center gap-2 px-4 py-2 rounded-xl bg-[#161722] hover:bg-[#20222f] text-zinc-300 text-xs font-semibold border border-[#232533] transition-all"
         >
-          <ArrowLeft className="w-4 h-4" /> Quay lại
+          <PixelIcon name="arrow-left" size={12} />
+          <span>Quay lại</span>
         </button>
-        <h2 className="text-xl font-extrabold text-white">Level 1: Học từ mới & Trắc nghiệm Kép 🎯</h2>
+        <h2 className="text-lg sm:text-xl font-black text-white">
+          Level 1: Trắc Nghiệm Kép
+        </h2>
       </div>
 
       {/* Progress & Stats Bar */}
-      <div className="flex items-center justify-between p-4 rounded-2xl bg-[#131B2E] border border-slate-800 mb-6 text-xs font-bold">
-        <span className="text-cyan-400">Từ vựng: {currentIndex + 1} / {pool.length}</span>
+      <div className="flex items-center justify-between p-3.5 rounded-2xl bg-[#14151e] border border-[#222432] mb-6 text-xs font-bold">
+        <span className="text-red-400">
+          Câu: {currentIndex + 1} / {pool.length}
+        </span>
         <div className="flex items-center gap-4">
           <span className="text-emerald-400">✓ Đúng: {correctCount}</span>
-          <span className="text-rose-400">✗ Sai/Quên: {mistakeCount}</span>
+          <span className="text-red-400">✗ Sai/Quên: {mistakeCount}</span>
         </div>
       </div>
 
       {/* Word Card Display */}
-      <div className="p-8 rounded-3xl bg-gradient-to-br from-slate-900 via-[#131B2E] to-slate-900 border border-cyan-500/30 text-center mb-6 shadow-2xl relative">
-        <div className="text-6xl font-black text-white font-jp mb-3">{currentWord.word}</div>
-        <div className="text-xs text-slate-400">Vui lòng chọn đồng thời Kana & Nghĩa Tiếng Việt tương ứng:</div>
+      <div className="p-8 rounded-3xl bg-[#121319] border border-[#232635] text-center mb-6 shadow-2xl relative">
+        <div className="text-6xl sm:text-7xl font-black text-white font-jp mb-3">
+          {currentWord.word}
+        </div>
+        <div className="text-xs text-zinc-400">
+          Vui lòng chọn đồng thời KANA và NGHĨA tiếng Việt tương ứng:
+        </div>
 
         {isEvaluated && !isBothCorrectState && (
-          <div className="mt-4 p-3 rounded-2xl bg-rose-950/40 border border-rose-500/50 text-rose-300 animate-fadeIn">
-            <div className="text-xs font-bold uppercase mb-1">❌ ĐÃ XÁC NHẬN QUÊN / CHỌN SAI - ĐÁP ÁN ĐÚNG ĐƯỢC TÔ XANH BÊN DƯỚI</div>
-            <div className="text-xs font-bold text-cyan-300 animate-pulse mt-1">
-              ⌨️ Nhấn phím [Enter] một lần nữa để chuyển sang câu tiếp theo ➔
+          <div className="mt-4 p-3 rounded-2xl bg-red-950/40 border border-red-500/50 text-red-300">
+            <div className="text-xs font-bold uppercase mb-1">
+              ĐÃ XÁC NHẬN QUÊN / CHỌN SAI - ĐÁP ÁN ĐÚNG ĐƯỢC TÔ XANH
+            </div>
+            <div className="text-xs font-bold text-red-400 animate-pulse mt-1">
+              Nhấn phím [Enter] một lần nữa để chuyển sang câu tiếp theo ➔
             </div>
           </div>
         )}
@@ -226,31 +242,35 @@ export const Level1DualChoice: React.FC<Level1DualChoiceProps> = ({
         {!isEvaluated && (
           <button
             onClick={handleForgot}
-            className="absolute top-4 right-4 flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 text-xs font-bold border border-rose-500/30 transition-all"
+            className="absolute top-4 right-4 flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-red-500/10 hover:bg-red-500/20 text-red-400 text-xs font-bold border border-red-500/30 transition-all"
           >
-            <HelpCircle className="w-3.5 h-3.5" /> Bấm [Enter] nếu quên
+            <PixelIcon name="help" size={12} />
+            <span>[Enter] nếu quên</span>
           </button>
         )}
       </div>
 
       {/* Dual Options Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {/* Left Column: Kana Options */}
-        <div className="p-6 rounded-3xl bg-[#131B2E] border border-slate-800">
-          <h3 className="text-sm font-extrabold text-cyan-400 mb-4 flex items-center gap-2">
-            <span>1. Chọn cách đọc KANA</span>
+        <div className="p-5 rounded-3xl bg-[#14151e] border border-[#222432]">
+          <h3 className="text-xs font-extrabold text-red-400 uppercase tracking-wider mb-3">
+            1. Chọn cách đọc KANA
           </h3>
-          <div className="space-y-3">
+          <div className="space-y-2.5">
             {kanaChoices.map((choice, i) => {
               const isSelected = selectedKana === choice;
               const isCorrect = choice === targetKana;
-              let btnStyle = 'bg-slate-900 border-slate-800 text-white hover:border-cyan-500/40';
+              let btnStyle = 'bg-[#181924] border-[#252837] text-white hover:border-red-500/40';
 
               if (isEvaluated) {
-                if (isCorrect) btnStyle = 'bg-emerald-500/20 border-emerald-500 text-emerald-300 font-bold shadow-md shadow-emerald-500/20';
-                else if (isSelected && !isCorrect) btnStyle = 'bg-rose-500/20 border-rose-500 text-rose-300';
+                if (isCorrect)
+                  btnStyle =
+                    'bg-emerald-500/20 border-emerald-500 text-emerald-300 font-bold shadow-md shadow-emerald-500/20';
+                else if (isSelected && !isCorrect)
+                  btnStyle = 'bg-red-500/20 border-red-500 text-red-300';
               } else if (isSelected) {
-                btnStyle = 'bg-cyan-500/20 border-cyan-500 text-cyan-300 font-bold';
+                btnStyle = 'bg-red-500/20 border-red-500 text-red-300 font-bold';
               }
 
               return (
@@ -258,7 +278,7 @@ export const Level1DualChoice: React.FC<Level1DualChoiceProps> = ({
                   key={i}
                   onClick={() => handleSelectKana(choice)}
                   disabled={isEvaluated}
-                  className={`w-full p-4 rounded-2xl border text-base font-extrabold transition-all ${btnStyle}`}
+                  className={`w-full p-3.5 rounded-2xl border text-sm font-extrabold font-jp transition-all ${btnStyle}`}
                 >
                   {choice}
                 </button>
@@ -268,21 +288,24 @@ export const Level1DualChoice: React.FC<Level1DualChoiceProps> = ({
         </div>
 
         {/* Right Column: Meaning Options */}
-        <div className="p-6 rounded-3xl bg-[#131B2E] border border-slate-800">
-          <h3 className="text-sm font-extrabold text-purple-400 mb-4 flex items-center gap-2">
-            <span>2. Chọn NGHĨA Tiếng Việt</span>
+        <div className="p-5 rounded-3xl bg-[#14151e] border border-[#222432]">
+          <h3 className="text-xs font-extrabold text-zinc-300 uppercase tracking-wider mb-3">
+            2. Chọn NGHĨA Tiếng Việt
           </h3>
-          <div className="space-y-3">
+          <div className="space-y-2.5">
             {meaningChoices.map((choice, i) => {
               const isSelected = selectedMeaning === choice;
               const isCorrect = choice === currentWord.meaning;
-              let btnStyle = 'bg-slate-900 border-slate-800 text-white hover:border-purple-500/40';
+              let btnStyle = 'bg-[#181924] border-[#252837] text-white hover:border-red-500/40';
 
               if (isEvaluated) {
-                if (isCorrect) btnStyle = 'bg-emerald-500/20 border-emerald-500 text-emerald-300 font-bold shadow-md shadow-emerald-500/20';
-                else if (isSelected && !isCorrect) btnStyle = 'bg-rose-500/20 border-rose-500 text-rose-300';
+                if (isCorrect)
+                  btnStyle =
+                    'bg-emerald-500/20 border-emerald-500 text-emerald-300 font-bold shadow-md shadow-emerald-500/20';
+                else if (isSelected && !isCorrect)
+                  btnStyle = 'bg-red-500/20 border-red-500 text-red-300';
               } else if (isSelected) {
-                btnStyle = 'bg-purple-500/20 border-purple-500 text-purple-300 font-bold';
+                btnStyle = 'bg-red-500/20 border-red-500 text-red-300 font-bold';
               }
 
               return (
@@ -290,7 +313,7 @@ export const Level1DualChoice: React.FC<Level1DualChoiceProps> = ({
                   key={i}
                   onClick={() => handleSelectMeaning(choice)}
                   disabled={isEvaluated}
-                  className={`w-full p-4 rounded-2xl border text-sm font-bold transition-all ${btnStyle}`}
+                  className={`w-full p-3.5 rounded-2xl border text-xs font-bold transition-all ${btnStyle}`}
                 >
                   {choice}
                 </button>
@@ -304,10 +327,10 @@ export const Level1DualChoice: React.FC<Level1DualChoiceProps> = ({
         <div className="mt-6 text-center">
           <button
             onClick={handleNextQuestion}
-            className="px-8 py-3.5 rounded-2xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-extrabold text-sm shadow-xl shadow-cyan-500/25 transition-all inline-flex items-center gap-2"
+            className="px-8 py-3.5 rounded-full bg-[#c93b3b] hover:bg-[#e74c3c] text-white font-extrabold text-xs shadow-xl shadow-red-500/25 transition-all inline-flex items-center gap-2"
           >
             <span>Chuyển câu tiếp theo (Nhấn Enter)</span>
-            <ArrowRight className="w-4 h-4" />
+            <PixelIcon name="chevron-right" size={12} />
           </button>
         </div>
       )}

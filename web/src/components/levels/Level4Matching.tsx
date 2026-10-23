@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ArrowLeft, Sparkles, CheckCircle2 } from 'lucide-react';
+import { PixelIcon } from '@/components/ui/PixelIcon';
 import { WordEntry } from '@/data/types';
 import { speakJapanese } from '@/data/tts';
 
@@ -50,7 +50,6 @@ export const Level4Matching: React.FC<Level4MatchingProps> = ({ words, onBack, o
     }
   }, [remainingWords, currentBatch]);
 
-  // Check matching triplet when selections change
   useEffect(() => {
     if (selectedWord && selectedKana && selectedMeaning) {
       const target = currentBatch.find((w) => w.word === selectedWord);
@@ -59,31 +58,41 @@ export const Level4Matching: React.FC<Level4MatchingProps> = ({ words, onBack, o
         (target.kana || target.word) === selectedKana &&
         target.meaning === selectedMeaning
       ) {
+        // Matched correctly!
         speakJapanese(target.kana || target.word);
-        const newMatched = new Set(matchedItems);
-        newMatched.add(selectedWord);
-        newMatched.add(selectedKana);
-        newMatched.add(selectedMeaning);
-        setMatchedItems(newMatched);
-        setMatchedWords((prev) => [...prev, target]);
+        setMatchedItems((prev) => {
+          const next = new Set(prev);
+          next.add(selectedWord);
+          next.add(selectedKana);
+          next.add(selectedMeaning);
+          return next;
+        });
 
-        // Clear choices
+        const newMatched = [...matchedWords, target];
+        setMatchedWords(newMatched);
+
         setSelectedWord(null);
         setSelectedKana(null);
         setSelectedMeaning(null);
 
-        // Check if batch is completed
-        if (newMatched.size === currentBatch.length * 3) {
-          setTimeout(() => {
-            if (remainingWords.length === 0) {
-              onFinish({ correct: words.length, mistakes: 0, missed: [] });
-            } else {
+        // Check if current batch finished
+        if (newMatched.length % BATCH_SIZE === 0 || newMatched.length === words.length) {
+          if (remainingWords.length > 0) {
+            setTimeout(() => {
               setCurrentBatch([]);
-            }
-          }, 800);
+            }, 600);
+          } else {
+            setTimeout(() => {
+              onFinish({
+                correct: newMatched.length,
+                mistakes: 0,
+                missed: [],
+              });
+            }, 800);
+          }
         }
       } else {
-        // Reset selections on mismatch
+        // Wrong match
         setTimeout(() => {
           setSelectedWord(null);
           setSelectedKana(null);
@@ -91,35 +100,40 @@ export const Level4Matching: React.FC<Level4MatchingProps> = ({ words, onBack, o
         }, 400);
       }
     }
-  }, [selectedWord, selectedKana, selectedMeaning]);
+  }, [selectedWord, selectedKana, selectedMeaning, currentBatch, matchedWords, words.length, remainingWords.length, onFinish]);
 
   return (
-    <div className="max-w-4xl mx-auto px-4 py-8">
+    <div className="max-w-4xl mx-auto px-4 py-6">
       {/* Header */}
       <div className="flex items-center justify-between gap-4 mb-6">
         <button
           onClick={onBack}
-          className="flex items-center gap-2 px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-sm font-semibold"
+          className="flex items-center gap-2 px-4 py-2 rounded-xl bg-[#161722] hover:bg-[#20222f] text-zinc-300 text-xs font-semibold border border-[#232533] transition-all"
         >
-          <ArrowLeft className="w-4 h-4" /> Quay lại
+          <PixelIcon name="arrow-left" size={12} />
+          <span>Quay lại</span>
         </button>
-        <h2 className="text-xl font-extrabold text-white">Level 4: Ghép Bộ Ba Tương Ứng 🧩</h2>
+        <h2 className="text-lg sm:text-xl font-black text-white">
+          Level 4: Ghép Nối Bộ Ba (Matching Grid)
+        </h2>
       </div>
 
       {/* Progress */}
-      <div className="flex items-center justify-between p-4 rounded-2xl bg-[#131B2E] border border-slate-800 mb-6 text-xs font-bold">
-        <span className="text-cyan-400">Đã ghép: {matchedWords.length} / {words.length} từ</span>
-        <span className="text-purple-400">Chọn 3 mục tương ứng ở 3 cột để ghép đôi</span>
+      <div className="flex items-center justify-between p-3.5 rounded-2xl bg-[#14151e] border border-[#222432] mb-6 text-xs font-bold">
+        <span className="text-red-400">
+          Đã ghép đúng: {matchedWords.length} / {words.length}
+        </span>
+        <span className="text-zinc-400">Chọn 3 mục tương ứng ở 3 cột để ghép đôi</span>
       </div>
 
       {/* 3 Column Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         {/* Column 1: Kanji / Chữ */}
-        <div className="p-5 rounded-3xl bg-[#131B2E] border border-slate-800">
-          <h3 className="text-xs font-extrabold text-cyan-400 mb-4 tracking-wider uppercase">
+        <div className="p-4 rounded-3xl bg-[#121319] border border-[#232635]">
+          <h3 className="text-xs font-extrabold text-red-400 mb-3 tracking-wider uppercase">
             1. KANJI / CHỮ
           </h3>
-          <div className="space-y-3">
+          <div className="space-y-2.5">
             {colKanji.map((item, idx) => {
               const isMatched = matchedItems.has(item);
               const isSelected = selectedWord === item;
@@ -128,12 +142,12 @@ export const Level4Matching: React.FC<Level4MatchingProps> = ({ words, onBack, o
                   key={idx}
                   onClick={() => !isMatched && setSelectedWord(item)}
                   disabled={isMatched}
-                  className={`w-full p-4 rounded-2xl border font-extrabold text-lg transition-all font-jp ${
+                  className={`w-full p-3.5 rounded-2xl border font-extrabold text-base transition-all font-jp ${
                     isMatched
                       ? 'bg-emerald-950/20 border-emerald-500/30 text-emerald-400 line-through opacity-40'
                       : isSelected
-                      ? 'bg-cyan-500/20 border-cyan-500 text-cyan-300 shadow-md'
-                      : 'bg-slate-900 border-slate-800 text-white hover:border-cyan-500/40'
+                      ? 'bg-red-500/20 border-red-500 text-red-300 shadow-md'
+                      : 'bg-[#181924] border-[#252837] text-white hover:border-red-500/40'
                   }`}
                 >
                   {item}
@@ -144,11 +158,11 @@ export const Level4Matching: React.FC<Level4MatchingProps> = ({ words, onBack, o
         </div>
 
         {/* Column 2: Kana */}
-        <div className="p-5 rounded-3xl bg-[#131B2E] border border-slate-800">
-          <h3 className="text-xs font-extrabold text-teal-400 mb-4 tracking-wider uppercase">
+        <div className="p-4 rounded-3xl bg-[#121319] border border-[#232635]">
+          <h3 className="text-xs font-extrabold text-zinc-300 mb-3 tracking-wider uppercase">
             2. KANA
           </h3>
-          <div className="space-y-3">
+          <div className="space-y-2.5">
             {colKana.map((item, idx) => {
               const isMatched = matchedItems.has(item);
               const isSelected = selectedKana === item;
@@ -157,12 +171,12 @@ export const Level4Matching: React.FC<Level4MatchingProps> = ({ words, onBack, o
                   key={idx}
                   onClick={() => !isMatched && setSelectedKana(item)}
                   disabled={isMatched}
-                  className={`w-full p-4 rounded-2xl border font-bold text-base transition-all font-jp ${
+                  className={`w-full p-3.5 rounded-2xl border font-bold text-sm transition-all font-jp ${
                     isMatched
                       ? 'bg-emerald-950/20 border-emerald-500/30 text-emerald-400 line-through opacity-40'
                       : isSelected
-                      ? 'bg-teal-500/20 border-teal-500 text-teal-300 shadow-md'
-                      : 'bg-slate-900 border-slate-800 text-white hover:border-teal-500/40'
+                      ? 'bg-red-500/20 border-red-500 text-red-300 shadow-md'
+                      : 'bg-[#181924] border-[#252837] text-white hover:border-red-500/40'
                   }`}
                 >
                   {item}
@@ -173,11 +187,11 @@ export const Level4Matching: React.FC<Level4MatchingProps> = ({ words, onBack, o
         </div>
 
         {/* Column 3: Meaning */}
-        <div className="p-5 rounded-3xl bg-[#131B2E] border border-slate-800">
-          <h3 className="text-xs font-extrabold text-purple-400 mb-4 tracking-wider uppercase">
+        <div className="p-4 rounded-3xl bg-[#121319] border border-[#232635]">
+          <h3 className="text-xs font-extrabold text-zinc-300 mb-3 tracking-wider uppercase">
             3. Ý NGHĨA TIẾNG VIỆT
           </h3>
-          <div className="space-y-3">
+          <div className="space-y-2.5">
             {colMeaning.map((item, idx) => {
               const isMatched = matchedItems.has(item);
               const isSelected = selectedMeaning === item;
@@ -186,12 +200,12 @@ export const Level4Matching: React.FC<Level4MatchingProps> = ({ words, onBack, o
                   key={idx}
                   onClick={() => !isMatched && setSelectedMeaning(item)}
                   disabled={isMatched}
-                  className={`w-full p-4 rounded-2xl border font-bold text-xs transition-all ${
+                  className={`w-full p-3.5 rounded-2xl border font-bold text-xs transition-all ${
                     isMatched
                       ? 'bg-emerald-950/20 border-emerald-500/30 text-emerald-400 line-through opacity-40'
                       : isSelected
-                      ? 'bg-purple-500/20 border-purple-500 text-purple-300 shadow-md'
-                      : 'bg-slate-900 border-slate-800 text-white hover:border-purple-500/40'
+                      ? 'bg-red-500/20 border-red-500 text-red-300 shadow-md'
+                      : 'bg-[#181924] border-[#252837] text-white hover:border-red-500/40'
                   }`}
                 >
                   {item}
