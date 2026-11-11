@@ -1,8 +1,8 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { PixelIcon } from '@/components/ui/PixelIcon';
-import { UserProgress, WordEntry } from '@/data/types';
+import { UserProgress, WordEntry, VocabPack } from '@/data/types';
 import { HIRAGANA_BASIC, KATAKANA_BASIC, generateRandomNumberEntries } from '@/data/kanaData';
-import { getBuiltInPack } from '@/data/wordData';
+import { VocabRepository } from '@/core/repositories/VocabRepository';
 import { speakJapanese } from '@/data/tts';
 
 interface LearningPathScreenProps {
@@ -46,18 +46,6 @@ const QUICK_REVIEW_CHARS = [
   { char: 'や', romaji: 'ya', meaning: 'ya (Hiragana)' },
 ];
 
-// Pack order: highest number first, down to pack_00
-const VOCAB_PACK_IDS = [
-  'pack_11',
-  'pack_10',
-  'pack_09',
-  'pack_08',
-  'pack_03',
-  'pack_02',
-  'pack_01',
-  'pack_00',
-];
-
 export const LearningPathScreen: React.FC<LearningPathScreenProps> = ({
   progress,
   onSelectPack,
@@ -66,13 +54,26 @@ export const LearningPathScreen: React.FC<LearningPathScreenProps> = ({
   onStartDirectPractice,
 }) => {
   const [mode, setMode] = useState<'auto' | 'manual'>('manual');
+  const repo = useMemo(() => VocabRepository.getInstance(), []);
+  const [repoVersion, setRepoVersion] = useState(0);
 
-  // Load all vocab packs sorted highest first
-  const vocabPacks = useMemo(() => {
-    return VOCAB_PACK_IDS.map((id) => getBuiltInPack(id)!).filter(Boolean);
-  }, []);
+  useEffect(() => {
+    return repo.subscribe(() => {
+      setRepoVersion((v) => v + 1);
+    });
+  }, [repo]);
 
-  // Track accordion states (pack_11 open by default so user sees vocab words immediately)
+  // Load all vocab packs (custom user packs + built-in packs dynamically from repository)
+  const vocabPacks: VocabPack[] = useMemo(() => {
+    const customs = repo.getCustomPacks().map((p) => p.toJSON());
+    const builtIns = repo
+      .getBuiltInPacks()
+      .map((p) => p.toJSON())
+      .filter((p) => p.id.startsWith('pack_'));
+    return [...customs, ...builtIns];
+  }, [repo, repoVersion]);
+
+  // Track accordion states (first pack open by default)
   const [openAccordions, setOpenAccordions] = useState<Record<string, boolean>>({
     pack_11: true,
     hiragana: false,
@@ -122,14 +123,26 @@ export const LearningPathScreen: React.FC<LearningPathScreenProps> = ({
   // Selected words per vocab pack (default all selected for each pack)
   const [selectedWordsByPack, setSelectedWordsByPack] = useState<Record<string, Set<number>>>(() => {
     const initial: Record<string, Set<number>> = {};
-    VOCAB_PACK_IDS.forEach((id) => {
-      const p = getBuiltInPack(id);
-      if (p) {
-        initial[id] = new Set(p.words.map((_, i) => i));
-      }
-    });
+    for (const p of vocabPacks) {
+      initial[p.id] = new Set(p.words.map((_, i) => i));
+    }
     return initial;
   });
+
+  // Ensure new packs added at runtime also have words selected by default
+  useEffect(() => {
+    setSelectedWordsByPack((prev) => {
+      const next = { ...prev };
+      let changed = false;
+      for (const p of vocabPacks) {
+        if (!next[p.id]) {
+          next[p.id] = new Set(p.words.map((_, i) => i));
+          changed = true;
+        }
+      }
+      return changed ? next : prev;
+    });
+  }, [vocabPacks]);
 
   const toggleWordInPack = (packId: string, wordIdx: number) => {
     setSelectedWordsByPack((prev) => {
@@ -375,9 +388,16 @@ export const LearningPathScreen: React.FC<LearningPathScreenProps> = ({
                     <PixelIcon name={isOpen ? 'chevron-down' : 'chevron-right'} size={12} />
                   </span>
                   <div>
-                    <h3 className="font-extrabold text-base sm:text-lg text-white">
-                      {pack.name}
-                    </h3>
+                    <div className="flex items-center gap-2">
+                      <h3 className="font-extrabold text-base sm:text-lg text-white">
+                        {pack.name}
+                      </h3>
+                      {pack.is_custom && (
+                        <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40">
+                          ✨ Chủ đề của bạn
+                        </span>
+                      )}
+                    </div>
                     <p className="text-xs text-zinc-400 font-medium">
                       {pack.description} · <span className="text-red-400 font-bold">{pack.words.length} từ</span>
                     </p>
