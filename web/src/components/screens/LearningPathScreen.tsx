@@ -74,12 +74,12 @@ export const LearningPathScreen: React.FC<LearningPathScreenProps> = ({
   }, [repo, repoVersion]);
 
   // Track accordion states (first pack open by default)
-  const [openAccordions, setOpenAccordions] = useState<Record<string, boolean>>({
-    pack_11: true,
+  const [openAccordions, setOpenAccordions] = useState<Record<string, boolean>>(() => ({
+    [vocabPacks[0]?.id || 'pack_12']: true,
     hiragana: false,
     katakana: false,
     other: false,
-  });
+  }));
 
   const toggleAccordion = (id: string) => {
     setOpenAccordions((prev) => ({
@@ -120,23 +120,28 @@ export const LearningPathScreen: React.FC<LearningPathScreenProps> = ({
     setSelectedStages(new Set());
   };
 
-  // Selected words per vocab pack (default all selected for each pack)
+  // Selected words per vocab pack (only the newest package has all words selected by default; others start empty)
   const [selectedWordsByPack, setSelectedWordsByPack] = useState<Record<string, Set<number>>>(() => {
     const initial: Record<string, Set<number>> = {};
+    const newestPackId = vocabPacks[0]?.id;
     for (const p of vocabPacks) {
-      initial[p.id] = new Set(p.words.map((_, i) => i));
+      if (p.id === newestPackId) {
+        initial[p.id] = new Set(p.words.map((_, i) => i));
+      } else {
+        initial[p.id] = new Set();
+      }
     }
     return initial;
   });
 
-  // Ensure new packs added at runtime also have words selected by default
+  // Ensure new packs added at runtime also have state initialized (empty by default)
   useEffect(() => {
     setSelectedWordsByPack((prev) => {
       const next = { ...prev };
       let changed = false;
       for (const p of vocabPacks) {
         if (!next[p.id]) {
-          next[p.id] = new Set(p.words.map((_, i) => i));
+          next[p.id] = new Set();
           changed = true;
         }
       }

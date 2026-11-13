@@ -3,6 +3,11 @@
 #include <stdlib.h>
 #include <time.h>
 
+int calculate_sum_3(int x)
+{
+    
+}
+
 int main() {
     int a;
     scanf("%d", &a)

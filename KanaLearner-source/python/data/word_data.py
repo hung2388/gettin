@@ -912,6 +912,70 @@ PACK_11_WORDS: List[WordEntry] = [
     WordEntry("お待たせ(しました)", "omatase(shimashita)", "xin lỗi vì để bạn/anh/chị phải đợi", "おまたせ(しました)"),
 ]
 
+PACK_12_WORDS: List[WordEntry] = [
+    WordEntry("材料", "zairyou", "nguyên liệu", "ざいりょう"),
+    WordEntry("ジューサー", "juusaa", "máy làm nước hoa quả", "ジューサー"),
+    WordEntry("キャベツ", "kyabetsu", "bắp cải", "キャベツ"),
+    WordEntry("トマト", "tomato", "cà chua", "トマト"),
+    WordEntry("ニンジン", "ninjin", "cà rốt", "ニンジン"),
+    WordEntry("けが", "kega", "vết thương", "けが"),
+    WordEntry("食欲", "shokuyoku", "cảm giác muốn ăn", "しょくよく"),
+    WordEntry("調子", "choushi", "tình trạng", "ちょうし"),
+    WordEntry("熱", "netsu", "nhiệt", "ねつ"),
+    WordEntry("病気", "byouki", "bệnh", "びょうき"),
+    WordEntry("のど", "nodo", "họng", "のど"),
+    WordEntry("歯", "ha", "răng", "は"),
+    WordEntry("飲み会", "nomikai", "buổi ăn uống", "のみかい"),
+    WordEntry("～度", "~do", "~độ", "～ど"),
+    WordEntry("治ります [治る]", "naorimasu [naoru]", "khỏi", "なおります [なおる]"),
+    WordEntry("悪い", "warui", "xấu", "わるい"),
+    WordEntry("気持ちが悪い", "kimochi ga warui", "khó chịu", "きもちがわるい"),
+    WordEntry("大丈夫（な）", "daijoubu (na)", "không sao", "だいじょうぶ（な）"),
+    WordEntry("早く", "hayaku", "sớm", "はやく"),
+    WordEntry("おかげさまで", "okagesamade", "nhờ có anh/chị", "おかげさまで"),
+    WordEntry("お大事に", "odaijini", "giữ gìn sức khỏe", "おだいじに"),
+    WordEntry("それはいけませんね", "sore wa ikemasen ne", "thế thì không được", "それはいけませんね"),
+    WordEntry("シャワー", "shawaa", "vòi hoa sen", "シャワー"),
+    WordEntry("睡眠", "suimin", "ngủ", "すいみん"),
+    WordEntry("歯医者", "haisha", "nha sĩ", "はいしゃ"),
+    WordEntry("やけど", "yakedo", "bỏng", "やけど"),
+    WordEntry("こと", "koto", "việc", "こと"),
+    WordEntry("もの", "mono", "vật", "もの"),
+    WordEntry("以上", "ijou", "trên", "いじょう"),
+    WordEntry("出します [出す]", "dashimasu [dasu]", "phát ra", "だします [だす]"),
+    WordEntry("声を出します。", "koe o dashimasu.", "Tôi nói ra tiếng.", "こえをだします。"),
+    WordEntry("塗ります [塗る]", "nurimasu [nuru]", "bôi", "ぬります [ぬる]"),
+    WordEntry("浴びます [浴びる]", "abimasu [abiru]", "tắm", "あびます [あびる]"),
+    WordEntry("出かけます [出かける]", "dekakemasu [dekakeru]", "đi ra ngoài", "でかけます [でかける]"),
+    WordEntry("運動・します [運動・する]", "undoushimasu [undousuru]", "vận động", "うんどう・します [うんどう・する]"),
+    WordEntry("固い", "katai", "cứng", "かたい"),
+    WordEntry("柔らかい", "yawarakai", "mềm", "やわらかい"),
+    WordEntry("体にいい", "karada ni ii", "tốt cho cơ thể", "からだにいい"),
+    WordEntry("自分で", "jibun de", "tự mình", "じぶんで"),
+    WordEntry("できるだけ", "dekirudake", "cố gắng", "できるだけ"),
+    WordEntry("ゆっくり", "yukkuri", "thư thả", "ゆっくり"),
+    WordEntry("ゆっくり休んでください。", "yukkuri yasunde kudasai.", "Hãy nghỉ ngơi thư thả.", "ゆっくりやすんでください。"),
+    WordEntry("薬剤師", "yakuzaishi", "dược sĩ", "やくざいし"),
+    WordEntry("上着", "uwagi", "áo khoác", "うわぎ"),
+    WordEntry("コンタクトレンズ", "kontakutorenzu", "kính áp tròng", "コンタクトレンズ"),
+    WordEntry("説明書", "setsumeisho", "quyển hướng dẫn", "せつめいしょ"),
+    WordEntry("（お）風呂", "(o)furo", "bồn tắm", "（お）ふろ"),
+    WordEntry("保険証", "hokenshou", "thẻ bảo hiểm", "ほけんしょう"),
+    WordEntry("待合室", "machiaishitsu", "phòng đợi", "まちあいしつ"),
+    WordEntry("薬局", "yakkyoku", "cửa hàng thuốc", "やっきょく"),
+    WordEntry("出します [出す]", "dashimasu [dasu]", "xuất trình", "だします [だす]"),
+    WordEntry("保険証を出してください。", "hokenshou o dashite kudasai.", "Hãy xuất trình thẻ bảo hiểm.", "ほけんしょうをだしてください。"),
+    WordEntry("脱ぎます [脱ぐ]", "nugimasu [nugu]", "cởi", "ぬぎます [ぬぐ]"),
+    WordEntry("走ります [走る]", "hashirimasu [hashiru]", "chạy", "はしります [はしる]"),
+    WordEntry("待ちます [待つ]", "machimasu [matsu]", "đợi", "まちます [まつ]"),
+    WordEntry("磨きます [磨く]", "migakimasu [migaku]", "mài, đánh", "みがきます [みがく]"),
+    WordEntry("横になります [横になる]", "yoko ni narimasu [yoko ni naru]", "nằm", "よこになります [よこになる]"),
+    WordEntry("準備・します [準備・する]", "junbishimasu [junbisuru]", "chuẩn bị", "じゅんび・します [じゅんび・する]"),
+    WordEntry("かゆい", "kayui", "ngứa", "かゆい"),
+    WordEntry("処方箋", "shohousen", "đơn thuốc", "しょほうせん"),
+    WordEntry("赤い", "akai", "đỏ", "あかい"),
+]
+
 # ── Accessors ─────────────────────────────────────────────────────────────
 
 def get_hiragana_words() -> List[WordEntry]:
@@ -940,6 +1004,7 @@ def get_words_for_type(kana_type) -> List[WordEntry]:
         KanaType.PACK_09: PACK_09_WORDS,
         KanaType.PACK_10: PACK_10_WORDS,
         KanaType.PACK_11: PACK_11_WORDS,
+        KanaType.PACK_12: PACK_12_WORDS,
     }
     if kana_type == KanaType.BOTH:
         return HIRAGANA_WORDS + KATAKANA_WORDS
@@ -956,6 +1021,6 @@ class VocabPack:
 
     @property
     def supports_handwriting(self) -> bool:
-        return self.id in ("pack_00", "pack_01", "pack_02", "pack_03", "pack_08", "pack_09", "pack_10", "pack_11")
+        return self.id in ("pack_00", "pack_01", "pack_02", "pack_03", "pack_08", "pack_09", "pack_10", "pack_11", "pack_12")
 
 

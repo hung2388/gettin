@@ -877,6 +877,71 @@ export const PACK_11_WORDS: WordEntry[] = [
   { word: 'お待たせ(しました)', kana: 'おまたせ(しました)', romaji: 'omatase(shimashita)', meaning: 'xin lỗi vì để bạn/anh/chị phải đợi' },
 ];
 
+// ── Pack 12 (Full 61 Words - Sức khỏe, Y tế, Thể chất & Đời sống) ─────────────
+export const PACK_12_WORDS: WordEntry[] = [
+  { word: '材料', kana: 'ざいりょう', romaji: 'zairyou', meaning: 'nguyên liệu' },
+  { word: 'ジューサー', kana: 'ジューサー', romaji: 'juusaa', meaning: 'máy làm nước hoa quả' },
+  { word: 'キャベツ', kana: 'キャベツ', romaji: 'kyabetsu', meaning: 'bắp cải' },
+  { word: 'トマト', kana: 'トマト', romaji: 'tomato', meaning: 'cà chua' },
+  { word: 'ニンジン', kana: 'ニンジン', romaji: 'ninjin', meaning: 'cà rốt' },
+  { word: 'けが', kana: 'けが', romaji: 'kega', meaning: 'vết thương' },
+  { word: '食欲', kana: 'しょくよく', romaji: 'shokuyoku', meaning: 'cảm giác muốn ăn' },
+  { word: '調子', kana: 'ちょうし', romaji: 'choushi', meaning: 'tình trạng' },
+  { word: '熱', kana: 'ねつ', romaji: 'netsu', meaning: 'nhiệt' },
+  { word: '病気', kana: 'びょうき', romaji: 'byouki', meaning: 'bệnh' },
+  { word: 'のど', kana: 'のど', romaji: 'nodo', meaning: 'họng' },
+  { word: '歯', kana: 'は', romaji: 'ha', meaning: 'răng' },
+  { word: '飲み会', kana: 'のみかい', romaji: 'nomikai', meaning: 'buổi ăn uống' },
+  { word: '～度', kana: '～ど', romaji: '~do', meaning: '~độ' },
+  { word: '治ります [治る]', kana: 'なおります [なおる]', romaji: 'naorimasu [naoru]', meaning: 'khỏi' },
+  { word: '悪い', kana: 'わるい', romaji: 'warui', meaning: 'xấu' },
+  { word: '気持ちが悪い', kana: 'きもちがわるい', romaji: 'kimochi ga warui', meaning: 'khó chịu' },
+  { word: '大丈夫（な）', kana: 'だいじょうぶ（な）', romaji: 'daijoubu (na)', meaning: 'không sao' },
+  { word: '早く', kana: 'はやく', romaji: 'hayaku', meaning: 'sớm' },
+  { word: 'おかげさまで', kana: 'おかげさまで', romaji: 'okagesamade', meaning: 'nhờ có anh/chị' },
+  { word: 'お大事に', kana: 'おだいじに', romaji: 'odaijini', meaning: 'giữ gìn sức khỏe' },
+  { word: 'それはいけませんね', kana: 'それはいけませんね', romaji: 'sore wa ikemasen ne', meaning: 'thế thì không được' },
+  { word: 'シャワー', kana: 'シャワー', romaji: 'shawaa', meaning: 'vòi hoa sen' },
+  { word: '睡眠', kana: 'すいみん', romaji: 'suimin', meaning: 'ngủ' },
+  { word: '歯医者', kana: 'はいしゃ', romaji: 'haisha', meaning: 'nha sĩ' },
+  { word: 'やけど', kana: 'やけど', romaji: 'yakedo', meaning: 'bỏng' },
+  { word: 'こと', kana: 'こと', romaji: 'koto', meaning: 'việc' },
+  { word: 'もの', kana: 'もの', romaji: 'mono', meaning: 'vật' },
+  { word: '以上', kana: 'いじょう', romaji: 'ijou', meaning: 'trên' },
+  { word: '出します [出す]', kana: 'だします [だす]', romaji: 'dashimasu [dasu]', meaning: 'phát ra' },
+  { word: '声を出します。', kana: 'こえをだします。', romaji: 'koe o dashimasu.', meaning: 'Tôi nói ra tiếng.' },
+  { word: '塗ります [塗る]', kana: 'ぬります [ぬる]', romaji: 'nurimasu [nuru]', meaning: 'bôi' },
+  { word: '浴びます [浴びる]', kana: 'あびます [あびる]', romaji: 'abimasu [abiru]', meaning: 'tắm' },
+  { word: '出かけます [出かける]', kana: 'でかけます [でかける]', romaji: 'dekakemasu [dekakeru]', meaning: 'đi ra ngoài' },
+  { word: '運動・します [運動・する]', kana: 'うんどう・します [うんどう・する]', romaji: 'undoushimasu [undousuru]', meaning: 'vận động' },
+  { word: '固い', kana: 'かたい', romaji: 'katai', meaning: 'cứng' },
+  { word: '柔らかい', kana: 'やわらかい', romaji: 'yawarakai', meaning: 'mềm' },
+  { word: '体にいい', kana: 'からだにいい', romaji: 'karada ni ii', meaning: 'tốt cho cơ thể' },
+  { word: '自分で', kana: 'じぶんで', romaji: 'jibun de', meaning: 'tự mình' },
+  { word: 'できるだけ', kana: 'できるだけ', romaji: 'dekirudake', meaning: 'cố gắng' },
+  { word: 'ゆっくり', kana: 'ゆっくり', romaji: 'yukkuri', meaning: 'thư thả' },
+  { word: 'ゆっくり休んでください。', kana: 'ゆっくりやすんでください。', romaji: 'yukkuri yasunde kudasai.', meaning: 'Hãy nghỉ ngơi thư thả.' },
+  { word: '薬剤師', kana: 'やくざいし', romaji: 'yakuzaishi', meaning: 'dược sĩ' },
+  { word: '上着', kana: 'うわぎ', romaji: 'uwagi', meaning: 'áo khoác' },
+  { word: 'コンタクトレンズ', kana: 'コンタクトレンズ', romaji: 'kontakutorenzu', meaning: 'kính áp tròng' },
+  { word: '説明書', kana: 'せつめいしょ', romaji: 'setsumeisho', meaning: 'quyển hướng dẫn' },
+  { word: '（お）風呂', kana: '（お）ふろ', romaji: '(o)furo', meaning: 'bồn tắm' },
+  { word: '保険証', kana: 'ほけんしょう', romaji: 'hokenshou', meaning: 'thẻ bảo hiểm' },
+  { word: '待合室', kana: 'まちあいしつ', romaji: 'machiaishitsu', meaning: 'phòng đợi' },
+  { word: '薬局', kana: 'やっきょく', romaji: 'yakkyoku', meaning: 'cửa hàng thuốc' },
+  { word: '出します [出す]', kana: 'だします [だす]', romaji: 'dashimasu [dasu]', meaning: 'xuất trình' },
+  { word: '保険証を出してください。', kana: 'ほけんしょうをだしてください。', romaji: 'hokenshou o dashite kudasai.', meaning: 'Hãy xuất trình thẻ bảo hiểm.' },
+  { word: '脱ぎます [脱ぐ]', kana: 'ぬぎます [ぬぐ]', romaji: 'nugimasu [nugu]', meaning: 'cởi' },
+  { word: '走ります [走る]', kana: 'はしります [はしる]', romaji: 'hashirimasu [hashiru]', meaning: 'chạy' },
+  { word: '待ちます [待つ]', kana: 'まちます [まつ]', romaji: 'machimasu [matsu]', meaning: 'đợi' },
+  { word: '磨きます [磨く]', kana: 'みがきます [みがく]', romaji: 'migakimasu [migaku]', meaning: 'mài, đánh' },
+  { word: '横になります [横になる]', kana: 'よこになります [よこになる]', romaji: 'yoko ni narimasu [yoko ni naru]', meaning: 'nằm' },
+  { word: '準備・します [準備・する]', kana: 'じゅんび・します [じゅんび・する]', romaji: 'junbishimasu [junbisuru]', meaning: 'chuẩn bị' },
+  { word: 'かゆい', kana: 'かゆい', romaji: 'kayui', meaning: 'ngứa' },
+  { word: '処方箋', kana: 'しょほうせん', romaji: 'shohousen', meaning: 'đơn thuốc' },
+  { word: '赤い', kana: 'あかい', romaji: 'akai', meaning: 'đỏ' },
+];
+
 export function getBuiltInPack(packId: string): VocabPack | null {
   const packsMap: Record<string, { name: string; description: string; words: WordEntry[]; supports_handwriting?: boolean }> = {
     pack_00: {
@@ -927,6 +992,12 @@ export function getBuiltInPack(packId: string): VocabPack | null {
       words: PACK_11_WORDS,
       supports_handwriting: true,
     },
+    pack_12: {
+      name: 'Gói từ vựng 12',
+      description: 'Gói học từ vựng bài 12: Sức khỏe, Y tế, Thể chất & Đời sống (61 từ)',
+      words: PACK_12_WORDS,
+      supports_handwriting: true,
+    },
     days_week: {
       name: 'Thứ trong tuần',
       description: 'Cách đọc 7 ngày thứ trong tuần tiếng Nhật (7 từ)',
@@ -975,6 +1046,6 @@ export function getBuiltInPack(packId: string): VocabPack | null {
 }
 
 export function getAllBuiltInPacks(): VocabPack[] {
-  const ids = ['pack_00', 'pack_01', 'pack_02', 'pack_03', 'pack_08', 'pack_09', 'pack_10', 'pack_11', 'days_week', 'days_month', 'months', 'years', 'birth_year'];
+  const ids = ['pack_00', 'pack_01', 'pack_02', 'pack_03', 'pack_08', 'pack_09', 'pack_10', 'pack_11', 'pack_12', 'days_week', 'days_month', 'months', 'years', 'birth_year'];
   return ids.map((id) => getBuiltInPack(id)!).filter(Boolean);
 }

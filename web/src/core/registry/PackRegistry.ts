@@ -9,6 +9,7 @@ import {
   PACK_09_WORDS,
   PACK_10_WORDS,
   PACK_11_WORDS,
+  PACK_12_WORDS,
   DAYS_WEEK_WORDS,
   DAYS_MONTH_WORDS,
   MONTHS_WORDS,
@@ -87,6 +88,13 @@ export class PackRegistry {
       words: any[];
       supportsHandwriting: boolean;
     }> = [
+      {
+        id: 'pack_12',
+        name: 'Gói từ vựng 12',
+        description: 'Gói học từ vựng bài 12: Sức khỏe, Y tế, Thể chất & Đời sống (61 từ)',
+        words: PACK_12_WORDS,
+        supportsHandwriting: true,
+      },
       {
         id: 'pack_11',
         name: 'Gói từ vựng 11',
