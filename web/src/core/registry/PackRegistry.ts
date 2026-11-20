@@ -10,6 +10,7 @@ import {
   PACK_10_WORDS,
   PACK_11_WORDS,
   PACK_12_WORDS,
+  PACK_13_WORDS,
   DAYS_WEEK_WORDS,
   DAYS_MONTH_WORDS,
   MONTHS_WORDS,
@@ -88,6 +89,13 @@ export class PackRegistry {
       words: any[];
       supportsHandwriting: boolean;
     }> = [
+      {
+        id: 'pack_13',
+        name: 'Gói từ vựng 13',
+        description: 'Gói học từ vựng bài 13: Mua sắm, Du lịch, Trang phục & Đời sống (49 từ)',
+        words: PACK_13_WORDS,
+        supportsHandwriting: true,
+      },
       {
         id: 'pack_12',
         name: 'Gói từ vựng 12',

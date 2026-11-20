@@ -33,6 +33,7 @@ class KanaType(Enum):
     PACK_10 = "pack_10"
     PACK_11 = "pack_11"
     PACK_12 = "pack_12"
+    PACK_13 = "pack_13"
 
 
 # LearningMode has been replaced with manual learning packs path
@@ -162,12 +163,12 @@ class AppModel:
         self.save_progress()
 
     BUILT_IN_PACK_IDS = [
-        "pack_00", "pack_01", "pack_02", "pack_03", "pack_08", "pack_09", "pack_10", "pack_11", "pack_12",
+        "pack_00", "pack_01", "pack_02", "pack_03", "pack_08", "pack_09", "pack_10", "pack_11", "pack_12", "pack_13",
         "days_week", "days_month", "days_month_special", 
         "months", "years", "birth_year"
     ]
 
-    HANDWRITING_PACK_IDS = ["pack_00", "pack_01", "pack_02", "pack_03", "pack_08", "pack_09", "pack_10", "pack_11", "pack_12"]
+    HANDWRITING_PACK_IDS = ["pack_00", "pack_01", "pack_02", "pack_03", "pack_08", "pack_09", "pack_10", "pack_11", "pack_12", "pack_13"]
 
     def is_built_in_pack(self, pack_id: str) -> bool:
         """Returns True if the given pack_id corresponds to a built-in learning pack."""
@@ -189,6 +190,7 @@ class AppModel:
             "pack_10": ("Gói từ vựng 10", "Gói học từ vựng bài 10: Chỉ đường, Quy tắc, Động vật & Tham quan"),
             "pack_11": ("Gói từ vựng 11", "Gói học từ vựng bài 11: Đời sống, Thói quen, Cảm xúc & Giao tiếp"),
             "pack_12": ("Gói từ vựng 12", "Gói học từ vựng bài 12: Sức khỏe, Y tế, Thể chất & Đời sống"),
+            "pack_13": ("Gói từ vựng 13", "Gói học từ vựng bài 13: Mua sắm, Du lịch, Trang phục & Đời sống"),
             "days_week": ("Thứ trong tuần", "Học cách đọc thứ trong tuần"),
             "days_month": ("Ngày trong tháng", "Học cách đọc ngày trong tháng"),
             "months": ("Tháng", "Học cách đọc các tháng trong năm"),
@@ -269,6 +271,11 @@ class AppModel:
             "pack_02": 0.0,
             "pack_03": 0.0,
             "pack_08": 0.0,
+            "pack_09": 0.0,
+            "pack_10": 0.0,
+            "pack_11": 0.0,
+            "pack_12": 0.0,
+            "pack_13": 0.0,
             "days_week": 0.0,
             "days_month": 0.0,
             "days_month_special": 0.0,

@@ -942,6 +942,59 @@ export const PACK_12_WORDS: WordEntry[] = [
   { word: '赤い', kana: 'あかい', romaji: 'akai', meaning: 'đỏ' },
 ];
 
+// ── Pack 13 (Full 49 Words - Mua sắm, Du lịch, Trang phục & Đời sống) ─────────────
+export const PACK_13_WORDS: WordEntry[] = [
+  { word: 'おすすめ', kana: 'おすすめ', romaji: 'osusume', meaning: 'cái muốn giới thiệu' },
+  { word: '駅弁', kana: 'えきべん', romaji: 'ekiben', meaning: 'cơm hộp nhà ga' },
+  { word: '切符', kana: 'きっぷ', romaji: 'kippu', meaning: 'vé tàu xe' },
+  { word: '特急電車', kana: 'とっきゅうでんしゃ', romaji: 'tokkyuudensha', meaning: 'tàu tốc hành đặc biệt' },
+  { word: '～分', kana: '～ぶん', romaji: '~bun', meaning: 'phần~, tổng số~' },
+  { word: '紅葉', kana: 'こうよう', romaji: 'kouyou', meaning: 'trà đen' },
+  { word: 'サービス', kana: 'サービス', romaji: 'saabisu', meaning: 'dịch vụ' },
+  { word: '相撲', kana: 'すもう', romaji: 'sumou', meaning: 'vật sumô' },
+  { word: 'ホテル', kana: 'ホテル', romaji: 'hoteru', meaning: 'khách sạn' },
+  { word: '知ります［知る］', kana: 'しります［しる］', romaji: 'shirimasu [shiru]', meaning: 'biết' },
+  { word: 'デート・します［デート・する］', kana: 'デート・します［デート・する］', romaji: 'deetoshimasu [deetosuru]', meaning: 'hẹn hò' },
+  { word: '1回も', kana: '1かいも', romaji: 'ikkaimo', meaning: 'một lần cũng' },
+  { word: '何回も', kana: 'なんかいも', romaji: 'nankaimo', meaning: 'đến mấy lần' },
+  { word: '男の人', kana: 'おとこのひと', romaji: 'otokonohito', meaning: 'nam' },
+  { word: '女の人', kana: 'おんなのひと', romaji: 'onnanohito', meaning: 'nữ' },
+  { word: '（お）店', kana: '（お）みせ', romaji: '(o)mise', meaning: 'cửa hàng' },
+  { word: '遊園地', kana: 'ゆうえんち', romaji: 'yuuenchi', meaning: 'công viên giải trí' },
+  { word: 'ジェットコースター', kana: 'ジェットコースター', romaji: 'jettokoosutaa', meaning: 'tàu lượn cao tốc' },
+  { word: '電気製品', kana: 'でんきせいひん', romaji: 'denkiseihin', meaning: 'đồ điện' },
+  { word: 'サングラス', kana: 'サングラス', romaji: 'sangurasu', meaning: 'kính râm' },
+  { word: '眼鏡', kana: 'めがね', romaji: 'megane', meaning: 'cái kính' },
+  { word: 'シャツ', kana: 'シャツ', romaji: 'shatsu', meaning: 'áo sơ-mi' },
+  { word: 'スカート', kana: 'スカート', romaji: 'sukaato', meaning: 'váy ngắn' },
+  { word: 'ネクタイ', kana: 'ネクタイ', romaji: 'nekutai', meaning: 'cà-vạt' },
+  { word: '帽子', kana: 'ぼうし', romaji: 'boushi', meaning: 'mũ' },
+  { word: '人気', kana: 'にんき', romaji: 'ninki', meaning: 'hâm mộ' },
+  { word: '売ります［売る］', kana: 'うります［うる］', romaji: 'urimasu [uru]', meaning: 'bán' },
+  { word: 'かぶります［かぶる］', kana: 'かぶります［かぶる］', romaji: 'kaburimasu [kaburu]', meaning: 'đội' },
+  { word: '泊まります［泊まる］', kana: 'とまります［とまる］', romaji: 'tomarimasu [tomaru]', meaning: 'trọ lại' },
+  { word: 'はきます［はく］', kana: 'はきます［はく］', romaji: 'hakimasu [haku]', meaning: 'đi (giầy)' },
+  { word: 'かけます［かける］', kana: 'かけます［かける］', romaji: 'kakemasu [kakeru]', meaning: 'đeo' },
+  { word: '眼鏡をかけます。', kana: 'めがねをかけます。', romaji: 'megane o kakemasu.', meaning: 'đeo kính' },
+  { word: '着ます［着る］', kana: 'きます［きる］', romaji: 'kimasu [kiru]', meaning: 'mặc' },
+  { word: 'します［する］', kana: 'します［する］', romaji: 'shimasu [suru]', meaning: 'thắt' },
+  { word: 'ネクタイをします。', kana: 'ネクタイをします。', romaji: 'nekutai o shimasu.', meaning: 'thắt cà-vạt' },
+  { word: '青い', kana: 'あおい', romaji: 'aoi', meaning: 'xanh da trời' },
+  { word: '赤い', kana: 'あかい', romaji: 'akai', meaning: 'đỏ' },
+  { word: '黄色い', kana: 'きいろい', romaji: 'kiiroi', meaning: 'vàng' },
+  { word: '若い', kana: 'わかい', romaji: 'wakai', meaning: 'trẻ' },
+  { word: '新鮮（な）', kana: 'しんせん（な）', romaji: 'shinsen (na)', meaning: 'tươi' },
+  { word: '材料', kana: 'ざいりょう', romaji: 'zairyou', meaning: 'nguyên liệu' },
+  { word: '場所', kana: 'ばしょ', romaji: 'basho', meaning: 'địa điểm' },
+  { word: 'バスケットボール', kana: 'バスケットボール', romaji: 'basukettobooru', meaning: 'bóng rổ' },
+  { word: '浴衣', kana: 'ゆかた', romaji: 'yukata', meaning: 'áo yukata' },
+  { word: 'どこか', kana: 'どこか', romaji: 'dokoka', meaning: 'ở đâu đó' },
+  { word: '練習・します［練習・する］', kana: 'れんしゅう・します［練習・する］', romaji: 'renshuushimasu [renshuusuru]', meaning: 'luyện tập' },
+  { word: 'みんなで', kana: 'みんなで', romaji: 'minnade', meaning: 'mọi người cùng' },
+  { word: '手袋', kana: 'てぶくろ', romaji: 'tebukuro', meaning: 'găng tay' },
+  { word: '毛糸', kana: 'けいと', romaji: 'keito', meaning: 'len' },
+];
+
 export function getBuiltInPack(packId: string): VocabPack | null {
   const packsMap: Record<string, { name: string; description: string; words: WordEntry[]; supports_handwriting?: boolean }> = {
     pack_00: {
@@ -998,6 +1051,12 @@ export function getBuiltInPack(packId: string): VocabPack | null {
       words: PACK_12_WORDS,
       supports_handwriting: true,
     },
+    pack_13: {
+      name: 'Gói từ vựng 13',
+      description: 'Gói học từ vựng bài 13: Mua sắm, Du lịch, Trang phục & Đời sống (49 từ)',
+      words: PACK_13_WORDS,
+      supports_handwriting: true,
+    },
     days_week: {
       name: 'Thứ trong tuần',
       description: 'Cách đọc 7 ngày thứ trong tuần tiếng Nhật (7 từ)',
@@ -1046,6 +1105,6 @@ export function getBuiltInPack(packId: string): VocabPack | null {
 }
 
 export function getAllBuiltInPacks(): VocabPack[] {
-  const ids = ['pack_00', 'pack_01', 'pack_02', 'pack_03', 'pack_08', 'pack_09', 'pack_10', 'pack_11', 'pack_12', 'days_week', 'days_month', 'months', 'years', 'birth_year'];
+  const ids = ['pack_00', 'pack_01', 'pack_02', 'pack_03', 'pack_08', 'pack_09', 'pack_10', 'pack_11', 'pack_12', 'pack_13', 'days_week', 'days_month', 'months', 'years', 'birth_year'];
   return ids.map((id) => getBuiltInPack(id)!).filter(Boolean);
 }
