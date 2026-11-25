@@ -11,6 +11,7 @@ import {
   PACK_11_WORDS,
   PACK_12_WORDS,
   PACK_13_WORDS,
+  PACK_14_WORDS,
   DAYS_WEEK_WORDS,
   DAYS_MONTH_WORDS,
   MONTHS_WORDS,
@@ -89,6 +90,13 @@ export class PackRegistry {
       words: any[];
       supportsHandwriting: boolean;
     }> = [
+      {
+        id: 'pack_14',
+        name: 'Gói từ vựng 14',
+        description: 'Gói học từ vựng bài 14: Tập quán, Cuộc sống, Giao thông & Đô thị (76 từ)',
+        words: PACK_14_WORDS,
+        supportsHandwriting: true,
+      },
       {
         id: 'pack_13',
         name: 'Gói từ vựng 13',

@@ -32,7 +32,7 @@ def main():
     html_url = f"file:///{HTML_FILE.replace(os.sep, '/')}"
 
     window = webview.create_window(
-        title="KanaFlow · Japanese Learning",
+        title="Watashi no Nihongo · Japanese Learning",
         url=html_url,
         js_api=api,
         width=1280,

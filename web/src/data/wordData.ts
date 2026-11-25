@@ -995,6 +995,86 @@ export const PACK_13_WORDS: WordEntry[] = [
   { word: '毛糸', kana: 'けいと', romaji: 'keito', meaning: 'len' },
 ];
 
+// ── Pack 14 (Full 76 Words - Tập quán, Cuộc sống, Giao thông & Đô thị) ─────────────
+export const PACK_14_WORDS: WordEntry[] = [
+  { word: '習慣', kana: 'しゅうかん', romaji: 'shuukan', meaning: 'tập quán' },
+  { word: 'バスタブ', kana: 'バスタブ', romaji: 'basutabu', meaning: 'bồn tắm' },
+  { word: '話', kana: 'はなし', romaji: 'hanashi', meaning: 'chuyện' },
+  { word: 'ホストファミリー', kana: 'ホストファミリー', romaji: 'hosutofamirii', meaning: 'gia đình đón tiếp' },
+  { word: 'みんな', kana: 'みんな', romaji: 'minna', meaning: 'mọi người' },
+  { word: 'なくなります［なくなる］', kana: 'なくなります［なくなる］', romaji: 'nakunarimasu [nakunaru]', meaning: 'hết' },
+  { word: '笑います［笑う］', kana: 'わらいます［わらう］', romaji: 'waraimasu [warau]', meaning: 'cười' },
+  { word: '同じ', kana: 'おなじ', romaji: 'onaji', meaning: 'giống' },
+  { word: 'びっくり', kana: 'びっくり', romaji: 'bikkuri', meaning: 'ngạc nhiên' },
+  { word: 'うどん', kana: 'うどん', romaji: 'udon', meaning: 'mì ư-đôn' },
+  { word: 'そば', kana: 'そば', romaji: 'soba', meaning: 'mì sô-ba' },
+  { word: 'カイロ', kana: 'カイロ', romaji: 'kairo', meaning: 'Cairo' },
+  { word: 'こたつ', kana: 'こたつ', romaji: 'kotatsu', meaning: 'bàn gắn lò sưởi' },
+  { word: '字', kana: 'じ', romaji: 'ji', meaning: 'chữ' },
+  { word: '食券', kana: 'しょっけん', romaji: 'shokken', meaning: 'phiếu ăn' },
+  { word: '（お）釣り', kana: '（お）つり', romaji: '(o)tsuri', meaning: 'tiền lẻ' },
+  { word: '電気', kana: 'でんき', romaji: 'denki', meaning: 'điện' },
+  { word: 'ドア', kana: 'ドア', romaji: 'doa', meaning: 'cửa' },
+  { word: '唐辛子', kana: 'とうがらし', romaji: 'tougarashi', meaning: 'ớt' },
+  { word: '風鈴', kana: 'ふうりん', romaji: 'fuurin', meaning: 'chuông gió' },
+  { word: '布団', kana: 'ふとん', romaji: 'futon', meaning: 'cái chăn' },
+  { word: 'ポケット', kana: 'ポケット', romaji: 'poketto', meaning: 'túi (áo, quần)' },
+  { word: 'ボタン', kana: 'ボタン', romaji: 'botan', meaning: 'cái cúc' },
+  { word: '（お）湯', kana: '（お）ゆ', romaji: '(o)yu', meaning: 'nước nóng' },
+  { word: '湯たんぽ', kana: 'ゆたんぽ', romaji: 'yutanpo', meaning: 'bình sưởi ấm đựng nước nóng' },
+  { word: 'レバー', kana: 'レバー', romaji: 'rebaa', meaning: 'cần gạt' },
+  { word: '開きます［開く］', kana: 'あきます［あく］', romaji: 'akimasu [aku]', meaning: 'mở' },
+  { word: '触ります［触る］', kana: 'さわります［さわる］', romaji: 'sawarimasu [sawaru]', meaning: 'sờ' },
+  { word: 'つきます［つく］', kana: 'つきます［つく］', romaji: 'tsukimasu [tsuku]', meaning: 'bật' },
+  { word: '回します［回す］', kana: 'まわします［まわす］', romaji: 'mawashimasu [mawasu]', meaning: 'xoay' },
+  { word: '出ます［出る］', kana: 'でます［でる］', romaji: 'demasu [deru]', meaning: 'ra' },
+  { word: 'お釣りが出ます。', kana: 'おつりがでます。', romaji: 'otsuri ga demasu.', meaning: 'Có tiền lẻ trả lại.' },
+  { word: 'あれ？', kana: 'あれ？', romaji: 'are?', meaning: 'ô?' },
+  { word: 'いただきます', kana: 'いただきます', romaji: 'itadakimasu', meaning: 'tôi xin phép ăn' },
+  { word: 'おなかがいっぱいです', kana: 'おなかがいっぱいです', romaji: 'onaka ga ippai desu', meaning: 'tôi no' },
+  { word: 'ごちそうさまでした', kana: 'ごちそうさまでした', romaji: 'gochisousamadeshita', meaning: 'xin phép tôi đã ăn xong' },
+  { word: '以下', kana: 'いか', romaji: 'ika', meaning: 'dưới' },
+  { word: '玄関', kana: 'げんかん', romaji: 'genkan', meaning: 'cửa ra vào' },
+  { word: 'シートベルト', kana: 'シートベルト', romaji: 'shiitoberuto', meaning: 'dây an toàn ở ghế ngồi' },
+  { word: '制服', kana: 'せいふく', romaji: 'seifuku', meaning: 'đồng phục' },
+  { word: 'バイク', kana: 'バイク', romaji: 'baiku', meaning: 'xe máy' },
+  { word: 'ヘルメット', kana: 'ヘルメット', romaji: 'herumetto', meaning: 'mũ bảo hiểm' },
+  { word: 'パスポート', kana: 'パスポート', romaji: 'pasupooto', meaning: 'hộ chiếu' },
+  { word: '身分証', kana: 'みぶんしょう', romaji: 'mibunshou', meaning: 'giấy chứng minh bản thân' },
+  { word: '料金', kana: 'りょうきん', romaji: 'ryoukin', meaning: 'tiền cước' },
+  { word: '入場料', kana: 'にゅうじょうりょう', romaji: 'nyuujouryou', meaning: 'lệ phí vào' },
+  { word: '並びます［並ぶ］', kana: 'ならびます［ならぶ］', romaji: 'narabimasu [narabu]', meaning: 'xếp hàng' },
+  { word: '止めます［止める］', kana: 'とめます［とめる］', romaji: 'tomemasu [tomeru]', meaning: 'dừng' },
+  { word: '分けます［分ける］', kana: 'わけます［わける］', romaji: 'wakemasu [wakeru]', meaning: 'chia' },
+  { word: 'きちんと', kana: 'きちんと', romaji: 'kichinto', meaning: 'đúng, nghiêm túc' },
+  { word: 'そうなんですか', kana: 'そうなんですか', romaji: 'sounandesuka', meaning: 'thế à' },
+  { word: 'ほら', kana: 'ほら', romaji: 'hora', meaning: 'này, đây' },
+  { word: '田舎', kana: 'いなか', romaji: 'inaka', meaning: 'nhà quê' },
+  { word: '都会', kana: 'とかい', romaji: 'tokai', meaning: 'thành thị' },
+  { word: '空気', kana: 'くうき', romaji: 'kuuki', meaning: 'không khí' },
+  { word: '交通', kana: 'こうつう', romaji: 'koutsuu', meaning: 'giao thông' },
+  { word: '時給', kana: 'じきゅう', romaji: 'jikyuu', meaning: 'lương giờ' },
+  { word: '自由', kana: 'じゆう', romaji: 'jiyuu', meaning: 'tự do' },
+  { word: 'デザイン', kana: 'デザイン', romaji: 'dezain', meaning: 'thiết kế' },
+  { word: '番組', kana: 'ばんぐみ', romaji: 'bangumi', meaning: 'chương trình' },
+  { word: 'ファストフード', kana: 'ファストフード', romaji: 'fasutofuudo', meaning: 'đồ ăn nhanh' },
+  { word: 'ファッション', kana: 'ファッション', romaji: 'fasshon', meaning: 'mốt' },
+  { word: 'フリープラン', kana: 'フリープラン', romaji: 'furiipuran', meaning: 'chương trình tự do' },
+  { word: '思います［思う］', kana: 'おもいます［おもう］', romaji: 'omoimasu [omou]', meaning: 'nghĩ' },
+  { word: '化粧・します［化粧・する］', kana: 'けしょう・します［けしょう・する］', romaji: 'keshoushimasu [keshousuru]', meaning: 'trang điểm' },
+  { word: '経験・します［経験・する］', kana: 'けいけん・します［けいけん・する］', romaji: 'keikenshimasu [keikensuru]', meaning: 'trải qua, có kinh nghiệm' },
+  { word: 'うるさい', kana: 'うるさい', romaji: 'urusai', meaning: 'ồn ào, khắt khe' },
+  { word: 'おしゃれ（な）', kana: 'おしゃれ（な）', romaji: 'oshare (na)', meaning: 'điệu, diện' },
+  { word: '複雑（な）', kana: 'ふくざつ（な）', romaji: 'fukuzatsu (na)', meaning: 'phức tạp' },
+  { word: '便利（な）', kana: 'べんり（な）', romaji: 'benri (na)', meaning: 'tiện lợi' },
+  { word: '不便（な）', kana: 'ふべん（な）', romaji: 'fuben (na)', meaning: 'bất tiện' },
+  { word: 'いつでも', kana: 'いつでも', romaji: 'itsudemo', meaning: 'lúc nào cũng' },
+  { word: 'うーん', kana: 'うーん', romaji: 'uun', meaning: 'à, ừ' },
+  { word: '～について', kana: '～について', romaji: '~ni tsuite', meaning: 'về~' },
+  { word: '私もそう思います', kana: 'わたしもそうおもいます', romaji: 'watashi mo sou omoimasu', meaning: 'tôi cũng nghĩ thế' },
+  { word: '駐輪場', kana: 'ちゅうりんじょう', romaji: 'chuurinjou', meaning: 'nơi để xe đạp' },
+];
+
 export function getBuiltInPack(packId: string): VocabPack | null {
   const packsMap: Record<string, { name: string; description: string; words: WordEntry[]; supports_handwriting?: boolean }> = {
     pack_00: {
@@ -1057,6 +1137,12 @@ export function getBuiltInPack(packId: string): VocabPack | null {
       words: PACK_13_WORDS,
       supports_handwriting: true,
     },
+    pack_14: {
+      name: 'Gói từ vựng 14',
+      description: 'Gói học từ vựng bài 14: Tập quán, Cuộc sống, Giao thông & Đô thị (76 từ)',
+      words: PACK_14_WORDS,
+      supports_handwriting: true,
+    },
     days_week: {
       name: 'Thứ trong tuần',
       description: 'Cách đọc 7 ngày thứ trong tuần tiếng Nhật (7 từ)',
@@ -1105,6 +1191,6 @@ export function getBuiltInPack(packId: string): VocabPack | null {
 }
 
 export function getAllBuiltInPacks(): VocabPack[] {
-  const ids = ['pack_00', 'pack_01', 'pack_02', 'pack_03', 'pack_08', 'pack_09', 'pack_10', 'pack_11', 'pack_12', 'pack_13', 'days_week', 'days_month', 'months', 'years', 'birth_year'];
+  const ids = ['pack_00', 'pack_01', 'pack_02', 'pack_03', 'pack_08', 'pack_09', 'pack_10', 'pack_11', 'pack_12', 'pack_13', 'pack_14', 'days_week', 'days_month', 'months', 'years', 'birth_year'];
   return ids.map((id) => getBuiltInPack(id)!).filter(Boolean);
 }

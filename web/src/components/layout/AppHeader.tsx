@@ -38,7 +38,7 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
             className="flex items-center gap-2.5 cursor-pointer lg:hidden"
           >
             <PixelAppLogo size={28} />
-            <span className="font-extrabold text-sm text-white tracking-tight">Kana Pro</span>
+            <span className="font-extrabold text-sm text-white tracking-tight">Watashi no Nihongo</span>
           </div>
 
           {/* Desktop Subtitle / Breadcrumbs */}
@@ -61,17 +61,6 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
             <PixelIcon name="trophy" size={14} className="text-amber-400" />
             <span>Đã thuộc: <strong className="text-amber-400">{completedCount}</strong> bài</span>
           </button>
-
-          {/* Link to previous version / info */}
-          <a
-            href="https://kana.pro/vi"
-            target="_blank"
-            rel="noreferrer"
-            className="hidden sm:inline-flex items-center gap-1.5 text-xs font-medium text-zinc-400 hover:text-zinc-200 hover:underline transition-colors"
-          >
-            <span>Phiên bản gốc</span>
-            <PixelIcon name="chevron-right" size={10} />
-          </a>
         </div>
       </div>
     </header>

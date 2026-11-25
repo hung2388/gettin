@@ -17,7 +17,7 @@ export const PixelAppLogo: React.FC<PixelAppLogoProps> = ({
         height: size,
         lineHeight: 1,
       }}
-      title="Kana Pro - 私 (Watashi)"
+      title="Watashi no Nihongo - 私 (Watashi)"
     >
       <span
         className="font-bold leading-none select-none text-white"

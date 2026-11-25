@@ -75,7 +75,7 @@ export const LearningPathScreen: React.FC<LearningPathScreenProps> = ({
 
   // Track accordion states (first pack open by default)
   const [openAccordions, setOpenAccordions] = useState<Record<string, boolean>>(() => ({
-    [vocabPacks[0]?.id || 'pack_13']: true,
+    [vocabPacks[0]?.id || 'pack_14']: true,
     hiragana: false,
     katakana: false,
     other: false,

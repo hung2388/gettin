@@ -55,7 +55,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
               {!isCollapsed && (
                 <div className="whitespace-nowrap transition-opacity duration-200">
                   <span className="font-extrabold text-base text-white tracking-tight flex items-center gap-1.5">
-                    Kana Pro
+                    Watashi no Nihongo
                     <span className="text-[9px] font-bold px-1.5 py-0.5 rounded bg-red-500/20 text-red-400 border border-red-500/30">
                       VI
                     </span>

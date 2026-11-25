@@ -1029,6 +1029,86 @@ PACK_13_WORDS: List[WordEntry] = [
     WordEntry("毛糸", "keito", "len", "けいと"),
 ]
 
+# ── Pack 14 (Full 76 Words - Tập quán, Cuộc sống, Giao thông & Đô thị) ─────────────
+PACK_14_WORDS: List[WordEntry] = [
+    WordEntry("習慣", "shuukan", "tập quán", "しゅうかん"),
+    WordEntry("バスタブ", "basutabu", "bồn tắm", "バスタブ"),
+    WordEntry("話", "hanashi", "chuyện", "はなし"),
+    WordEntry("ホストファミリー", "hosutofamirii", "gia đình đón tiếp", "ホストファミリー"),
+    WordEntry("みんな", "minna", "mọi người", "みんな"),
+    WordEntry("なくなります［なくなる］", "nakunarimasu [nakunaru]", "hết", "なくなります［なくなる］"),
+    WordEntry("笑います［笑う］", "waraimasu [warau]", "cười", "わらいます［わらう］"),
+    WordEntry("同じ", "onaji", "giống", "おなじ"),
+    WordEntry("びっくり", "bikkuri", "ngạc nhiên", "びっくり"),
+    WordEntry("うどん", "udon", "mì ư-đôn", "うどん"),
+    WordEntry("そば", "soba", "mì sô-ba", "そば"),
+    WordEntry("カイロ", "kairo", "Cairo", "カイロ"),
+    WordEntry("こたつ", "kotatsu", "bàn gắn lò sưởi", "こたつ"),
+    WordEntry("字", "ji", "chữ", "じ"),
+    WordEntry("食券", "shokken", "phiếu ăn", "しょっけん"),
+    WordEntry("（お）釣り", "(o)tsuri", "tiền lẻ", "（お）つり"),
+    WordEntry("電気", "denki", "điện", "でんき"),
+    WordEntry("ドア", "doa", "cửa", "ドア"),
+    WordEntry("唐辛子", "tougarashi", "ớt", "とうがらし"),
+    WordEntry("風鈴", "fuurin", "chuông gió", "ふうりん"),
+    WordEntry("布団", "futon", "cái chăn", "ふとん"),
+    WordEntry("ポケット", "poketto", "túi (áo, quần)", "ポケット"),
+    WordEntry("ボタン", "botan", "cái cúc", "ボタン"),
+    WordEntry("（お）湯", "(o)yu", "nước nóng", "（お）ゆ"),
+    WordEntry("湯たんぽ", "yutanpo", "bình sưởi ấm đựng nước nóng", "ゆたんぽ"),
+    WordEntry("レバー", "rebaa", "cần gạt", "レバー"),
+    WordEntry("開きます［開く］", "akimasu [aku]", "mở", "あきます［あく］"),
+    WordEntry("触ります［触る］", "sawarimasu [sawaru]", "sờ", "さわります［さわる］"),
+    WordEntry("つきます［つく］", "tsukimasu [tsuku]", "bật", "つきます［つく］"),
+    WordEntry("回します［回す］", "mawashimasu [mawasu]", "xoay", "まわします［まわす］"),
+    WordEntry("出ます［出る］", "demasu [deru]", "ra", "でます［でる］"),
+    WordEntry("お釣りが出ます。", "otsuri ga demasu.", "Có tiền lẻ trả lại.", "おつりがでます。"),
+    WordEntry("あれ？", "are?", "ô?", "あれ？"),
+    WordEntry("いただきます", "itadakimasu", "tôi xin phép ăn", "いただきます"),
+    WordEntry("おなかがいっぱいです", "onaka ga ippai desu", "tôi no", "おなかがいっぱいです"),
+    WordEntry("ごちそうさまでした", "gochisousamadeshita", "xin phép tôi đã ăn xong", "ごちそうさまでした"),
+    WordEntry("以下", "ika", "dưới", "いか"),
+    WordEntry("玄関", "genkan", "cửa ra vào", "げんかん"),
+    WordEntry("シートベルト", "shiitoberuto", "dây an toàn ở ghế ngồi", "シートベルト"),
+    WordEntry("制服", "seifuku", "đồng phục", "せいふく"),
+    WordEntry("バイク", "baiku", "xe máy", "バイク"),
+    WordEntry("ヘルメット", "herumetto", "mũ bảo hiểm", "ヘルメット"),
+    WordEntry("パスポート", "pasupooto", "hộ chiếu", "パスポート"),
+    WordEntry("身分証", "mibunshou", "giấy chứng minh bản thân", "みぶんしょう"),
+    WordEntry("料金", "ryoukin", "tiền cước", "りょうきん"),
+    WordEntry("入場料", "nyuujouryou", "lệ phí vào", "にゅうじょうりょう"),
+    WordEntry("並びます［並ぶ］", "narabimasu [narabu]", "xếp hàng", "ならびます［ならぶ］"),
+    WordEntry("止めます［止める］", "tomemasu [tomeru]", "dừng", "とめます［とめる］"),
+    WordEntry("分けます［分ける］", "wakemasu [wakeru]", "chia", "わけます［わける］"),
+    WordEntry("きちんと", "kichinto", "đúng, nghiêm túc", "きちんと"),
+    WordEntry("そうなんですか", "sounandesuka", "thế à", "そうなんですか"),
+    WordEntry("ほら", "hora", "này, đây", "ほら"),
+    WordEntry("田舎", "inaka", "nhà quê", "いなか"),
+    WordEntry("都会", "tokai", "thành thị", "とかい"),
+    WordEntry("空気", "kuuki", "không khí", "くうき"),
+    WordEntry("交通", "koutsuu", "giao thông", "こうつう"),
+    WordEntry("時給", "jikyuu", "lương giờ", "じきゅう"),
+    WordEntry("自由", "jiyuu", "tự do", "じゆう"),
+    WordEntry("デザイン", "dezain", "thiết kế", "デザイン"),
+    WordEntry("番組", "bangumi", "chương trình", "ばんぐみ"),
+    WordEntry("ファストフード", "fasutofuudo", "đồ ăn nhanh", "ファストフード"),
+    WordEntry("ファッション", "fasshon", "mốt", "ファッション"),
+    WordEntry("フリープラン", "furiipuran", "chương trình tự do", "フリープラン"),
+    WordEntry("思います［思う］", "omoimasu [omou]", "nghĩ", "おもいます［おもう］"),
+    WordEntry("化粧・します［化粧・する］", "keshoushimasu [keshousuru]", "trang điểm", "けしょう・します［けしょう・する］"),
+    WordEntry("経験・します［経験・する］", "keikenshimasu [keikensuru]", "trải qua, có kinh nghiệm", "けいけん・します［けいけん・する］"),
+    WordEntry("うるさい", "urusai", "ồn ào, khắt khe", "うるさい"),
+    WordEntry("おしゃれ（な）", "oshare (na)", "điệu, diện", "おしゃれ（な）"),
+    WordEntry("複雑（な）", "fukuzatsu (na)", "phức tạp", "ふくざつ（な）"),
+    WordEntry("便利（な）", "benri (na)", "tiện lợi", "べんり（な）"),
+    WordEntry("不便（な）", "fuben (na)", "bất tiện", "ふべん（な）"),
+    WordEntry("いつでも", "itsudemo", "lúc nào cũng", "いつでも"),
+    WordEntry("うーん", "uun", "à, ừ", "うーん"),
+    WordEntry("～について", "~ni tsuite", "về~", "～について"),
+    WordEntry("私もそう思います", "watashi mo sou omoimasu", "tôi cũng nghĩ thế", "わたしもそうおもいます"),
+    WordEntry("駐輪場", "chuurinjou", "nơi để xe đạp", "ちゅうりんじょう"),
+]
+
 # ── Accessors ─────────────────────────────────────────────────────────────
 
 def get_hiragana_words() -> List[WordEntry]:
@@ -1059,6 +1139,7 @@ def get_words_for_type(kana_type) -> List[WordEntry]:
         KanaType.PACK_11: PACK_11_WORDS,
         KanaType.PACK_12: PACK_12_WORDS,
         KanaType.PACK_13: PACK_13_WORDS,
+        KanaType.PACK_14: PACK_14_WORDS,
     }
     if kana_type == KanaType.BOTH:
         return HIRAGANA_WORDS + KATAKANA_WORDS
@@ -1075,6 +1156,6 @@ class VocabPack:
 
     @property
     def supports_handwriting(self) -> bool:
-        return self.id in ("pack_00", "pack_01", "pack_02", "pack_03", "pack_08", "pack_09", "pack_10", "pack_11", "pack_12", "pack_13")
+        return self.id in ("pack_00", "pack_01", "pack_02", "pack_03", "pack_08", "pack_09", "pack_10", "pack_11", "pack_12", "pack_13", "pack_14")
 
 

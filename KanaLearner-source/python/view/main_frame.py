@@ -25,7 +25,7 @@ class MainFrame(ctk.CTk):
     def __init__(self):
         super().__init__()
 
-        self.title("Japanese Kana Learner")
+        self.title("Watashi no Nihongo")
         self.geometry(f"{Theme.WINDOW_WIDTH}x{Theme.WINDOW_HEIGHT}")
         self.minsize(Theme.MIN_WIDTH, Theme.MIN_HEIGHT)
         self.configure(fg_color=Theme.BG)
